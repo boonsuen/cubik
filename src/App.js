@@ -8,11 +8,13 @@ import { Head } from 'react-static';
 import CubikApp from './components/CubikApp';
 
 import './app.scss'
+import favicon from './img/favicon.png'
 
 const App = () => (
   <React.Fragment>
     <Head>
       <title>Cubik</title>
+      <link rel="icon" href={favicon} />
     </Head>
     <Router>
       <Switch>
