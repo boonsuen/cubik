@@ -1,4 +1,4 @@
-# React-Static - Basic Example
+# Cubik
 
 This example is the most basic version of react-static available. It includes:
 - Babel
