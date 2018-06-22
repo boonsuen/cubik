@@ -1,0 +1,132 @@
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Regular.woff);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Medium.woff);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Demi.woff);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Bold.woff);
+  font-weight: 700;
+}
+
+body {
+  font-family: "Avenir Next";
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 259px;
+  box-shadow: 5px 0 5px rgba(235, 233, 255, 50%);
+  z-index: 1;
+  padding: 20px 29px 0 29px;
+  box-sizing: border-box;
+}
+
+.given-lists {
+  color: #56578c;
+  font-weight: 500;
+  border-bottom: 1px solid #e6e9ec;
+}
+
+.given-lists p {
+  display: flex;
+  align-items: center;
+}
+
+.given-lists p:nth-child(2), .given-lists p:nth-child(3) {
+  margin-left: 15px;
+}
+
+.given-lists img {
+  margin-right: 10px;
+}
+
+
+.user-lists {
+  color: #8080a2;
+}
+
+.active {
+  color: #262660;
+  position: relative;
+}
+
+.active::before {
+  background: #6067f1;
+  position: absolute;
+  width: 2px;
+  height: 19px;
+  display: block;
+}
+
+.content {
+  background: #f7f8fe;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 50px;
+  overflow-y: scroll;
+}
+
+.links-group-column-manager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.links-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.links-group__title {
+  font-weight: 600;
+  font-size: 26px;
+  color: #000b9f;
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column-reverse;
+  box-shadow: 0 2px 8px #ecedff;
+  margin-bottom: 20px;
+}
+
+.links-container div {
+  width: 510px;
+  height: 105px;
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #56578c;
+  box-shadow: 0 2px 8px #ecedff;
+  line-height: 1.4;
+  transition: color 300ms, border-radius 300ms, box-shadow 300ms;
+  cursor: pointer;
+}
+
+.links-container div:hover {
+  color: #6067f1;
+  box-shadow: 0 2px 8px #8f94ff;
+  z-index: 1;
+  border-radius: 5px;
+}
