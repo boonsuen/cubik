@@ -32,7 +32,7 @@ export default {
       },
       {
         path: '/app',
-        component: 'src/components/CubikApp'
+        component: 'src/components/CubikApp',
       },
       {
         is404: true,
@@ -90,5 +90,5 @@ export default {
       },
     ]
     return config
-  }
+  },
 }
