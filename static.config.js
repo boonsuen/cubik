@@ -31,6 +31,10 @@ export default {
         })),
       },
       {
+        path: '/login',
+        component: 'src/containers/Login',
+      },
+      {
         path: '/app',
         component: 'src/components/CubikApp',
       },

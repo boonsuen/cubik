@@ -25,8 +25,8 @@ const App = () => (
             <nav className="nav__items">
               <Link className="nav__item" to="/about">About</Link>
               <Link className="nav__item" to="/blog">Blog</Link>
-              <Link className="nav__item" to="/app">Login</Link>
-              <Link className="nav__item" to="/blog">Signup</Link>
+              <Link className="nav__item" to="/login">Login</Link>
+              <Link className="nav__item" to="/app">Signup</Link>
             </nav>
           </div>
           <div className="content">
