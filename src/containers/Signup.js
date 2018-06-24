@@ -5,7 +5,7 @@ import { Head } from 'react-static'
 export default hot(module)(() => (
   <React.Fragment>
     <Head>
-      <title>Login</title>
+      <title>Sign Up</title>
     </Head>
     <div className="container">
       <div className="login">
@@ -30,7 +30,7 @@ export default hot(module)(() => (
             />
           </div>
           <div className="login-login__actions">
-            <button className="login-form__button" type="submit">Log In</button>
+            <button className="login-form__button" type="submit">Create Account</button>
           </div>
         </form>
       </div>

@@ -57,6 +57,11 @@ button {
   border: none;
   border-radius: 5px;
   font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 .container {
@@ -201,7 +206,7 @@ button {
     display: block;
     font-size: 16px;
     color: #535353;
-    font-weight: 500;
+    font-weight: 400;
   }
 }
 
@@ -231,9 +236,12 @@ button {
   }
 
   &__input:focus {
-    outline: none;
     border-color: #889fff;
     background-color: #fcfcff;
+  }
+
+  &__input:focus, &__input:active {
+    outline: none;
   }
 
   &__input::placeholder {
