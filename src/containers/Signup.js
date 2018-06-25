@@ -9,9 +9,9 @@ export default hot(module)(() => (
     </Head>
     <div className="container">
       <div className="login">
-        <h1 className="login__heading"> Welcome back!
+        <h1 className="login__heading"> Sign Up
           <small className="login__subheading">
-            Enter your details below to log in.
+            Create an account and start collecting today.
           </small>
         </h1>
         <form className="login-form">
