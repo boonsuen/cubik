@@ -52,7 +52,6 @@ img {
 }
 
 button {
-  width: 109px;
   height: 48px;
   border: none;
   border-radius: 5px;
@@ -251,5 +250,6 @@ button {
   &__button {
     background-color: #8096ff;
     color: #fff;
+    width: 109px;
   }
 }

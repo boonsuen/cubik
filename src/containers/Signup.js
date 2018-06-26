@@ -2,6 +2,8 @@ import React from 'react'
 import { hot } from 'react-hot-loader'
 import { Head } from 'react-static'
 
+import '../styles/Signup.scss';
+
 export default hot(module)(() => (
   <React.Fragment>
     <Head>
@@ -11,7 +13,7 @@ export default hot(module)(() => (
       <div className="login">
         <h1 className="login__heading"> Sign Up
           <small className="login__subheading">
-            Create an account and start collecting today.
+            Create an account and start collecting links today.
           </small>
         </h1>
         <form className="login-form">
@@ -29,8 +31,8 @@ export default hot(module)(() => (
               placeholder="Enter your password" spellCheck="false"
             />
           </div>
-          <div className="login-login__actions">
-            <button className="login-form__button" type="submit">Create Account</button>
+          <div className="signup-actions">
+            <button className="signup-form__button" type="submit">Create Account</button>
           </div>
         </form>
       </div>

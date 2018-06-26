@@ -7,7 +7,7 @@ import { Head } from 'react-static';
 
 import CubikApp from './components/CubikApp';
 
-import './app.scss'
+import './styles/App.scss'
 import favicon from './img/favicon.png'
 
 const App = () => (
