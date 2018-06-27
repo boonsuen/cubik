@@ -1,10 +1,9 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
 import { Head } from 'react-static'
 
 import '../styles/Signup.scss';
 
-export default hot(module)(() => (
+export default () => (
   <React.Fragment>
     <Head>
       <title>Sign Up</title>
@@ -38,4 +37,4 @@ export default hot(module)(() => (
       </div>
     </div>
   </React.Fragment>
-))
+)

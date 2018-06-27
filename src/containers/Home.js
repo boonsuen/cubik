@@ -1,18 +1,17 @@
 import React from 'react';
-import { withSiteData } from 'react-static';
-import { hot } from 'react-hot-loader';
+import { withSiteData, Link } from 'react-static';
 
 import logoImg from '../img/logo.png';
 
-export default hot(module)(withSiteData(() => (
+export default withSiteData(() => (
   <React.Fragment>
     <div className="hero-wrapper container">
       <div className="hero">
         <h1 className="hero__title">Curate links</h1>
         <p className="hero__subtitle">Stay organized, always be resourceful.</p>
-        <a href="/signup">
+        <Link to="/signup">
           <div className="hero__button">Get Started</div>
-        </a>
+        </Link>
       </div>
       <img className="cards" src={logoImg} alt="" style={{width: 150}} />
     </div>
@@ -31,4 +30,4 @@ export default hot(module)(withSiteData(() => (
       </div>
     </div>
   </React.Fragment>
-)))
+))

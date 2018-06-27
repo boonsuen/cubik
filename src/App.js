@@ -1,7 +1,6 @@
 import React from 'react'
 import { Router, Link, Route, Switch } from 'react-static'
-import { hot } from 'react-hot-loader'
-//
+
 import Routes from 'react-static-routes'
 import { Head } from 'react-static';
 
@@ -42,4 +41,4 @@ const App = () => (
   </React.Fragment>
 );
 
-export default hot(module)(App)
+export default App

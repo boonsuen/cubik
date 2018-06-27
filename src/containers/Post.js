@@ -1,6 +1,5 @@
 import React from 'react'
 import { withRouteData, Link } from 'react-static'
-//
 
 export default withRouteData(({ post }) => (
   <div className="container">

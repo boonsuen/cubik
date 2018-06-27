@@ -1,10 +1,9 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
 import { Head } from 'react-static'
 
 import webdesign from '../img/webdesign.png'
 
-export default hot(module)(() => (
+export default () => (
   <React.Fragment>
     <Head>
       <title>About | Cubik</title>
@@ -15,4 +14,4 @@ export default hot(module)(() => (
       <img src={webdesign} style={{width: 300}} />
     </div>
   </React.Fragment>
-))
+)

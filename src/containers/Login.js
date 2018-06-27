@@ -1,8 +1,7 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
 import { Head } from 'react-static'
 
-export default hot(module)(() => (
+export default () => (
   <React.Fragment>
     <Head>
       <title>Login</title>
@@ -36,4 +35,4 @@ export default hot(module)(() => (
       </div>
     </div>
   </React.Fragment>
-))
+)
