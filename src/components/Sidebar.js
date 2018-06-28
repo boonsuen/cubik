@@ -5,8 +5,14 @@ import Home from '../img/Home.png';
 import Read from '../img/Read.png';
 import Shape from '../img/Shape.png';
 import Delete from '../img/Delete.png';
+import firebase from '../firebase/firebase';
 
 export default class Sidebar extends React.Component {
+  logoutUser = () => {
+    firebase.auth().signOut().then(() => {
+      console.log('signed out');
+    });
+  }
   render() {
     return (
       <div className="sidebar">
@@ -24,6 +30,7 @@ export default class Sidebar extends React.Component {
         <div className="sidebar__bottomOperation">
           <button type="button">+ New List</button>
           <Link to="/">back</Link>
+          <button onClick={this.logoutUser}>Log out</button>
         </div>
       </div>
     )
