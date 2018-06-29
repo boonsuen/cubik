@@ -99,4 +99,5 @@ export default {
     ]
     return config
   },
+  preact: true
 }
