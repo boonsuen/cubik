@@ -1,26 +1,29 @@
-import React from 'react';
-import { Router, Link, Route, Head, Switch, Redirect } from 'react-static';
-import Routes from 'react-static-routes';
+import React from "react";
+import { Router, Link, Route, Head, Switch, Redirect } from "react-static";
+import Routes from "react-static-routes";
 
-import CubikApp from './components/CubikApp';
-import './styles/App.scss'
-import favicon from './img/favicon.png'
-import firebase from './firebase/firebase';
+import CubikApp from "./components/CubikApp";
+import "./styles/App.scss";
+import favicon from "./img/favicon.png";
+import firebase from "./firebase/firebase";
 
-firebase.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    console.log('in');
+    console.log("in");
     console.log(user);
   } else {
-    console.log('now redirecting to /signout or /');
+    console.log("now redirecting to /signout or /");
   }
 });
 
+const AuthContext = React.createContext(true);
+
 class App extends React.Component {
   state = {
-    loggedin: false
-  }
+    loggedIn: false
+  };
   render() {
+    const { loggedIn } = this.state;
     return (
       <React.Fragment>
         <Head>
@@ -30,18 +33,25 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route path="/app" component={CubikApp} />
-            {
-              this.state.loggedin 
-              && <Redirect to="/app" />
-            }
+            {loggedIn && <Redirect to="/app" />}
             <React.Fragment>
               <div className="nav container">
-                <Link exact to="/" className="logo">Cubik</Link>
+                <Link exact to="/" className="logo">
+                  Cubik
+                </Link>
                 <nav className="nav__items">
-                  <Link className="nav__item" to="/about">About</Link>
-                  <Link className="nav__item" to="/blog">Blog</Link>
-                  <Link className="nav__item" to="/login">Login</Link>
-                  <Link className="nav__item" to="/signup">Signup</Link>
+                  <Link className="nav__item" to="/about">
+                    About
+                  </Link>
+                  <Link className="nav__item" to="/blog">
+                    Blog
+                  </Link>
+                  <Link className="nav__item" to="/login">
+                    Login
+                  </Link>
+                  <Link className="nav__item" to="/signup">
+                    Signup
+                  </Link>
                 </nav>
               </div>
               <div className="content">
@@ -49,14 +59,16 @@ class App extends React.Component {
               </div>
               <div className="footer container">
                 <Link to="/about">About</Link>
-                <a href="https://twitter.com/SatoshiJS" target="_blank">Twitter</a>
+                <a href="https://twitter.com/SatoshiJS" target="_blank">
+                  Twitter
+                </a>
               </div>
             </React.Fragment>
           </Switch>
         </Router>
       </React.Fragment>
     );
-  };
+  }
 }
 
 export default App;
@@ -72,7 +84,7 @@ if (user != null) {
   console.log(email);
   photoUrl = user.photoURL;
   emailVerified = user.emailVerified;
-  uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                   // this value to authenticate with your backend server, if
-                   // you have one. Use User.getToken() instead.
+  uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
+  // this value to authenticate with your backend server, if
+  // you have one. Use User.getToken() instead.
 }
