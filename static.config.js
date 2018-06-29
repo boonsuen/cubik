@@ -111,6 +111,5 @@ export default {
     ]
 
     return config
-  },
-  bundleAnalyzer: true
+  }
 }
