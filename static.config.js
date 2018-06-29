@@ -85,7 +85,14 @@ export default {
       }
 
       // UglifyJS for production build
-      config.plugins.push(new UglifyJsPlugin())
+      config.plugins.push(new UglifyJsPlugin({
+        uglifyOptions: {
+          output: {
+            comments: false,
+            beautify: false
+          }
+        }
+      }))
     }
 
     config.module.rules = [
