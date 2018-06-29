@@ -1,5 +1,6 @@
 import axios from 'axios'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 
 export default {
   getSiteData: () => ({
@@ -82,6 +83,9 @@ export default {
           use: loaders,
         })
       }
+
+      // UglifyJS for production build
+      config.plugins.push(new UglifyJsPlugin())
     }
 
     config.module.rules = [
@@ -97,7 +101,7 @@ export default {
         ],
       },
     ]
+
     return config
-  },
-  preact: true
+  }
 }
