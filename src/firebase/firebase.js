@@ -1,4 +1,7 @@
 import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/functions";
 
 const config = {
   apiKey: "AIzaSyCNLGFcQa9PR51USKfPWMEnEkwDn2JNBPc",
@@ -8,11 +11,6 @@ const config = {
   storageBucket: "cubik-d04fe.appspot.com",
   messagingSenderId: "827219506474"
 };
-
-// Add additional services that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/functions";
 
 firebase.initializeApp(config);
 

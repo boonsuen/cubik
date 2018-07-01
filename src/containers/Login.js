@@ -8,17 +8,18 @@ class Login extends React.Component {
     email: '',
     password: ''
   }
-  loginUser = (email, password) => {
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
+  handleLogin = (e) => {
+    e.preventDefault();
+    console.log('handleLogin');
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+      console.log('catch:', 'signInWithEmailAndPassword');
+      const { code: errorCode, message: errorMessage } = error;
+      console.log(errorCode, errorMessage);
     });
   }
   onEmailChange = (e) => {
     const email = e.target.value;
-    this.setState(() => ({email}))
+    this.setState({email})
   }
   onPasswordChange = (e) => {
     const password = e.target.value;
@@ -38,7 +39,7 @@ class Login extends React.Component {
                 Enter your details below to log in.
               </small>
             </h1>
-            <form className="login-form" onSubmit={this.loginUser(email, password)}>
+            <form className="login-form" onSubmit={this.handleLogin}>
               <div className="login-form__group">
                 <label className="login-form__label">Email</label>
                 <input

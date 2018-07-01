@@ -8,11 +8,11 @@ import favicon from "./img/favicon.png";
 import firebase from "./firebase/firebase";
 
 firebase.auth().onAuthStateChanged(user => {
+  console.log('App.js:', 'onAuthStateChanged');
   if (user) {
-    console.log("in");
-    console.log(user);
+    console.log('App.js:', 'user is logged in');
   } else {
-    console.log("now redirecting to /signout or /");
+    console.log('App.js:', 'user is logged out');
   }
 });
 
@@ -32,7 +32,9 @@ class App extends React.Component {
         </Head>
         <Router>
           <Switch>
-            <Route path="/app" component={CubikApp} />
+            <Route path="/app" render={() => (
+              loggedIn ? <CubikApp /> : <Redirect to="/login" />
+            )} />
             {loggedIn && <Redirect to="/app" />}
             <React.Fragment>
               <div className="nav container">
@@ -73,18 +75,4 @@ class App extends React.Component {
 
 export default App;
 
-var user = firebase.auth().currentUser;
-console.log(user);
-let name, email, photoUrl, uid, emailVerified;
 
-if (user != null) {
-  name = user.displayName;
-  console.log(name);
-  email = user.email;
-  console.log(email);
-  photoUrl = user.photoURL;
-  emailVerified = user.emailVerified;
-  uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
-  // this value to authenticate with your backend server, if
-  // you have one. Use User.getToken() instead.
-}

@@ -1,99 +1,107 @@
-import axios from 'axios'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import axios from "axios";
+import ExtractTextPlugin from "extract-text-webpack-plugin";
+import UglifyJsPlugin from "uglifyjs-webpack-plugin";
 
 export default {
-  siteRoot: 'https://cubikapp.com',
+  siteRoot: "https://cubikapp.com",
   getSiteData: () => ({
-    title: 'React Static',
+    title: "React Static"
   }),
   getRoutes: async () => {
-    const { data: posts } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    const { data: posts } = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
     return [
       {
-        path: '/',
-        component: 'src/containers/Home',
+        path: "/",
+        component: "src/containers/Home"
       },
       {
-        path: '/about',
-        component: 'src/containers/About',
+        path: "/about",
+        component: "src/containers/About"
       },
       {
-        path: '/blog',
-        component: 'src/containers/Blog',
+        path: "/blog",
+        component: "src/containers/Blog",
         getData: () => ({
-          posts,
+          posts
         }),
         children: posts.map(post => ({
           path: `/post/${post.id}`,
-          component: 'src/containers/Post',
+          component: "src/containers/Post",
           getData: () => ({
-            post,
-          }),
-        })),
+            post
+          })
+        }))
       },
       {
-        path: '/login',
-        component: 'src/containers/Login',
+        path: "/login",
+        component: "src/containers/Login"
       },
       {
-        path: '/signup',
-        component: 'src/containers/Signup',
+        path: "/signup",
+        component: "src/containers/Signup"
       },
       {
-        path: '/app',
-        component: 'src/components/CubikApp',
+        path: "/app",
+        component: "src/components/CubikApp"
       },
       {
         is404: true,
-        component: 'src/containers/404',
-      },
-    ]
+        component: "src/containers/404"
+      }
+    ];
   },
   webpack: (config, { defaultLoaders, stage }) => {
-    let loaders = []
+    let loaders = [];
 
-    if (stage === 'dev') {
-      loaders = [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }]
+    if (stage === "dev") {
+      loaders = [
+        { loader: "style-loader" },
+        { loader: "css-loader" },
+        { loader: "sass-loader" }
+      ];
     } else {
       loaders = [
         {
-          loader: 'css-loader',
+          loader: "css-loader",
           options: {
             importLoaders: 1,
-            minimize: stage === 'prod',
-            sourceMap: false,
-          },
+            minimize: stage === "prod",
+            sourceMap: false
+          }
         },
         {
-          loader: 'sass-loader',
-          options: { includePaths: ['src/'] },
-        },
-      ]
+          loader: "sass-loader",
+          options: { includePaths: ["src/"] }
+        }
+      ];
 
       // Don't extract css to file during node build process
-      if (stage !== 'node') {
+      if (stage !== "node") {
         loaders = ExtractTextPlugin.extract({
           fallback: {
-            loader: 'style-loader',
+            loader: "style-loader",
             options: {
               sourceMap: false,
-              hmr: false,
-            },
+              hmr: false
+            }
           },
-          use: loaders,
-        })
+          use: loaders
+        });
       }
 
       // UglifyJS for production build
-      config.plugins.push(new UglifyJsPlugin({
-        uglifyOptions: {
-          output: {
-            comments: false,
-            beautify: false
+      config.plugins.push(
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            output: {
+              comments: false,
+              beautify: false
+            }
           }
-        }
-      }))
+        })
+      );
     }
 
     config.module.rules = [
@@ -101,15 +109,15 @@ export default {
         oneOf: [
           {
             test: /\.s(a|c)ss$/,
-            use: loaders,
+            use: loaders
           },
           defaultLoaders.cssLoader,
           defaultLoaders.jsLoader,
-          defaultLoaders.fileLoader,
-        ],
-      },
-    ]
+          defaultLoaders.fileLoader
+        ]
+      }
+    ];
 
-    return config
+    return config;
   }
-}
+};
