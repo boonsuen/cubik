@@ -30,4 +30,4 @@ export default withSiteData(() => (
       </div>
     </div>
   </React.Fragment>
-))
+));

@@ -7,23 +7,43 @@ import "./styles/App.scss";
 import favicon from "./img/favicon.png";
 import firebase from "./firebase/firebase";
 
-firebase.auth().onAuthStateChanged(user => {
-  console.log('App.js:', 'onAuthStateChanged');
-  if (user) {
-    console.log('App.js:', 'user is logged in');
-  } else {
-    console.log('App.js:', 'user is logged out');
-  }
+export const AuthContext = React.createContext({
+  authState: false,
+  toggleAuth: () => {}
 });
 
-const AuthContext = React.createContext(true);
-
 class App extends React.Component {
+  toggleAuth = () => {
+    this.setState(state => ({
+      authState: !state.authState
+    }));
+  }
   state = {
-    loggedIn: false
-  };
+    authState: false,
+    firebaseGotAuthState: false,
+    toggleAuth: this.toggleAuth
+  }
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      console.log('App.js:', 'onAuthStateChanged');
+      if (user) {
+        console.log('App.js:', 'user is logged in');
+        console.log(user);
+        this.setState(() => ({
+          authState: true,
+          firebaseGotAuthState: true
+        }));
+      } else {
+        console.log('App.js:', 'user is logged out');
+        this.setState(() => ({
+          authState: false,
+          firebaseGotAuthState: true
+        }));
+      }
+    });
+  }
   render() {
-    const { loggedIn } = this.state;
+    const { authState, firebaseGotAuthState } = this.state;
     return (
       <React.Fragment>
         <Head>
@@ -32,40 +52,44 @@ class App extends React.Component {
         </Head>
         <Router>
           <Switch>
-            <Route path="/app" render={() => (
-              loggedIn ? <CubikApp /> : <Redirect to="/login" />
-            )} />
-            {loggedIn && <Redirect to="/app" />}
-            <React.Fragment>
-              <div className="nav container">
-                <Link exact to="/" className="logo">
-                  Cubik
-                </Link>
-                <nav className="nav__items">
-                  <Link className="nav__item" to="/about">
-                    About
-                  </Link>
-                  <Link className="nav__item" to="/blog">
-                    Blog
-                  </Link>
-                  <Link className="nav__item" to="/login">
-                    Login
-                  </Link>
-                  <Link className="nav__item" to="/signup">
-                    Signup
-                  </Link>
-                </nav>
-              </div>
-              <div className="content">
-                <Routes />
-              </div>
-              <div className="footer container">
-                <Link to="/about">About</Link>
-                <a href="https://twitter.com/SatoshiJS" target="_blank">
-                  Twitter
-                </a>
-              </div>
-            </React.Fragment>
+            {firebaseGotAuthState ? (
+                <React.Fragment>
+                  {authState 
+                    ? ( 
+                      <React.Fragment>
+                        <Route path="/app" component={CubikApp} />
+                        <Route path="/" render={() => <Redirect to="/app" />} />
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <div className="nav container">
+                          <Link exact to="/" className="logo">
+                            Cubik
+                          </Link>
+                          <nav className="nav__items">
+                            <Link className="nav__item" to="/about"> About</Link>
+                            <Link className="nav__item" to="/blog">Blog</Link>
+                            <Link className="nav__item" to="/login">Login</Link>
+                            <Link className="nav__item" to="/signup">Signup</Link>
+                          </nav>
+                        </div>
+                        <div className="content">
+                          <AuthContext.Provider value={this.state.toggleAuth}>
+                            <Routes />
+                          </AuthContext.Provider>
+                        </div>
+                        <div className="footer container">
+                          <Link to="/about">About</Link>
+                          <a href="https://twitter.com/SatoshiJS" target="_blank">Twitter</a>
+                        </div>
+                      </React.Fragment>
+                    )
+                  }
+                </React.Fragment>
+              ) : (
+                <React.Fragment>it's loading!!!</React.Fragment>
+              )
+            }
           </Switch>
         </Router>
       </React.Fragment>

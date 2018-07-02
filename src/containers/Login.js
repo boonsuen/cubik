@@ -1,6 +1,7 @@
 import React from 'react'
 import { Head } from 'react-static'
 
+import { AuthContext } from '../App';
 import firebase from '../firebase/firebase';
 
 class Login extends React.Component {
@@ -26,7 +27,6 @@ class Login extends React.Component {
     this.setState(() => ({password}))
   }
   render() {
-    const {email, password} = this.state;
     return (
       <React.Fragment>
         <Head>
@@ -39,27 +39,36 @@ class Login extends React.Component {
                 Enter your details below to log in.
               </small>
             </h1>
-            <form className="login-form" onSubmit={this.handleLogin}>
-              <div className="login-form__group">
-                <label className="login-form__label">Email</label>
-                <input
-                  className="login-form__input" type="email" 
-                  placeholder="you@example.com" spellCheck="false" 
-                  onChange={this.onEmailChange}
-                />
-              </div>
-              <div className="login-form__group">
-                <label className="login-form__label">Password</label>
-                <input 
-                  className="login-form__input" type="password" 
-                  placeholder="Enter your password" spellCheck="false"
-                  onChange={this.onPasswordChange}
-                />
-              </div>
-              <div className="login-login__actions">
-                <button className="login-form__button" type="submit">Log In</button>
-              </div>
-            </form>
+            <AuthContext.Consumer>
+              {(toggleAuth) => (
+                <form className="login-form" 
+                  onSubmit={(event) => { 
+                    this.handleLogin(event); 
+                    toggleAuth();
+                  }}
+                >
+                  <div className="login-form__group">
+                    <label className="login-form__label">Email</label>
+                    <input
+                      className="login-form__input" type="email" 
+                      placeholder="you@example.com" spellCheck="false" 
+                      onChange={this.onEmailChange}
+                    />
+                  </div>
+                  <div className="login-form__group">
+                    <label className="login-form__label">Password</label>
+                    <input 
+                      className="login-form__input" type="password" 
+                      placeholder="Enter your password" spellCheck="false"
+                      onChange={this.onPasswordChange}
+                    />
+                  </div>
+                  <div className="login-login__actions">
+                    <button className="login-form__button" type="submit">Log In</button>
+                  </div>
+                </form>
+              )}
+            </AuthContext.Consumer>
           </div>
         </div>
       </React.Fragment>
