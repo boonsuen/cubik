@@ -56,10 +56,10 @@ class App extends React.Component {
                 <React.Fragment>
                   {authState 
                     ? ( 
-                      <React.Fragment>
+                      <Switch>
                         <Route path="/app" component={CubikApp} />
                         <Route path="/" render={() => <Redirect to="/app" />} />
-                      </React.Fragment>
+                      </Switch>
                     ) : (
                       <React.Fragment>
                         <div className="nav container">
