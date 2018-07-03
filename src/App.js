@@ -62,6 +62,7 @@ class App extends React.Component {
                       </Switch>
                     ) : (
                       <React.Fragment>
+                        <Route path="/app" render={() => (<Redirect to="/" />)} />
                         <div className="nav container">
                           <Link exact to="/" className="logo">
                             Cubik
@@ -87,7 +88,7 @@ class App extends React.Component {
                   }
                 </React.Fragment>
               ) : (
-                <React.Fragment>it's loading!!!</React.Fragment>
+                <React.Fragment></React.Fragment>
               )
             }
           </Switch>
