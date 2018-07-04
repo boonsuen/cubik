@@ -24,21 +24,41 @@ class App extends React.Component {
     toggleAuth: this.toggleAuth
   }
   componentDidMount() {
+    console.log('page load');
+    const localAuthState = JSON.parse(localStorage.getItem('localAuthState'));
+    if (localAuthState) {
+      console.log('lAS is true, do something');
+      this.setState({
+        authState: true,
+        firebaseGotAuthState: true
+      });
+    } else if (!localAuthState) {
+      localStorage.setItem('localAuthState', this.state.authState);
+      this.setState({
+        authState: false,
+        firebaseGotAuthState: true
+      });
+    };
     firebase.auth().onAuthStateChanged(user => {
       console.log('App.js:', 'onAuthStateChanged');
       if (user) {
         console.log('App.js:', 'user is logged in');
         console.log(user);
-        this.setState(() => ({
+        this.setState({
           authState: true,
           firebaseGotAuthState: true
-        }));
+        }, () => {
+          console.log('setState done, set lAS')
+          localStorage.setItem('localAuthState', this.state.authState);
+        });
       } else {
         console.log('App.js:', 'user is logged out');
-        this.setState(() => ({
+        this.setState({
           authState: false,
           firebaseGotAuthState: true
-        }));
+        }, () => {
+          localStorage.setItem('localAuthState', this.state.authState);
+        });
       }
     });
   }
