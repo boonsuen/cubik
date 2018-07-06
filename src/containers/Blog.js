@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouteData, Link } from 'react-static'
 
 export default withRouteData(({ posts }) => (
-  <div className="container">
+  <div>
     <h1>It’s blog time.</h1>
     <br />
     All Posts:

@@ -1,11 +1,14 @@
 import React from 'react';
-import { withSiteData, Link } from 'react-static';
+import { withSiteData, Link, Head } from 'react-static';
 
 import logoImg from '../img/logo.png';
 
 export default withSiteData(() => (
   <React.Fragment>
-    <div className="hero-wrapper container">
+    <Head>
+      <title>Cubik</title>
+    </Head>
+    <div className="hero-wrapper">
       <div className="hero">
         <h1 className="hero__title">Curate links</h1>
         <p className="hero__subtitle">Stay organized, always be resourceful.</p>
@@ -15,7 +18,7 @@ export default withSiteData(() => (
       </div>
       <img className="cards" src={logoImg} alt="" style={{width: 150}} />
     </div>
-    <div className="container">
+    <div>
       <div className="pricing">
         <h1 className="pricing__title">Pricing</h1>
         <h2 className="pricing__subtitle">Free of charge at this stage.</h2>

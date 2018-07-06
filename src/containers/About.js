@@ -8,10 +8,10 @@ export default () => (
     <Head>
       <title>About | Cubik</title>
     </Head>
-    <div className="container">
+    <div>
       <h1>This is what we’re all about.</h1>
       <p>React, static sites, performance, speed. It’s the stuff that makes us tick.</p>
       <img src={webdesign} style={{width: 300}} />
     </div>
   </React.Fragment>
-)
+);
