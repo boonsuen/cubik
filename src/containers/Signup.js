@@ -7,7 +7,7 @@ import '../styles/Signup.scss';
 class Signup extends React.Component {
   state = {
     email: '',
-    password: '',
+    password: ''
   }
   createUser = (email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
