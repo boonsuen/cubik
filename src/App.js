@@ -5,24 +5,13 @@ import Routes from "react-static-routes";
 import CubikApp from "./components/CubikApp";
 import "./styles/App.scss";
 import favicon from "./img/favicon.png";
-import firebase from "./firebase/firebase";
+import { getLocalItem } from './localStorage/localStorage';
 
 export const AuthContext = React.createContext({
   auth: false,
+  firebaseAuth: 'initial',
   toggleAuth: () => {}
 });
-
-const loadLocal = () => {
-  try {
-    const localAuth = localStorage.getItem('localAuth');
-    if (localAuth === null) {
-      return false;
-    }
-    return JSON.parse(localAuth);
-  } catch (err) {
-    return undefined
-  }
-}
 
 class App extends React.Component {
   toggleAuth = (auth, firebaseAuth) => {
@@ -35,30 +24,16 @@ class App extends React.Component {
     console.log('toggleAuth');
   }
   state = {
-    auth: loadLocal(),
+    auth: getLocalItem('localAuth'),
     firebaseAuth: 'initial',
     toggleAuth: this.toggleAuth
   }
   componentDidMount() {
     console.log('App mounted');
     console.log(this.state);
-    // if (this.state.localAuth) {
-    //   this.setState({auth: true});
-    // }
   }
   componentDidUpdate(prevProps, prevState) {
     console.log(this.state, prevState);
-    // if (this.state.localAuth !== prevState.localAuth && this.state.localAuth) {
-    //   console.log('lA is true, do something');
-    //   this.setState({
-    //     auth: true
-    //   });
-    // } else if (this.state.localAuth !== prevState.localAuth && !this.state.localAuth) {
-    //   localStorage.setItem('localAuth', false);
-    //   this.setState({
-    //     auth: false
-    //   });
-    // }
   }
   render() {
     const { auth, firebaseAuth } = this.state;
@@ -67,6 +42,21 @@ class App extends React.Component {
         <Head>
           <title>Cubik</title>
           <link rel="icon" href={favicon} />
+          <script>
+          {`
+            document.addEventListener('readystatechange', event => {
+              if (event.target.readyState === "interactive") {
+                const body = document.querySelector('body');
+                body.classList.add('body-show');
+              }
+              else if (event.target.readyState === "complete") {
+                console.log('App completed');
+                const body = document.querySelector('body');
+                body.classList.add('body-show');
+              }
+            });
+          `}
+          </script>
         </Head>
         <Router>
           <Switch>
@@ -83,7 +73,15 @@ class App extends React.Component {
                 );
               }
             }} />
-            {auth && <Route path="/" render={() => <Redirect to="/app" />} />}
+            {auth && 
+              <Route 
+                path="/" 
+                render={() => {
+                  console.log('redirect to app');
+                  return <Redirect to="/app" />
+                }} 
+              />
+            }
             <React.Fragment>
               <div className="nav container">
                 <Link exact to="/" className="logo">Cubik</Link>

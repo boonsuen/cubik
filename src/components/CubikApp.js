@@ -6,9 +6,12 @@ import Content from "./Content";
 import firebase from '../firebase/firebase';
 
 import { AuthContext } from "../App";
+import { getLocalItem } from '../localStorage/localStorage';
 
 class Loading extends React.Component {
   componentDidMount() {
+    console.log('Loading mounted');
+
     const loadFirebaseAuthState = new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -32,7 +35,7 @@ class Loading extends React.Component {
     return (
       <React.Fragment>
         <Head>
-          <title>Loadidng...</title>
+          <title>Loading...</title>
         </Head>
         { this.props.loadingFirebaseAuth ? 'Loading...' : <CubikApp /> }
       </React.Fragment>

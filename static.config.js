@@ -5,7 +5,7 @@ import UglifyJsPlugin from "uglifyjs-webpack-plugin";
 export default {
   siteRoot: "http://localhost:3001",
   getSiteData: () => ({
-    title: "React Static"
+    title: "Cubik"
   }),
   getRoutes: async () => {
     const { data: posts } = await axios.get(
