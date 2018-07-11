@@ -44,17 +44,12 @@ class App extends React.Component {
           <link rel="icon" href={favicon} />
           <script>
           {`
-            document.addEventListener('readystatechange', event => {
-              if (event.target.readyState === "interactive") {
-                const body = document.querySelector('body');
-                body.classList.add('body-show');
-              }
-              else if (event.target.readyState === "complete") {
-                console.log('App completed');
-                const body = document.querySelector('body');
-                body.classList.add('body-show');
-              }
-            });
+            if (JSON.parse(localStorage.getItem('preventFlashLoad')) 
+              && window.location.pathname !== "/app"
+              && window.location.pathname !== "/app/"
+            ) {
+              window.location.pathname = '/app'
+            }
           `}
           </script>
         </Head>

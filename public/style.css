@@ -22,11 +22,6 @@
   font-weight: 700;
 }
 
-body {
-  font-family: "Avenir Next";
-  margin: 0;
-}
-
 .app {
   display: flex;
   height: 100vh;
