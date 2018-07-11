@@ -3,7 +3,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin";
 import UglifyJsPlugin from "uglifyjs-webpack-plugin";
 
 export default {
-  siteRoot: "http://localhost:3001",
+  siteRoot: "https://cubikapp.com",
   getSiteData: () => ({
     title: "Cubik"
   }),
