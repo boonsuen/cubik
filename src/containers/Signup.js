@@ -1,7 +1,7 @@
 import React from 'react'
 import { Head } from 'react-static'
 
-import firebase from '../firebase/firebase';
+import { auth } from '../firebase/firebase';
 import '../styles/Signup.scss';
 
 class Signup extends React.Component {
@@ -10,7 +10,7 @@ class Signup extends React.Component {
     password: ''
   }
   createUser = (email, password) => {
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
