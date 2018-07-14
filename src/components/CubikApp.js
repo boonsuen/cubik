@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Head } from "react-static";
+import { Head } from "react-static";
 import { BrowserRouter } from 'react-router-dom';
 import Sidebar from "./Sidebar";
 import Content from "./Content";
@@ -7,7 +7,6 @@ import Content from "./Content";
 import { auth } from '../firebase/firebase';
 
 import { AuthContext } from "../App";
-import { getLocalItem } from '../localStorage/localStorage';
 
 class Loading extends React.Component {
   componentDidMount() {
@@ -36,7 +35,13 @@ class Loading extends React.Component {
         <Head>
           <title>Loading...</title>
         </Head>
-        { this.props.loadingFirebaseAuth ? 'Loading...' : <CubikApp /> }
+        <div className="loader-ctn">
+          <div className="loader">
+            <div className="loader-items"></div>
+            <div className="loader-items loader__2"></div>
+            <div className="loader-items loader__3"></div>
+          </div>
+        </div>
       </React.Fragment>
     );
   }
@@ -69,10 +74,10 @@ class CubikApp extends React.Component {
                 toggleAuth={toggleAuth}
               /> 
             : (
-                <div className="app">
-                  <Sidebar lists={["JavaScript", "Open Source", "GraphQL"]} />
-                  <Content />
-                </div>
+              <div className="app">
+                <Sidebar lists={["JavaScript", "Open Source", "GraphQL"]} />
+                <Content />
+              </div>
             )
           }
         }

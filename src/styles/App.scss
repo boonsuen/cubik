@@ -259,3 +259,50 @@ button {
     width: 109px;
   }
 }
+
+.loader-ctn {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 40px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+}
+
+.loader-items {
+  width: 20%;
+  background: #21D4FD;
+  animation-name: loader;
+  animation-iteration-count: infinite;
+  animation-duration: 0.6s;
+}
+
+@keyframes loader {
+  0%   {
+    opacity: .2;
+    height: 60%;
+  }
+  50%  {
+    opacity: 1;
+    height: 100%;
+  }
+  100% {
+    opacity: .2;
+    height: 60%;
+  }
+}
+
+.loader__2 {
+  animation-delay: 0.15s;
+}
+
+.loader__3 {
+  animation-delay: 0.3s;
+}
