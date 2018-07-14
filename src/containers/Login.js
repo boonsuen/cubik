@@ -2,7 +2,7 @@ import React from 'react'
 import { Head } from 'react-static'
 
 import { AuthContext } from '../App';
-import firebase from '../firebase/firebase';
+import { auth } from '../firebase/firebase';
 
 class Login extends React.Component {
   state = {
@@ -12,7 +12,7 @@ class Login extends React.Component {
   handleLogin = (e) => {
     e.preventDefault();
 
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+    auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       console.log('signin done!!');
     }).catch(function(error) {
       console.log('catch:', 'signInWithEmailAndPassword');
