@@ -1,21 +1,20 @@
 import React from "react";
-import { Head } from "react-static";
+import { Router, Head } from "react-static";
+import { BrowserRouter } from 'react-router-dom';
 import Sidebar from "./Sidebar";
 import Content from "./Content";
 
-import firebase from '../firebase/firebase';
+import { auth } from '../firebase/firebase';
 
 import { AuthContext } from "../App";
 import { getLocalItem } from '../localStorage/localStorage';
 
 class Loading extends React.Component {
   componentDidMount() {
-    console.log('Loading mounted');
-
     const loadFirebaseAuthState = new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged(user => {
+      auth.onAuthStateChanged(user => {
         if (user) {
-          console.log('App.js logged in', user);
+          console.log('App.js: logged in', user);
           resolve(true);
         } else {
           console.log('App.js: logged out');
@@ -49,12 +48,8 @@ class CubikApp extends React.Component {
       loadingFirebaseAuth: false
     });
   }
-  componentDidMount() {
-    console.log('CubikApp mounted');
-  }
-  componentDidUpdate() {
-    console.log('CubikApp updated');
-  }
+  componentDidMount() {}
+  componentDidUpdate(prevProps, prevState, snapshot) {}
   state = {
     loadingFirebaseAuth: true
   }
@@ -74,10 +69,10 @@ class CubikApp extends React.Component {
                 toggleAuth={toggleAuth}
               /> 
             : (
-              <div className="app">
-                <Sidebar />
-                <Content />
-              </div>
+                <div className="app">
+                  <Sidebar lists={["JavaScript", "Open Source", "GraphQL"]} />
+                  <Content />
+                </div>
             )
           }
         }

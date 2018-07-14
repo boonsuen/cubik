@@ -1,9 +1,11 @@
+import React from 'react';
 import axios from "axios";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 import UglifyJsPlugin from "uglifyjs-webpack-plugin";
 
 export default {
   siteRoot: "https://cubikapp.com",
+  stagingSiteRoot: "http://localhost:3001",
   getSiteData: () => ({
     title: "Cubik"
   }),
@@ -119,5 +121,6 @@ export default {
     ];
 
     return config;
-  }
+  },
+  disableRouteInfoWarning: true
 };

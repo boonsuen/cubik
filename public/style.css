@@ -22,6 +22,40 @@
   font-weight: 700;
 }
 
+.add-new-list input {
+  height: 35px;
+  width: 100%;
+  font-size: 14px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  border: 1px solid #c4c8d7;
+  transition: all 300ms;
+}
+
+.add-new-list input:focus {
+  border-color: #889fff;
+  background-color: #fcfcff;
+  outline: none;
+}
+
+.add-new-list button {
+  color: #fff;
+  height: 35px;
+  font-size: 14px;
+  border-radius: 2px;
+  padding: 0px 15px 0px 15px;
+  background: #7272fc;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.add-new-list button.cancel {
+  background: #e5e5ff;
+  color: #6e6e99;
+}
+
 .app {
   display: flex;
   height: 100vh;
@@ -47,20 +81,19 @@
   align-items: center;
 }
 
-.given-lists p:nth-child(2), .given-lists p:nth-child(3) {
+/* .given-lists p:nth-child(2), .given-lists p:nth-child(3) {
   margin-left: 15px;
-}
+} */
 
 .given-lists img {
   margin-right: 10px;
 }
 
-
-.user-lists {
+.user-lists a {
   color: #8080a2;
 }
 
-.active {
+.user-lists a.active {
   color: #262660;
   position: relative;
 }

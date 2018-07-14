@@ -1,8 +1,10 @@
 import React from "react";
 import { Router, Link, Route, Head, Switch, Redirect } from "react-static";
 import Routes from "react-static-routes";
+import universal from 'react-universal-component'
 
-import CubikApp from "./components/CubikApp";
+const CubikApp = universal(import('./components/CubikApp'));
+// import CubikApp from "./components/CubikApp";
 import "./styles/App.scss";
 import favicon from "./img/favicon.png";
 import { getLocalItem } from './localStorage/localStorage';
@@ -20,6 +22,7 @@ class App extends React.Component {
       firebaseAuth
     }, () => {
       localStorage.setItem('localAuth', this.state.auth);
+      localStorage.setItem('preventFlashLoad', this.state.auth);
     });
     console.log('toggleAuth');
   }
@@ -28,13 +31,8 @@ class App extends React.Component {
     firebaseAuth: 'initial',
     toggleAuth: this.toggleAuth
   }
-  componentDidMount() {
-    console.log('App mounted');
-    console.log(this.state);
-  }
-  componentDidUpdate(prevProps, prevState) {
-    console.log(this.state, prevState);
-  }
+  componentDidMount() {}
+  componentDidUpdate(prevProps, prevState) {}
   render() {
     const { auth, firebaseAuth } = this.state;
     return (
@@ -44,9 +42,10 @@ class App extends React.Component {
           <link rel="icon" href={favicon} />
           <script>
           {`
-            if (JSON.parse(localStorage.getItem('preventFlashLoad')) 
-              && window.location.pathname !== "/app"
-              && window.location.pathname !== "/app/"
+            if (
+              JSON.parse(localStorage.getItem('preventFlashLoad')) 
+              && 
+              !window.location.pathname.startsWith('/app')
             ) {
               window.location.pathname = '/app'
             }
@@ -55,7 +54,7 @@ class App extends React.Component {
         </Head>
         <Router>
           <Switch>
-            <Route path="/app" render={() => {
+            <Route path="/app" render={({match}) => {
               if (firebaseAuth === 'done') {
                 return auth
                   ? <CubikApp />
