@@ -7,18 +7,23 @@ import Shape from '../img/Shape.png';
 import Delete from '../img/Delete.png';
 import { db } from '../firebase/firebase';
 
-class AddNewList extends React.Component {
+class AddList extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('uo');
+    this.props.addList(this.input.value);
   }
   render() {
     return (
-      <form className="add-new-list">
-        <input type="text" placeholder="Name your list" autoFocus/>
+      <form onSubmit={this.handleSubmit} className="add-new-list">
+        <input 
+          type="text" 
+          placeholder="Name your list" 
+          ref={(el) => { this.input = el }}
+          autoFocus
+        />
         <div>
-          <button onClick={this.handleSubmit} type="submit">Add</button>
-          <button className="cancel" onClick={this.props.hideAddNewList} type="button">Cancel</button>
+          <button type="submit">Add</button>
+          <button className="cancel" onClick={this.props.toggleAddList} type="button">Cancel</button>
         </div>
       </form>
     );
@@ -27,7 +32,8 @@ class AddNewList extends React.Component {
 
 export default class Sidebar extends React.Component {
   state = {
-    showAddNewListBtn: false
+    showAddListBtn: false,
+    lists: this.props.lists
   }
   logoutUser = () => {
     firebase.auth().signOut().then(() => {
@@ -35,35 +41,21 @@ export default class Sidebar extends React.Component {
     });
   }
   firebaseDB = () => {
-    // db.collection("users").add({
-    //   first: "Alan",
-    //   middle: "Mathison",
-    //   last: "Turing",
-    //   born: 1912
-    // })
-    // .then(function(docRef) {
-    //     console.log("Document written with ID: ", docRef.id);
-    // })
-    // .catch(function(error) {
-    //     console.error("Error adding document: ", error);
-    // });
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           console.log(doc, doc.id, doc.data());
       });
     });
-    // /users/A7JI929/
-    // linklist/linkgroup/link
-    //                :
   }
-  addNewList = () => {
-    this.setState({
-      showAddNewListBtn: true
-    });
+  addList = (inputValue) => {
+    this.setState((state) => ({
+      showAddList: !state.showAddList,
+      lists: [...state.lists, inputValue]
+    }));
   }
-  hideAddNewList = () => {
+  toggleAddList = () => {
     this.setState({
-      showAddNewListBtn: false
+      showAddList: !this.state.showAddList
     });
   }
   render() {
@@ -76,13 +68,19 @@ export default class Sidebar extends React.Component {
           <p><img src={Delete} />Trash</p>
         </div>
         <div className="user-lists">
-          {this.props.lists.map((listName, index) => 
+          {this.state.lists.map((listName, index) => 
             <p key={index}><Link to={`/app/${listName.toLowerCase()}`}>{listName}</Link></p>
           )}
-          {this.state.showAddNewListBtn && <AddNewList hideAddNewList={this.hideAddNewList} />}
+          {this.state.showAddList
+            && 
+            <AddList 
+              toggleAddList={this.toggleAddList} 
+              addList={this.addList}
+            />
+          }
         </div>
         <div className="sidebar__bottomOperation">
-          <button type="button" onClick={this.addNewList}>+ New List</button>
+          <button type="button" onClick={this.toggleAddList}>+ New List</button>
           <Link to="/app">back</Link>
           <button onClick={this.logoutUser}>Log out</button>
         </div>

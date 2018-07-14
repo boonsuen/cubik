@@ -278,7 +278,8 @@ button {
 
 .loader-items {
   width: 20%;
-  background: #21D4FD;
+  background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
   animation-name: loader;
   animation-iteration-count: infinite;
   animation-duration: 0.6s;
