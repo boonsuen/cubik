@@ -14,8 +14,7 @@ class Home extends React.Component {
           <div className="hero">
             <h1 className="hero__title">Curate links</h1>
             <p className="hero__subtitle">Stay organized, always be resourceful.</p>
-            <Link to="/signup">
-              <div className="hero__button">Get Started</div>
+            <Link to="/signup" className="hero__button">Get Started
             </Link>
           </div>
           <img className="cards" src={logoImg} alt="" style={{width: 150}} />
