@@ -5,7 +5,7 @@ import Home from '../img/Home.png';
 import Read from '../img/Read.png';
 import Shape from '../img/Shape.png';
 import Delete from '../img/Delete.png';
-import { db } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
 
 class AddList extends React.Component {
   handleSubmit = (e) => {
@@ -36,7 +36,7 @@ export default class Sidebar extends React.Component {
     lists: this.props.lists
   }
   logoutUser = () => {
-    firebase.auth().signOut().then(() => {
+    auth.signOut().then(() => {
       console.log('signed out');
     });
   }
