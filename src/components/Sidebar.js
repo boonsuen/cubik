@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-static';
 
-import Home from '../img/Home.png';
-import Read from '../img/Read.png';
-import Shape from '../img/Shape.png';
-import Delete from '../img/Delete.png';
+import Home from '../img/home2.svg';
+import Read from '../img/clock.svg';
+import Boxes from '../img/boxes.svg';
+import Trash from '../img/trash.svg';
 import { auth, db } from '../firebase/firebase';
 
 class AddList extends React.Component {
@@ -62,10 +62,10 @@ export default class Sidebar extends React.Component {
     return (
       <div className="sidebar">
         <div className="given-lists">
-          <p><img src={Home} />All links</p>
-          <p><img src={Read} />Reading List</p>
-          <p><img src={Shape} />Uncategorised</p>
-          <p><img src={Delete} />Trash</p>
+          <p><img src={Home} /><span className="given-lists__text">All links</span></p>
+          <p><img src={Read} /><span className="given-lists__text">Reading List</span></p>
+          <p><img src={Boxes} /><span className="given-lists__text">Uncategorised</span></p>
+          <p><img src={Trash} /><span className="given-lists__text">Trash</span></p>
         </div>
         <div className="user-lists">
           {this.state.lists.map((listName, index) => 

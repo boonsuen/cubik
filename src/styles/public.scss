@@ -1,0 +1,310 @@
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Regular.woff);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Medium.woff);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Demi.woff);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url(/fonts/AvenirNextLTPro-Bold.woff);
+  font-weight: 700;
+}
+
+$primary-color: #108db8;
+$main-font: "Avenir Next", sans-serif;
+
+* {
+  font-family: $main-font;
+}
+
+body {
+  font-family: $main-font;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.body-show {
+  visibility: visible;
+  opacity: 1;
+}
+
+a {
+  text-decoration: none;
+  color: #313131;
+}
+
+h1 {
+  font-size: 40px;
+  color: #102d3e;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  height: 48px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.container {
+  width: 1070px;
+  max-width: 90%;
+  margin: auto;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 700;
+  color: #0d0d59;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+
+  &__items {
+    margin-left: auto;
+    width: initial;
+  }
+
+  &__item {
+    font-size: 20px;
+    font-weight: 500;
+    color: #0d0d59;
+    margin-left: 38px;
+  }
+}
+
+.hero {
+  margin-top: 105px;
+  color: #102d3e;
+
+  &__title {
+    margin: 0 0 6px 0;
+  }
+
+  &__subtitle {
+    font-weight: 400;
+    font-size: 25px;
+    margin: 10px 0 35px 0;
+  }
+
+  &__button {
+    text-align: center;
+    background-color: #939aff;
+    width: 140px;
+    height: 55px;
+    display: inline-block;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding-top: 19px;
+  }
+}
+
+.pricing {
+  margin-top: 150px;
+  margin-bottom: 150px;
+  position: relative;
+
+  &::before {
+    top: -70px;
+    left: -70px;
+    right: -70px;
+    bottom: -70px;
+    position: absolute;
+    content: '';
+    width: 856px;
+    background: #ddfaff;
+    z-index: -1;
+  }
+
+  &__title {
+    color: #0b0093;
+    border-bottom: #c9c2ff 5px solid;
+    display: inline;
+    padding-bottom: 8px;
+  }
+
+  &__subtitle {
+    color: #1c1c1c;
+    font-size: 25px;
+    margin: 35px 0 10px 0;
+    font-weight: 600;
+  }
+
+  &__description {
+    color: #3b3b3b;
+    font-size: 20px;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__button {
+    margin-top: 28px;
+    color: #fff;
+    border-radius: 5px;
+    height: 55px;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 20px 20px 0 20px;
+    background: #3d96ff;
+    font-weight: 600;
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  color: #0d0d59;
+  font-weight: 500;
+  font-size: 20px;
+
+  a {
+    margin-right: 71px;
+  }
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 62px;
+
+  &__heading {
+    margin: 0 0 28px 0;
+    text-align: center;
+  }
+
+  &__subheading {
+    margin: 10px 0 10px 0;
+    display: block;
+    font-size: 16px;
+    color: #535353;
+    font-weight: 400;
+  }
+}
+
+.login-form {
+  &__group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 23px 0;
+  }
+
+  &__label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #102d3e;
+    margin-bottom: 5px;
+  }
+
+  &__input {
+    width: 342px;
+    height: 48px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #c4c8d7;
+    padding-left: 14px;
+    transition: all 300ms;
+    font-size: 14px;
+  }
+
+  &__input:focus {
+    border-color: #889fff;
+    background-color: #fcfcff;
+  }
+
+  &__input:focus, &__input:active {
+    outline: none;
+  }
+
+  &__input::placeholder {
+    color: #d4d4df;
+  }
+
+  &__button {
+    background-color: #8096ff;
+    color: #fff;
+    width: 109px;
+  }
+}
+
+.loader-ctn {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 40px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+}
+
+.loader-items {
+  width: 20%;
+  background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+  animation-name: loader;
+  animation-iteration-count: infinite;
+  animation-duration: 0.6s;
+}
+
+@keyframes loader {
+  0%   {
+    opacity: .2;
+    height: 60%;
+  }
+  50%  {
+    opacity: 1;
+    height: 100%;
+  }
+  100% {
+    opacity: .2;
+    height: 60%;
+  }
+}
+
+.loader__2 {
+  animation-delay: 0.15s;
+}
+
+.loader__3 {
+  animation-delay: 0.3s;
+}

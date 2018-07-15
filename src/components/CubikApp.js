@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import Content from "./Content";
 
 import { auth } from '../firebase/firebase';
+import '../styles/App.scss';
 
 import { AuthContext } from "../App";
 
@@ -62,7 +63,6 @@ class CubikApp extends React.Component {
     return (
       <React.Fragment>
         <Head>
-          <link href="/style.css" rel="stylesheet" />
           <title>App</title>
         </Head>
         <AuthContext.Consumer>

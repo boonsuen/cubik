@@ -5,7 +5,7 @@ import universal from 'react-universal-component'
 
 const CubikApp = universal(import('./components/CubikApp'));
 // import CubikApp from "./components/CubikApp";
-import "./styles/App.scss";
+import "./styles/public.scss";
 import favicon from "./img/favicon.png";
 import { getLocalItem } from './localStorage/localStorage';
 
