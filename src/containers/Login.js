@@ -7,13 +7,15 @@ import { auth } from '../firebase/firebase';
 class Login extends React.Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    authSignin: 'initial'
   }
-  handleLogin = (e) => {
+  handleLogin = (e, toggleAuth) => {
     e.preventDefault();
-
+    this.setState({authSignin: 'loading'});
     auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-      console.log('signin done!!');
+      this.setState({authSignin: 'done'});
+      toggleAuth(true, 'done');
     }).catch(function(error) {
       console.log('catch:', 'signInWithEmailAndPassword');
       const { code: errorCode, message: errorMessage } = error;
@@ -45,8 +47,7 @@ class Login extends React.Component {
               {(toggleAuth) => (
                 <form className="login-form" 
                   onSubmit={(event) => { 
-                    this.handleLogin(event); 
-                    toggleAuth();
+                    this.handleLogin(event, toggleAuth);
                   }}
                 >
                   <div className="login-form__group">

@@ -7,13 +7,21 @@ const CubikApp = universal(import('./components/CubikApp'));
 // import CubikApp from "./components/CubikApp";
 import "./styles/public.scss";
 import favicon from "./img/favicon.png";
-import { getLocalItem } from './localStorage/localStorage';
 
 export const AuthContext = React.createContext({
   auth: false,
   firebaseAuth: 'initial',
   toggleAuth: () => {}
 });
+
+const getLocalAuth = (name) => {
+  try {
+    const item = localStorage.getItem(name);
+    return item !== 'true' || item !== 'false' ? false : JSON.parse(item);
+  } catch (err) {
+    return undefined;
+  }
+}
 
 class App extends React.Component {
   toggleAuth = (auth, firebaseAuth) => {
@@ -27,7 +35,7 @@ class App extends React.Component {
     console.log('toggleAuth');
   }
   state = {
-    auth: getLocalItem('localAuth'),
+    auth: getLocalAuth('localAuth'),
     firebaseAuth: 'initial',
     toggleAuth: this.toggleAuth
   }
@@ -42,12 +50,15 @@ class App extends React.Component {
           <link rel="icon" href={favicon} />
           <script>
           {`
-            if (
-              JSON.parse(localStorage.getItem('preventFlashLoad')) 
-              && 
-              !window.location.pathname.startsWith('/app')
-            ) {
-              window.location.pathname = '/app'
+            const pFL = localStorage.getItem('preventFlashLoad');
+            if (pFL === 'false' || pFL === 'true') {
+              const ppFL = JSON.parse(pFL);
+              if (ppFL && !window.location.pathname.startsWith('/app')) { 
+                window.location.pathname = '/app' 
+              }
+            } else {
+              localStorage.setItem('localAuth', false);
+              localStorage.setItem('preventFlashLoad', false);
             }
           `}
           </script>
@@ -57,8 +68,11 @@ class App extends React.Component {
             <Route path="/app" render={({match}) => {
               if (firebaseAuth === 'done') {
                 return auth
-                  ? <CubikApp />
-                  : <Redirect to="/login" />
+                  ? (
+                    <AuthContext.Provider value={this.state}>
+                      <CubikApp />
+                    </AuthContext.Provider>
+                  ) : <Redirect to="/login" />
               } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {
                 return (
                   <AuthContext.Provider value={this.state}>
@@ -70,10 +84,7 @@ class App extends React.Component {
             {auth && 
               <Route 
                 path="/" 
-                render={() => {
-                  console.log('redirect to app');
-                  return <Redirect to="/app" />
-                }} 
+                render={() => <Redirect to="/app" />} 
               />
             }
             <React.Fragment>

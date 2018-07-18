@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-static';
 
-import Home from '../img/home2.svg';
-import Read from '../img/clock.svg';
-import Boxes from '../img/boxes.svg';
-import Trash from '../img/trash.svg';
+import Home from '../img/icons/home.svg';
+import Clock from '../img/icons/clock.svg';
+import Boxes from '../img/icons/boxes.svg';
+import Trash from '../img/icons/trash.svg';
 import { auth, db } from '../firebase/firebase';
 
 class AddList extends React.Component {
@@ -38,6 +38,7 @@ export default class Sidebar extends React.Component {
   logoutUser = () => {
     auth.signOut().then(() => {
       console.log('signed out');
+      this.props.toggleAuth(false, 'done');
     });
   }
   firebaseDB = () => {
@@ -63,7 +64,7 @@ export default class Sidebar extends React.Component {
       <div className="sidebar">
         <div className="given-lists">
           <p><img src={Home} /><span className="given-lists__text">All links</span></p>
-          <p><img src={Read} /><span className="given-lists__text">Reading List</span></p>
+          <p><img src={Clock} /><span className="given-lists__text">Reading List</span></p>
           <p><img src={Boxes} /><span className="given-lists__text">Uncategorised</span></p>
           <p><img src={Trash} /><span className="given-lists__text">Trash</span></p>
         </div>

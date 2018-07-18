@@ -75,7 +75,10 @@ class CubikApp extends React.Component {
               /> 
             : (
               <div className="app">
-                <Sidebar lists={["JavaScript", "Open Source", "GraphQL"]} />
+                <Sidebar 
+                  lists={["JavaScript", "Open Source", "GraphQL"]} 
+                  toggleAuth={toggleAuth}
+                />
                 <Content />
               </div>
             )
