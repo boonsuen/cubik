@@ -1,29 +1,29 @@
 @font-face {
   font-family: "Avenir Next";
-  src: url(/fonts/AvenirNextLTPro-Regular.woff);
+  src: url(/fonts/AvenirNextLTPro-Regular-subset.woff);
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Avenir Next";
-  src: url(/fonts/AvenirNextLTPro-Medium.woff);
+  src: url(/fonts/AvenirNextLTPro-Medium-subset.woff);
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Avenir Next";
-  src: url(/fonts/AvenirNextLTPro-Demi.woff);
+  src: url(/fonts/AvenirNextLTPro-Demi-subset.woff);
   font-weight: 600;
 }
 
 @font-face {
   font-family: "Avenir Next";
-  src: url(/fonts/AvenirNextLTPro-Bold.woff);
+  src: url(/fonts/AvenirNextLTPro-Bold-subset.woff);
   font-weight: 700;
 }
 
 $primary-color: #108db8;
-$main-font: "Avenir Next", sans-serif;
+$main-font: "Avenir Next", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, sans-serif;
 
 * {
   font-family: $main-font;

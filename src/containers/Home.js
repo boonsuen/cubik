@@ -9,6 +9,14 @@ class Home extends React.Component {
       <React.Fragment>
         <Head>
           <title>Cubik</title>
+          {`
+          <script>
+            window.EMOJICOM_WIDGET = {
+              campaign: "W4mvMmYKKGjSpKpsybwx"
+            };
+          </script>
+          <script src="https://cdn.emojicom.io/embed/widget.js" async></script>
+          `}
         </Head>
         <div className="hero-wrapper">
           <div className="hero">
@@ -19,6 +27,7 @@ class Home extends React.Component {
           </div>
           <img className="cards" src={logoImg} alt="" style={{width: 150}} />
         </div>
+        <div id="emojicom-widget-inline"></div>
         <div>
           <div className="pricing">
             <h1 className="pricing__title">Pricing</h1>

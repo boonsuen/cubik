@@ -11,6 +11,32 @@ class AddList extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.addList(this.input.value);
+    // const docRef = db.collection('users');
+    // docRef.get().then(function(doc) {
+    //   if (doc.exists) {
+    //       console.log("Document data:", doc.data());
+    //   } else {
+    //       // doc.data() will be undefined in this case
+    //       console.log("No such document!");
+    //   }
+    // }).catch(function(error) {
+    //     console.log("Error getting document:", error);
+    // });
+    const currentUser = auth.currentUser;
+    console.log(currentUser);
+    // db.collection('users').doc(currentUser.uid).set({name: 'Boonsuen Oh'})
+
+    // db.collection(`users/${currentUser.uid}/lists`).get().then(function(querySnapshot) {
+    //   querySnapshot.forEach(function(doc) {
+    //     console.log(doc.id, " => ", doc.data());
+    //   });
+    // });
+
+    db.collection(`/users/${currentUser.uid}/lists/4W8P97ezy7tkgvtuSAcu/links`).get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
   }
   render() {
     return (
