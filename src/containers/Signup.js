@@ -1,6 +1,7 @@
 import React from 'react'
 import { Head } from 'react-static'
 
+import { AuthContext } from '../App';
 import { auth } from '../firebase/firebase';
 import '../styles/Signup.scss';
 
@@ -9,12 +10,16 @@ class Signup extends React.Component {
     email: '',
     password: ''
   }
-  createUser = (email, password) => {
-    auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
+  handleSignup = (e, toggleAuth) => {
+    e.preventDefault();
+    auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      toggleAuth(true, 'done');
+    })
+    .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
+      console.log('Signup error', errorCode, errorMessage);
     });
   }
   onEmailChange = (e) => {
@@ -26,7 +31,6 @@ class Signup extends React.Component {
     this.setState(() => ({password}))
   }
   render() {
-    const {email, password} = this.state;
     return (
       <React.Fragment>
         <Head>
@@ -39,27 +43,37 @@ class Signup extends React.Component {
                 Create an account and start collecting links today.
               </small>
             </h1>
-            <form className="login-form" onSubmit={this.createUser(email, password)}>
-              <div className="login-form__group">
-                <label className="login-form__label">Email</label>
-                <input
-                  className="login-form__input" type="email" 
-                  placeholder="you@example.com" spellCheck="false" 
-                  onChange={this.onEmailChange}
-                />
-              </div>
-              <div className="login-form__group">
-                <label className="login-form__label">Password</label>
-                <input 
-                  className="login-form__input" type="password" 
-                  placeholder="Enter your password" spellCheck="false"
-                  onChange={this.onPasswordChange}
-                />
-              </div>
-              <div className="signup-actions">
-                <button className="signup-form__button" type="submit">Create Account</button>
-              </div>
-            </form>
+            <AuthContext.Consumer>
+              {(toggleAuth) => (
+                <form 
+                  className="login-form" 
+                  onSubmit={(e) => { 
+                    this.handleSignup(e, toggleAuth);
+                  }}
+                >
+                  <div className="login-form__group">
+                    <label className="login-form__label">Email</label>
+                    <input
+                      className="login-form__input" type="email" 
+                      placeholder="you@example.com" spellCheck="false" 
+                      onChange={this.onEmailChange}
+                    />
+                  </div>
+                  <div className="login-form__group">
+                    <label className="login-form__label">Password</label>
+                    <input 
+                      className="login-form__input" type="password" 
+                      placeholder="Enter your password" spellCheck="false"
+                      onChange={this.onPasswordChange}
+                    />
+                  </div>
+                  <div className="signup-actions">
+                    <button className="signup-form__button" type="submit">Create Account</button>
+                  </div>
+                </form>
+              )}
+            </AuthContext.Consumer>
+            
           </div>
         </div>
       </React.Fragment>

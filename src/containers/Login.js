@@ -13,10 +13,12 @@ class Login extends React.Component {
   handleLogin = (e, toggleAuth) => {
     e.preventDefault();
     this.setState({authSignin: 'loading'});
-    auth.signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+    auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
       this.setState({authSignin: 'done'});
       toggleAuth(true, 'done');
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
       console.log('catch:', 'signInWithEmailAndPassword');
       const { code: errorCode, message: errorMessage } = error;
       console.log(errorCode, errorMessage);
@@ -24,11 +26,11 @@ class Login extends React.Component {
   }
   onEmailChange = (e) => {
     const email = e.target.value;
-    this.setState({email})
+    this.setState({email});
   }
   onPasswordChange = (e) => {
     const password = e.target.value;
-    this.setState(() => ({password}))
+    this.setState({password});
   }
   render() {
     return (
@@ -45,9 +47,10 @@ class Login extends React.Component {
             </h1>
             <AuthContext.Consumer>
               {(toggleAuth) => (
-                <form className="login-form" 
-                  onSubmit={(event) => { 
-                    this.handleLogin(event, toggleAuth);
+                <form 
+                  className="login-form" 
+                  onSubmit={(e) => { 
+                    this.handleLogin(e, toggleAuth);
                   }}
                 >
                   <div className="login-form__group">

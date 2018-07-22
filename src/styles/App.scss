@@ -121,7 +121,7 @@
   margin-bottom: 20px;
 }
 
-.links-container div {
+.links-container .links {
   width: 510px;
   height: 105px;
   padding: 30px;
@@ -136,7 +136,7 @@
   cursor: pointer;
 }
 
-.links-container div:hover {
+.links-container .links:hover {
   color: #6067f1;
   box-shadow: 0 2px 8px #8f94ff;
   z-index: 1;
