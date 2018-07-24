@@ -1,42 +1,38 @@
 import React from 'react';
 import { Link } from 'react-static';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Home from '../img/icons/home.svg';
 import Clock from '../img/icons/clock.svg';
 import Boxes from '../img/icons/boxes.svg';
 import Trash from '../img/icons/trash.svg';
 import { auth, db } from '../firebase/firebase';
+import { DataContext } from './CubikApp';
+
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  background: isDragging && '#afffd4',
+  padding: '8px 0 8px 0',
+  margin: '0',
+  ...draggableStyle,
+});
+
+const getListStyle = isDraggingOver => ({
+  background: isDraggingOver && '#c1f5ff',
+});
 
 class AddList extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.addList(this.input.value);
-    // const docRef = db.collection('users');
-    // docRef.get().then(function(doc) {
-    //   if (doc.exists) {
-    //       console.log("Document data:", doc.data());
-    //   } else {
-    //       // doc.data() will be undefined in this case
-    //       console.log("No such document!");
-    //   }
-    // }).catch(function(error) {
-    //     console.log("Error getting document:", error);
-    // });
-    const currentUser = auth.currentUser;
-    console.log(currentUser);
-    // db.collection('users').doc(currentUser.uid).set({name: 'Boonsuen Oh'})
-
-    // db.collection(`users/${currentUser.uid}/lists`).get().then(function(querySnapshot) {
-    //   querySnapshot.forEach(function(doc) {
-    //     console.log(doc.id, " => ", doc.data());
-    //   });
-    // });
-
-    db.collection(`/users/${currentUser.uid}/lists/4W8P97ezy7tkgvtuSAcu/links`).get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        console.log(doc.id, " => ", doc.data());
-      });
-    });
   }
   render() {
     return (
@@ -56,7 +52,7 @@ class AddList extends React.Component {
   }
 }
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
   state = {
     showAddListBtn: false,
     lists: this.props.lists
@@ -67,22 +63,49 @@ export default class Sidebar extends React.Component {
       this.props.toggleAuth(false, 'done');
     });
   }
-  firebaseDB = () => {
-    db.collection("users").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          console.log(doc, doc.id, doc.data());
-      });
-    });
-  }
-  addList = (inputValue) => {
+  handleAddList = (inputValue) => {
+    if (!inputValue) return;
     this.setState((state) => ({
       showAddList: !state.showAddList,
-      lists: [...state.lists, inputValue]
-    }));
+      lists: [...state.lists, {title: inputValue, id: 'temporary-id'}]
+    }), () => {
+      db.collection(`users/${this.props.userId}/lists`).add({
+        title: inputValue,
+        order: this.state.lists.length - 1,
+      })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+        this.setState((state) => {
+          return {
+            lists: [
+              ...state.lists.filter(list => list.id !== 'temporary-id'),
+              {title: inputValue, id: docRef.id}
+            ]
+          }
+        });
+      })
+      .catch(function(error) {
+          console.error("Error adding document: ", error);
+      });
+    });
   }
   toggleAddList = () => {
     this.setState({
       showAddList: !this.state.showAddList
+    });
+  }
+  onDragEnd = (result) => {
+    if (!result.destination) return;
+    console.log(result);
+
+    const lists = reorder(
+      this.state.lists,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      lists,
     });
   }
   render() {
@@ -94,18 +117,40 @@ export default class Sidebar extends React.Component {
           <p><img src={Boxes} /><span className="given-lists__text">Uncategorised</span></p>
           <p><img src={Trash} /><span className="given-lists__text">Trash</span></p>
         </div>
-        <div className="user-lists">
-          {this.state.lists.map((listName, index) => 
-            <p key={index}><Link to={`/app/${listName.toLowerCase()}`}>{listName}</Link></p>
-          )}
-          {this.state.showAddList
-            && 
-            <AddList 
-              toggleAddList={this.toggleAddList} 
-              addList={this.addList}
-            />
-          }
-        </div>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                className="user-lists"
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+              >
+                {this.state.lists.map((list, index) => (
+                  <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
+                    {(provided, snapshot) => (
+                      <p
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          provided.draggableProps.style
+                        )}
+                      ><Link to={`/app/${list.id}`}>{list.title}</Link></p>
+                    )}
+                  </Draggable>
+                ))}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {this.state.showAddList
+          && 
+          <AddList 
+            toggleAddList={this.toggleAddList} 
+            addList={this.handleAddList}
+          />
+        }
         <div className="sidebar__bottomOperation">
           <button type="button" onClick={this.toggleAddList}>+ New List</button>
           <Link to="/app">back</Link>
@@ -115,3 +160,9 @@ export default class Sidebar extends React.Component {
     );
   }
 }
+
+export default props => (
+  <DataContext.Consumer>
+    {data => <Sidebar {...props} lists={data.lists} userId={data.user.id} />}
+  </DataContext.Consumer>
+);

@@ -4,7 +4,6 @@ import Routes from "react-static-routes";
 import universal from 'react-universal-component'
 
 const CubikApp = universal(import('./components/CubikApp'));
-// import CubikApp from "./components/CubikApp";
 import "./styles/public.scss";
 import favicon from "./img/favicon.png";
 
@@ -52,8 +51,7 @@ class App extends React.Component {
           {`
             const pFL = localStorage.getItem('preventFlashLoad');
             if (pFL === 'false' || pFL === 'true') {
-              const ppFL = JSON.parse(pFL);
-              if (ppFL && !window.location.pathname.startsWith('/app')) { 
+              if (JSON.parse(pFL) && !window.location.pathname.startsWith('/app')) { 
                 window.location.pathname = '/app' 
               }
             } else {
@@ -91,18 +89,10 @@ class App extends React.Component {
               <div className="nav container">
                 <Link exact to="/" className="logo">Cubik</Link>
                 <nav className="nav__items">
-                  <Link className="nav__item" to="/about">
-                    About
-                  </Link>
-                  <Link className="nav__item" to="/blog">
-                    Blog
-                  </Link>
-                  <Link className="nav__item" to="/login">
-                    Login
-                  </Link>
-                  <Link className="nav__item" to="/signup">
-                    Signup
-                  </Link>
+                  <Link className="nav__item" to="/about">About</Link>
+                  <Link className="nav__item" to="/blog">Blog</Link>
+                  <Link className="nav__item" to="/login">Login</Link>
+                  <Link className="nav__item" to="/signup">Signup</Link>
                 </nav>
               </div>
               <div className="container">
