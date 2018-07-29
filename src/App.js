@@ -63,7 +63,7 @@ class App extends React.Component {
         </Head>
         <Router>
           <Switch>
-            <Route path="/app" render={({match}) => {
+            <Route path="/app" render={({location}) => {
               if (firebaseAuth === 'done') {
                 return auth
                   ? (
@@ -74,7 +74,7 @@ class App extends React.Component {
               } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {
                 return (
                   <AuthContext.Provider value={this.state}>
-                    <CubikApp />
+                    <CubikApp currentListId={location.pathname.replace(/\/app\//, '')} />
                   </AuthContext.Provider>
                 );
               }

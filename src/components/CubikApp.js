@@ -46,12 +46,27 @@ class Loading extends React.Component {
           status = 'verified';
           console.log('App.js: logged in', user);
           db.collection(`/users/${user.uid}/lists`).get().then((querySnapshot) => {
-            resolve({auth: true, id: user.uid});
             let lists = [];
             querySnapshot.forEach((doc) => {
               lists.push({...doc.data(), id: doc.id});
             });
-            this.props.initLists(lists);
+            if (this.props.currentListId !== '/app') {
+              let sublistIds;
+              db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists`).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  console.log(doc.id, doc.data());
+                  db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists/${doc.id}/links`).get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                      console.log(doc.id, doc.data());
+                    });
+                    resolve({auth: true, id: user.uid, lists});
+                  });
+                });
+                
+              });
+            } else {
+              resolve({auth: true, id: user.uid, lists});
+            }
           });
         } else {
           status = 'verified';
@@ -63,7 +78,7 @@ class Loading extends React.Component {
     });
 
     loadFirebaseAuthState.then((user => {
-      this.props.doneLoadingFirebaseAuth(!user.auth, user.id);
+      this.props.doneLoadingFirebaseAuth(!user.auth, user.id, user.lists);
       this.props.toggleAuth(user.auth, 'done');
     }));
   }
@@ -86,17 +101,12 @@ class Loading extends React.Component {
 }
 
 class CubikApp extends React.Component {
-  doneLoadingFirebaseAuth = (auth, userId) => {
+  doneLoadingFirebaseAuth = (auth, userId, lists) => {
     this.setState({
       loadingFirebaseAuth: auth,
       user: {
         id: userId
-      }
-    });
-  }
-  initLists = (lists) => {
-    console.log('lists', lists);
-    this.setState({
+      },
       lists: lists.sort((a, b) => a.order - b.order)
     });
   }
@@ -138,9 +148,9 @@ class CubikApp extends React.Component {
           return this.state.loadingFirebaseAuth 
             ? <Loading 
                 loadingFirebaseAuth={this.state.loadingFirebaseAuth}
-                initLists={this.initLists} 
                 doneLoadingFirebaseAuth={this.doneLoadingFirebaseAuth}
                 toggleAuth={toggleAuth}
+                currentListId={this.props.currentListId}
               /> 
             : (
               <DataContext.Provider value={{
@@ -151,9 +161,7 @@ class CubikApp extends React.Component {
                 currentList: this.state.currentList
               }}>             
                 <div className="app">
-                  <Sidebar
-                    toggleAuth={toggleAuth}
-                  />
+                  <Sidebar toggleAuth={toggleAuth} />
                   <Content />
                 </div> 
               </DataContext.Provider>

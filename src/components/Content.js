@@ -1,25 +1,27 @@
 import React from 'react';
 import { Route } from 'react-static';
 import Sublist from './Sublist';
+import AllLinks from './AllLinks';
 
 import { DataContext } from './CubikApp';
 
 class Content extends React.Component {
-  state = {
-    
-  }
   render () {
     return (
       <div className="content">
-        <h1>{this.props.currentList.title}</h1>
-        <div className="links-group-column-manager">
-          <Route path="/app/javascript" render={({match}) => <Sublist title={match.url} links={[]} />} />
-          <Route path="/app/graphql" render={({match}) => <Sublist title={match.url} links={[]} />} />
-          <Route path="/app/serverless" render={({match}) => <Sublist title={match.url} links={[]} />} />
-          {this.props.currentList.sublists.map((sublist) => (
-            <Sublist key={sublist.id} title={sublist.title} links={sublist.links} />
-          ))}
-        </div>
+        <Route path="/app" render={() => <AllLinks currentList={this.props.currentList} />} exact />
+        {this.props.lists.map((list) => (
+          <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
+            <React.Fragment>
+              <h1>{list.title} {match.url.replace(/\/app\//, '')}</h1>
+              <div className="links-group-column-manager">
+                {this.props.currentList.sublists.map((sublist) => (
+                  <Sublist key={sublist.id} title={sublist.title} links={sublist.links} />
+                ))}
+              </div>
+            </React.Fragment>
+          )} />
+        ))}
       </div>
     );
   }
@@ -27,6 +29,6 @@ class Content extends React.Component {
 
 export default props => (
   <DataContext.Consumer>
-    {data => <Content {...props} currentList={data.currentList} />}
+    {data => <Content {...props} lists={data.lists} currentList={data.currentList} />}
   </DataContext.Consumer>
 );

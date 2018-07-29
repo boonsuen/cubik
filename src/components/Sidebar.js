@@ -19,14 +19,13 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  background: isDragging && '#afffd4',
-  padding: '8px 0 8px 0',
+  background: isDragging && '#efffef',
   margin: '0',
   ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver && '#c1f5ff',
+  background: isDraggingOver && '#ffefef',
 });
 
 class AddList extends React.Component {
@@ -56,6 +55,9 @@ class Sidebar extends React.Component {
   state = {
     showAddListBtn: false,
     lists: this.props.lists
+  }
+  componentDidUpdate() {
+    console.log('siderbar updated');
   }
   logoutUser = () => {
     auth.signOut().then(() => {
