@@ -9,7 +9,7 @@ class Content extends React.Component {
   render () {
     return (
       <div className="content">
-        <Route path="/app" render={() => <AllLinks currentList={this.props.currentList} />} exact />
+        <Route path="/app" render={() => <AllLinks allLinks={this.props.allLinks} />} exact />
         {this.props.lists.map((list) => (
           <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
             <React.Fragment>
@@ -29,6 +29,13 @@ class Content extends React.Component {
 
 export default props => (
   <DataContext.Consumer>
-    {data => <Content {...props} lists={data.lists} currentList={data.currentList} />}
+    {data => (
+      <Content 
+        {...props} 
+        lists={data.lists} 
+        currentList={data.currentList} 
+        allLinks={data.allLinks}
+      />
+    )}
   </DataContext.Consumer>
 );

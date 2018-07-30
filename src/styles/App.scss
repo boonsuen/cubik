@@ -58,6 +58,10 @@
   align-items: center;
 }
 
+.given-lists a {
+  color: #56578c;
+}
+
 .given-lists .given-lists__text {
   margin-top: 5px;
   display: inline-block;
@@ -121,6 +125,7 @@
   flex-direction: column-reverse;
   box-shadow: 0 2px 8px #ecedff;
   margin-bottom: 20px;
+  background: white;
 }
 
 .links-container .links {

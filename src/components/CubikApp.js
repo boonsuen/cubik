@@ -51,7 +51,12 @@ class Loading extends React.Component {
               lists.push({...doc.data(), id: doc.id});
             });
             if (this.props.currentListId !== '/app') {
-              let sublistIds;
+              // db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/links`).get().then((querySnapshot) => {
+              //   querySnapshot.forEach((doc) => {
+              //     console.log(doc.id, doc.data());
+              //   });
+              //   resolve({auth: true, id: user.uid, lists});
+              // });
               db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists`).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                   console.log(doc.id, doc.data());
@@ -61,8 +66,7 @@ class Loading extends React.Component {
                     });
                     resolve({auth: true, id: user.uid, lists});
                   });
-                });
-                
+                });                
               });
             } else {
               resolve({auth: true, id: user.uid, lists});
@@ -119,19 +123,36 @@ class CubikApp extends React.Component {
     },
     lists: [],
     currentList: {
-      id: 'dheuhe',
+      id: 'dd',
       title: 'GraphQL',
       ungrouppedLinks: [{}],
       sublists: [{
-        id: 'jiajia',
+        id: 'ee',
         title: 'Learn GraphQL',
         links: [{
-          id: 'cnene',
+          id: 'eee',
           title: 'An Introduction to GraphQL',
           url: 'https://flaviocopes.com/graphql-guide/'
         }, {
-          id: 'dede',
+          id: 'eeee',
           title: 'GraphQL: Everything You Need to Know',
+          url: 'https://medium.com/@weblab_tech/graphql-everything-you-need-to-know-58756ff253d8'
+        }]
+      }]
+    },
+    allLinks: {
+      id: 'allLinks',
+      ungrouppedLinks: [{}],
+      sublists: [{
+        id: 'allLinksSublist',
+        title: 'Home GraphQL',
+        links: [{
+          id: 'cnene',
+          title: 'Introduction to GraphQL',
+          url: 'https://flaviocopes.com/graphql-guide/'
+        }, {
+          id: 'dede',
+          title: 'Everything You Need to Know about GraphQL',
           url: 'https://medium.com/@weblab_tech/graphql-everything-you-need-to-know-58756ff253d8'
         }]
       }]
@@ -158,7 +179,8 @@ class CubikApp extends React.Component {
                   id: this.state.user.id
                 },
                 lists: this.state.lists, 
-                currentList: this.state.currentList
+                currentList: this.state.currentList,
+                allLinks: this.state.allLinks
               }}>             
                 <div className="app">
                   <Sidebar toggleAuth={toggleAuth} />
