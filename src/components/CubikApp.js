@@ -51,23 +51,23 @@ class Loading extends React.Component {
               lists.push({...doc.data(), id: doc.id});
             });
             if (this.props.currentListId !== '/app') {
-              // db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/links`).get().then((querySnapshot) => {
-              //   querySnapshot.forEach((doc) => {
-              //     console.log(doc.id, doc.data());
-              //   });
-              //   resolve({auth: true, id: user.uid, lists});
-              // });
-              db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists`).get().then((querySnapshot) => {
+              db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/links`).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                   console.log(doc.id, doc.data());
-                  db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists/${doc.id}/links`).get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                      console.log(doc.id, doc.data());
-                    });
-                    resolve({auth: true, id: user.uid, lists});
-                  });
-                });                
+                });
+                resolve({auth: true, id: user.uid, lists});
               });
+              // db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists`).get().then((querySnapshot) => {
+              //   querySnapshot.forEach((doc) => {
+              //     console.log(doc.id, doc.data());
+              //     db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists/${doc.id}/links`).get().then((querySnapshot) => {
+              //       querySnapshot.forEach((doc) => {
+              //         console.log(doc.id, doc.data());
+              //       });
+              //       resolve({auth: true, id: user.uid, lists});
+              //     });
+              //   });                
+              // });
             } else {
               resolve({auth: true, id: user.uid, lists});
             }
