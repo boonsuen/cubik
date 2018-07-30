@@ -114,18 +114,18 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar">
         <div className="given-lists">
-          <p><Link to="/app">
-              <img src={Home} /><span className="given-lists__text">All links</span>
-          </Link></p>
-          <p><Link to="/app">
-              <img src={Clock} /><span className="given-lists__text">Reading List</span>
-          </Link></p>
-          <p><Link to="/app">
-              <img src={Boxes} /><span className="given-lists__text">Uncategorised</span>
-          </Link></p>
-          <p><Link to="/app">
-              <img src={Trash} /><span className="given-lists__text">Trash</span>
-          </Link></p>
+          <Link to="/app">
+            <img src={Home} /><span className="given-lists__text">All links</span>
+          </Link>
+          <Link to="/app">
+            <img src={Clock} /><span className="given-lists__text">Reading List</span>
+          </Link>
+          <Link to="/app">
+            <img src={Boxes} /><span className="given-lists__text">Uncategorised</span>
+          </Link>
+          <Link to="/app">
+            <img src={Trash} /><span className="given-lists__text">Trash</span>
+          </Link>
         </div>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="droppable">
