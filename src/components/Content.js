@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-static';
 import Sublist from './Sublist';
 import AllLinks from './AllLinks';
+import Links from './Links';
 
 import { DataContext } from './CubikApp';
 
@@ -14,11 +15,20 @@ class Content extends React.Component {
           <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
             <React.Fragment>
               <h1>{list.title} {match.url.replace(/\/app\//, '')}</h1>
+              <Links links={this.props.ungrouppedLinks} />
+              
               <div className="links-group-column-manager">
-                {this.props.currentList.sublists.map((sublist) => (
-                  <Sublist key={sublist.id} title={sublist.title} links={sublist.links} />
-                ))}
+                {Object.keys(this.props.sublistLinks).map((item, index) => (
+                
+                  <Sublist 
+                    key={`SublistLinks-${index}`} 
+                    title={item} 
+                    links={this.props.sublistLinks[item]} 
+                  />
+              ))}
               </div>
+
+
             </React.Fragment>
           )} />
         ))}
@@ -29,13 +39,31 @@ class Content extends React.Component {
 
 export default props => (
   <DataContext.Consumer>
-    {data => (
-      <Content 
-        {...props} 
-        lists={data.lists} 
-        currentList={data.currentList} 
-        allLinks={data.allLinks}
-      />
-    )}
+    {data => {
+      if (data.links) {
+        const sublistLinks = data.links.filter(link => link.sublist);
+        return <Content 
+          {...props} 
+          lists={data.lists} 
+          allLinks={data.allLinks}
+          ungrouppedLinks={data.links.filter(link => !link.sublist)} 
+          sublistLinks={sublistLinks.reduce((accumulator, currentValue, currentIndex) => {
+            if (accumulator[currentValue.sublist]) {
+              accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
+            } else {
+              accumulator[currentValue.sublist] = [];
+              accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
+            }
+            return accumulator;
+          }, {})}
+        />
+      } else {
+        return <Content 
+          {...props} 
+          lists={data.lists} 
+          allLinks={data.allLinks}
+        />
+      }
+    }}
   </DataContext.Consumer>
 );

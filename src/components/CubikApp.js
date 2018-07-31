@@ -1,32 +1,5 @@
-// state = {
-//   loadingFirebaseAuth: true,
-//   user: {
-//     id: ''
-//   },
-//   lists: [],
-//   currentList: {
-//     id: 'dheuhe',
-//     title: 'GraphQL',
-//     ungrouppedLinks: [{}],
-//     sublists: [{
-//       id: 'jiajia',
-//       title: 'Learn GraphQL',
-//       links: [{
-//         id: 'cnene',
-//         title: 'An Introduction to GraphQL',
-//         url: 'https://flaviocopes.com/graphql-guide/'
-//       }, {
-//         id: 'dede',
-//         title: 'GraphQL: Everything You Need to Know',
-//         url: 'https://medium.com/@weblab_tech/graphql-everything-you-need-to-know-58756ff253d8'
-//       }]
-//     }]
-//   }
-// }
-
 import React from "react";
 import { Head } from "react-static";
-import { BrowserRouter } from 'react-router-dom';
 import Sidebar from "./Sidebar";
 import Content from "./Content";
 
@@ -50,24 +23,15 @@ class Loading extends React.Component {
             querySnapshot.forEach((doc) => {
               lists.push({...doc.data(), id: doc.id});
             });
-            if (this.props.currentListId !== '/app') {
-              db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/links`).get().then((querySnapshot) => {
+            if (this.props.routeListId !== '/app') {
+              db.collection(`/users/${user.uid}/lists/${this.props.routeListId}/links`).get().then((querySnapshot) => {
+                let links = [];
                 querySnapshot.forEach((doc) => {
                   console.log(doc.id, doc.data());
+                  links.push({...doc.data(), id: doc.id});
                 });
-                resolve({auth: true, id: user.uid, lists});
+                resolve({auth: true, id: user.uid, lists, links});
               });
-              // db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists`).get().then((querySnapshot) => {
-              //   querySnapshot.forEach((doc) => {
-              //     console.log(doc.id, doc.data());
-              //     db.collection(`/users/${user.uid}/lists/${this.props.currentListId}/sublists/${doc.id}/links`).get().then((querySnapshot) => {
-              //       querySnapshot.forEach((doc) => {
-              //         console.log(doc.id, doc.data());
-              //       });
-              //       resolve({auth: true, id: user.uid, lists});
-              //     });
-              //   });                
-              // });
             } else {
               resolve({auth: true, id: user.uid, lists});
             }
@@ -82,7 +46,7 @@ class Loading extends React.Component {
     });
 
     loadFirebaseAuthState.then((user => {
-      this.props.doneLoadingFirebaseAuth(!user.auth, user.id, user.lists);
+      this.props.doneLoadingFirebaseAuth(!user.auth, user.id, user.lists, user.links);
       this.props.toggleAuth(user.auth, 'done');
     }));
   }
@@ -105,13 +69,14 @@ class Loading extends React.Component {
 }
 
 class CubikApp extends React.Component {
-  doneLoadingFirebaseAuth = (auth, userId, lists) => {
+  doneLoadingFirebaseAuth = (auth, userId, lists, links) => {
     this.setState({
       loadingFirebaseAuth: auth,
       user: {
         id: userId
       },
-      lists: lists.sort((a, b) => a.order - b.order)
+      lists: lists.sort((a, b) => a.order - b.order),
+      links
     });
   }
   componentDidMount() {}
@@ -122,24 +87,7 @@ class CubikApp extends React.Component {
       id: ''
     },
     lists: [],
-    currentList: {
-      id: 'dd',
-      title: 'GraphQL',
-      ungrouppedLinks: [{}],
-      sublists: [{
-        id: 'ee',
-        title: 'Learn GraphQL',
-        links: [{
-          id: 'eee',
-          title: 'An Introduction to GraphQL',
-          url: 'https://flaviocopes.com/graphql-guide/'
-        }, {
-          id: 'eeee',
-          title: 'GraphQL: Everything You Need to Know',
-          url: 'https://medium.com/@weblab_tech/graphql-everything-you-need-to-know-58756ff253d8'
-        }]
-      }]
-    },
+    links: [],
     allLinks: {
       id: 'allLinks',
       ungrouppedLinks: [{}],
@@ -171,7 +119,7 @@ class CubikApp extends React.Component {
                 loadingFirebaseAuth={this.state.loadingFirebaseAuth}
                 doneLoadingFirebaseAuth={this.doneLoadingFirebaseAuth}
                 toggleAuth={toggleAuth}
-                currentListId={this.props.currentListId}
+                routeListId={this.props.routeListId}
               /> 
             : (
               <DataContext.Provider value={{
@@ -179,7 +127,7 @@ class CubikApp extends React.Component {
                   id: this.state.user.id
                 },
                 lists: this.state.lists, 
-                currentList: this.state.currentList,
+                links: this.state.links,
                 allLinks: this.state.allLinks
               }}>             
                 <div className="app">
