@@ -29,8 +29,8 @@
 $primary-color: #108db8;
 $main-font: "Avenir Next", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, sans-serif;
 
-input, button {
-  font-family: $main-font;
+html, #root {
+  height: 100%;
 }
 
 body {
@@ -39,11 +39,11 @@ body {
   font-size: 16px;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
-.body-show {
-  visibility: visible;
-  opacity: 1;
+input, button {
+  font-family: $main-font;
 }
 
 a {
@@ -266,7 +266,7 @@ button {
 }
 
 .loader-ctn {
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
