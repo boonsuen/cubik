@@ -1,5 +1,5 @@
 import React from 'react'
-import { Head } from 'react-static'
+import { Head, Link } from 'react-static'
 
 import { AuthContext } from '../App';
 import { auth } from '../firebase/firebase';
@@ -69,8 +69,12 @@ class Login extends React.Component {
                       onChange={this.onPasswordChange}
                     />
                   </div>
-                  <div className="login-login__actions">
+                  <div className="login__actions">
                     <button className="login-form__button" type="submit">Log In</button>
+                    <div className="login-form__other-links">
+                      <Link to="/signup">Don't have an account?</Link>
+                      <Link to="/amnesia">Forgot password?</Link>
+                    </div>
                   </div>
                 </form>
               )}

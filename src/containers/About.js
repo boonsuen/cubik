@@ -1,5 +1,5 @@
-import React from 'react'
-import { Head } from 'react-static'
+import React from 'react';
+import { Head } from 'react-static';
 
 import webdesign from '../img/webdesign.png'
 

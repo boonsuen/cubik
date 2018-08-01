@@ -45,6 +45,10 @@ export default {
         component: "src/containers/Signup"
       },
       {
+        path: "/amnesia",
+        component: "src/containers/Amnesia"
+      },
+      {
         path: "/app",
         component: "src/components/CubikApp"
       },
