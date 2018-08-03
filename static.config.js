@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from "axios";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 import UglifyJsPlugin from "uglifyjs-webpack-plugin";

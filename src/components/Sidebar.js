@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-static';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+import { auth } from '../firebase/auth';
+import { db } from '../firebase/db';
+import { DataContext } from './CubikApp';
+
 import Home from '../img/icons/home.svg';
 import Clock from '../img/icons/clock.svg';
 import Boxes from '../img/icons/boxes.svg';
 import Trash from '../img/icons/trash.svg';
-import { auth, db } from '../firebase/firebase';
-import { DataContext } from './CubikApp';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -117,7 +119,7 @@ class Sidebar extends React.Component {
           <Link to="/app">
             <img src={Home} /><span className="given-lists__text">All links</span>
           </Link>
-          <Link to="/app">
+          <Link to="/app/reading-list">
             <img src={Clock} /><span className="given-lists__text">Reading List</span>
           </Link>
           <Link to="/app">

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Head } from 'react-static'
 
-import { auth } from '../firebase/firebase';
+import { auth } from '../firebase/auth';
 
 class Amnesia extends React.Component {
   state = {

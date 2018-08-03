@@ -1,31 +1,25 @@
 import React from 'react';
 import { withSiteData, Link, Head } from 'react-static';
 
-import logoImg from '../img/logo.png';
-
 class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
         <Head>
           <title>Cubik</title>
-          {`
-          <script>
-            window.EMOJICOM_WIDGET = {
-              campaign: "W4mvMmYKKGjSpKpsybwx"
-            };
-          </script>
-          <script src="https://cdn.emojicom.io/embed/widget.js" async></script>
-          `}
         </Head>
         <div className="hero-wrapper">
           <div className="hero">
             <h1 className="hero__title">Curate links</h1>
             <p className="hero__subtitle">Stay organized, always be resourceful.</p>
-            <Link to="/signup" className="hero__button">Get Started
-            </Link>
+            <Link to="/signup" className="hero__button">Get Started</Link>
           </div>
-          <img className="cards" src={logoImg} alt="" style={{width: 150}} />
+          <div className="cards">
+            <div className="cards__item1">Medium</div>
+            <div className="cards__item2">Blogs</div>
+            <div className="cards__item3">Tutorials</div>
+            <div className="cards__item4">Videos</div>
+          </div>
         </div>
         <div id="emojicom-widget-inline"></div>
         <div>

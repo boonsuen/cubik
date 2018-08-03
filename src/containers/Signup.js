@@ -2,7 +2,7 @@ import React from 'react'
 import { Head } from 'react-static'
 
 import { AuthContext } from '../App';
-import { auth } from '../firebase/firebase';
+import { auth } from '../firebase/auth';
 import '../styles/Signup.scss';
 
 class Signup extends React.Component {

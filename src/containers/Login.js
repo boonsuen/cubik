@@ -2,7 +2,7 @@ import React from 'react'
 import { Head, Link } from 'react-static'
 
 import { AuthContext } from '../App';
-import { auth } from '../firebase/firebase';
+import { auth } from '../firebase/auth';
 
 class Login extends React.Component {
   state = {

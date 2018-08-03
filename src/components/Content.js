@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-static';
 import Sublist from './Sublist';
 import AllLinks from './AllLinks';
+import ReadingList from './ReadingList';
 import Links from './Links';
 
 import { DataContext } from './CubikApp';
@@ -11,6 +12,7 @@ class Content extends React.Component {
     return (
       <div className="content">
         <Route path="/app" render={() => <AllLinks allLinks={this.props.allLinks} />} exact />
+        <Route path="/app/reading-list" render={() => <ReadingList allLinks={this.props.allLinks} exact />} />
         {this.props.lists.map((list) => (
           <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
             <React.Fragment>
