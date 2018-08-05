@@ -18,7 +18,12 @@ class Loading extends React.Component {
         let status = 'unverified';
         if (user) {
           status = 'verified';
-          console.log('App.js: logged in', user);
+          console.log(
+            `%c AUTH %c Logged in `,
+            "background: #00d334; color: #fff; padding: 3px;",
+            "background: #7cffc0; padding: 3px;",
+            user
+          );
           db.collection(`/users/${user.uid}/lists`).get().then((querySnapshot) => {
             let lists = [];
             querySnapshot.forEach((doc) => {

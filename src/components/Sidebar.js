@@ -122,10 +122,10 @@ class Sidebar extends React.Component {
           <Link to="/app/reading-list">
             <img src={Clock} /><span className="given-lists__text">Reading List</span>
           </Link>
-          <Link to="/app">
+          <Link to="/app/uncategorised">
             <img src={Boxes} /><span className="given-lists__text">Uncategorised</span>
           </Link>
-          <Link to="/app">
+          <Link to="/app/trash">
             <img src={Trash} /><span className="given-lists__text">Trash</span>
           </Link>
         </div>

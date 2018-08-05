@@ -1,6 +1,8 @@
 import React from 'react';
 import { withSiteData, Link, Head } from 'react-static';
 
+import undraw from '../img/undraw.svg';
+
 class Home extends React.Component {
   render() {
     return (
@@ -10,18 +12,12 @@ class Home extends React.Component {
         </Head>
         <div className="hero-wrapper">
           <div className="hero">
-            <h1 className="hero__title">Curate links</h1>
+            <h1 className="hero__title">Curate & save links</h1>
             <p className="hero__subtitle">Stay organized, always be resourceful.</p>
             <Link to="/signup" className="hero__button">Get Started</Link>
           </div>
-          <div className="cards">
-            <div className="cards__item1">Medium</div>
-            <div className="cards__item2">Blogs</div>
-            <div className="cards__item3">Tutorials</div>
-            <div className="cards__item4">Videos</div>
-          </div>
+          <img className="hero__img" src={undraw} />
         </div>
-        <div id="emojicom-widget-inline"></div>
         <div>
           <div className="pricing">
             <h1 className="pricing__title">Pricing</h1>

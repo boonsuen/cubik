@@ -3,6 +3,8 @@ import { Route } from 'react-static';
 import Sublist from './Sublist';
 import AllLinks from './AllLinks';
 import ReadingList from './ReadingList';
+import Uncategorised from './Uncategorised';
+import Trash from './Trash';
 import Links from './Links';
 
 import { DataContext } from './CubikApp';
@@ -12,13 +14,14 @@ class Content extends React.Component {
     return (
       <div className="content">
         <Route path="/app" render={() => <AllLinks allLinks={this.props.allLinks} />} exact />
-        <Route path="/app/reading-list" render={() => <ReadingList allLinks={this.props.allLinks} exact />} />
+        <Route path="/app/reading-list" render={() => <ReadingList allLinks={this.props.allLinks} exact />} />    
+        <Route path="/app/uncategorised" render={() => <Uncategorised allLinks={this.props.allLinks} exact />} />    
+        <Route path="/app/trash" render={() => <Trash allLinks={this.props.allLinks} exact />} />    
         {this.props.lists.map((list) => (
           <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
             <React.Fragment>
               <h1>{list.title} {match.url.replace(/\/app\//, '')}</h1>
-              <Links links={this.props.ungrouppedLinks} />
-              
+              <Links links={this.props.ungrouppedLinks} />              
               <div className="links-group-column-manager">
                 {Object.keys(this.props.sublistLinks).map((item, index) => (
                 
@@ -29,8 +32,6 @@ class Content extends React.Component {
                   />
               ))}
               </div>
-
-
             </React.Fragment>
           )} />
         ))}

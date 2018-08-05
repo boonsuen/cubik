@@ -138,6 +138,13 @@ button {
     box-sizing: border-box;
     padding-top: 19px;
   }
+
+  &__img {
+    margin: 82px 100px 0 50px;
+    max-width: 175px;
+    width: 20%;
+    align-self: center;
+  }
 }
 
 .cards {
