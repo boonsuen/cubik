@@ -18,19 +18,17 @@ class Home extends React.Component {
           </div>
           <img className="hero__img" src={undraw} />
         </div>
-        <div>
-          <div className="pricing">
-            <h1 className="pricing__title">Pricing</h1>
-            <h2 className="pricing__subtitle">Free of charge at this stage.</h2>
-            <p className="pricing__description">
-              If you do find Cubik is to be useful, feel free to contribute a small amount of<br />
-              money to keep it running. The money will be used to cover the costs of<br />
-              hosting and data storage.
-            </p>
-            <a href="/pay">
-              <div className="pricing__button">Buy me a coffee</div>
-            </a>
-          </div>
+        <div className="pricing">
+          <h1 className="pricing__title">Pricing</h1>
+          <h2 className="pricing__subtitle">Free of charge at this stage.</h2>
+          <p className="pricing__description">
+            If you do find Cubik is to be useful, feel free to contribute a small amount of<br />
+            money to keep it running. The money will be used to cover the costs of<br />
+            hosting and data storage.
+          </p>
+          <a href="/pay">
+            <div className="pricing__button">Buy me a coffee</div>
+          </a>
         </div>
       </React.Fragment>
     );

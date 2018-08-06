@@ -1,11 +1,18 @@
-import React from "react";
-import { Router, Link, Route, Head, Switch, Redirect } from "react-static";
-import Routes from "react-static-routes";
-import universal from 'react-universal-component'
+import React from 'react';
+import { 
+  Router, 
+  Link, 
+  Route, 
+  Head, 
+  Switch, 
+  Redirect 
+} from 'react-static';
+import Routes from 'react-static-routes';
+import universal from 'react-universal-component';
 
 const CubikApp = universal(import('./components/CubikApp'));
-import "./styles/public.scss";
-import favicon from "./img/favicon.png";
+import './styles/public.scss';
+import favicon from './img/favicon.png';
 
 export const AuthContext = React.createContext({
   auth: false,

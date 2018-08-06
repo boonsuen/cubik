@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head } from 'react-static';
 
-import webdesign from '../img/webdesign.png'
+import webdesign from '../img/webdesign.png';
 
 export default () => (
   <React.Fragment>

@@ -14,4 +14,4 @@ export default withRouteData(({ posts }) => (
       ))}
     </ul>
   </div>
-))
+));
