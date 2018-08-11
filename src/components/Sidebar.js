@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-static';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { auth } from '../firebase/auth';
-import { db } from '../firebase/db';
+import auth from '../firebase/auth';
+import db from '../firebase/db';
 import { DataContext } from './CubikApp';
 
 import Home from '../img/icons/home.svg';

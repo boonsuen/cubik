@@ -3,8 +3,8 @@ import { Head } from "react-static";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
 
-import { auth } from '../firebase/auth';
-import { db } from '../firebase/db';
+import auth from '../firebase/auth';
+import db from '../firebase/db';
 import '../styles/App.scss';
 
 import { AuthContext } from "../App";
