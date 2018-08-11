@@ -1,7 +1,7 @@
 import React from 'react';
 import { withSiteData, Link, Head } from 'react-static';
 
-import undraw from '../img/undraw.svg';
+import box from '../img/box.svg';
 
 class Home extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class Home extends React.Component {
             <p className="hero__subtitle">Stay organized, always be resourceful.</p>
             <Link to="/signup" className="hero__button">Get Started</Link>
           </div>
-          <img className="hero__img" src={undraw} />
+          <img className="hero__img" src={box} />
         </div>
         <div className="pricing">
           <h1 className="pricing__title">Pricing</h1>
