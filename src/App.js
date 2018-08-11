@@ -94,7 +94,7 @@ class App extends React.Component {
             }
             <React.Fragment>
               <div className="nav container">
-                <Link exact to="/" className="logo">Cubik</Link>
+                <Link to="/" className="logo">Cubik</Link>
                 <nav className="nav__items">
                   <Link className="nav__item" to="/about">About</Link>
                   <Link className="nav__item" to="/blog">Blog</Link>
