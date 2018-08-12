@@ -8,11 +8,9 @@ const About = () => (
     <Head>
       <title>About | Cubik</title>
     </Head>
-    <div>
-      <h1>This is what we’re all about.</h1>
-      <p>React, static sites, performance, speed. It’s the stuff that makes us tick.</p>
-      <img src={ethereum} style={{width: 300}} alt="ethereum" />
-    </div>
+    <h1>This is what we’re all about.</h1>
+    <p>React, static sites, performance, speed. It’s the stuff that makes us tick.</p>
+    <img src={ethereum} style={{width: 300}} alt="ethereum" />
   </React.Fragment>
 );
 

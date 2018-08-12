@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head } from 'react-static';
 
-import { auth } from '../firebase/auth';
+import auth from '../firebase/auth';
 
 class Amnesia extends React.Component {
   state = {
@@ -11,7 +11,7 @@ class Amnesia extends React.Component {
     auth.sendPasswordResetEmail(this.state.email).then(function() {
       console.log('email sent');
     }).catch(function(error) {
-      console.log('error happened');
+      console.log(error, 'error happened');
     });
   }
   onEmailChange = (e) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouteData, Link } from 'react-static';
 
-export default withRouteData(({ posts }) => (
-  <div>
+const Blog = withRouteData(({ posts }) => (
+  <React.Fragment>
     <h1>It’s blog time.</h1>
     <br />
     All Posts:
@@ -13,5 +13,7 @@ export default withRouteData(({ posts }) => (
         </li>
       ))}
     </ul>
-  </div>
+  </React.Fragment>
 ));
+
+export default Blog;

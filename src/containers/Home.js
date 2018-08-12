@@ -1,5 +1,5 @@
 import React from 'react';
-import { withSiteData, Link, Head } from 'react-static';
+import { withSiteData, Link } from 'react-static';
 
 import box from '../img/box.svg';
 
@@ -7,9 +7,6 @@ class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Head>
-          <title>Cubik</title>
-        </Head>
         <div className="hero-wrapper">
           <div className="hero">
             <h1 className="hero__title">Curate & save links</h1>
