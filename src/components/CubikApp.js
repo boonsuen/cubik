@@ -1,7 +1,7 @@
-import React from "react";
-import { Head } from "react-static";
-import Sidebar from "./Sidebar";
-import Content from "./Content";
+import React from 'react';
+import { Head } from 'react-static';
+import Sidebar from './Sidebar';
+import Content from './Content';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
