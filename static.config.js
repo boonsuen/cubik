@@ -14,46 +14,46 @@ export default {
     );
     return [
       {
-        path: "/",
-        component: "src/containers/Home"
+        path: '/',
+        component: 'src/containers/Home',
       },
       {
-        path: "/about",
-        component: "src/containers/About"
+        path: '/about',
+        component: 'src/containers/About',
       },
       {
-        path: "/blog",
-        component: "src/containers/Blog",
+        path: '/blog',
+        component: 'src/containers/Blog',
         getData: () => ({
           posts
         }),
         children: posts.map(post => ({
           path: `/post/${post.id}`,
-          component: "src/containers/Post",
+          component: 'src/containers/Post',
           getData: () => ({
             post
           })
         }))
       },
       {
-        path: "/login",
-        component: "src/containers/Login"
+        path: '/login',
+        component: 'src/containers/Login'
       },
       {
-        path: "/signup",
-        component: "src/containers/Signup"
+        path: '/signup',
+        component: 'src/containers/Signup'
       },
       {
-        path: "/amnesia",
-        component: "src/containers/Amnesia"
+        path: '/amnesia',
+        component: 'src/containers/Amnesia'
       },
       {
-        path: "/app",
-        component: "src/components/CubikApp"
+        path: '/app',
+        component: 'src/components/CubikApp'
       },
       {
         is404: true,
-        component: "src/containers/404"
+        component: 'src/containers/404'
       }
     ];
   },

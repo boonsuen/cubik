@@ -6,7 +6,6 @@ import Content from "./Content";
 import auth from '../firebase/auth';
 import db from '../firebase/db';
 import '../styles/App.scss';
-
 import { AuthContext } from "../App";
 
 export const DataContext = React.createContext({});
