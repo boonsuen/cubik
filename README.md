@@ -1,5 +1,5 @@
 # Cubik
-A webapp for saving and organising links.
+A webapp for saving and organising links.  
 Some usage includes knowledge base, reading list, or simple reference. Use it the way you like it.
 
 The stack:
