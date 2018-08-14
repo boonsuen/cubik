@@ -6,4 +6,4 @@ The stack includes:
 - File imports
 - Automatic Routing
 
-To get started, run `react-static create` and use the `styled-components` template.
+![alt text](https://raw.githubusercontent.com/boonsuen/cubik/master/src/img/preview.png)
