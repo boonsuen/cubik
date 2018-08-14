@@ -104,8 +104,11 @@ class Loading extends React.Component {
     });
 
     loadFirebaseAuthState.then((user => {    
+      if (user.auth === false) {
+        this.props.toggleAuth(user.auth, 'done');
+        return;
+      }
       this.props.doneLoadingFirebaseAuth(!user.auth, user.id, user.lists, user.links);
-      this.props.toggleAuth(user.auth, 'done');
     }));
   }
   render() {
