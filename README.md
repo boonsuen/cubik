@@ -1,11 +1,9 @@
 # Cubik
 
-This example is the most basic version of react-static available. It includes:
-- Babel
-- SASS/SCSS imports
+The stack includes:
+- styled-components
 - Image imports
 - File imports
-- SASS Loader
 - Automatic Routing
 
-To get started, run `react-static create` and use the `sass` template.
+To get started, run `react-static create` and use the `styled-components` template.

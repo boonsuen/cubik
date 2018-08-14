@@ -1,8 +1,10 @@
-import axios from "axios";
-import ExtractTextPlugin from "extract-text-webpack-plugin";
-import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+import axios from 'axios';
+import React from 'react';
+import { ServerStyleSheet } from 'styled-components';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
+  plugins: ['react-static-plugin-styled-components'],
   siteRoot: "https://cubikapp.com",
   stagingSiteRoot: "http://localhost:3001",
   getSiteData: () => ({
@@ -57,45 +59,32 @@ export default {
       }
     ];
   },
+  renderToHtml: (render, Comp, meta) => {
+    const sheet = new ServerStyleSheet()
+    const html = render(sheet.collectStyles(<Comp />))
+    meta.styleTags = sheet.getStyleElement()
+    return html
+  },
+  Document: class CustomHtml extends React.Component {
+    render () {
+      const {
+        Html, Head, Body, children, renderMeta,
+      } = this.props
+
+      return (
+        <Html>
+          <Head>
+            <meta charSet="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            {renderMeta.styleTags}
+          </Head>
+          <Body>{children}</Body>
+        </Html>
+      )
+    }
+  },
   webpack: (config, { defaultLoaders, stage }) => {
-    let loaders = [];
-
-    if (stage === "dev") {
-      loaders = [
-        { loader: "style-loader" },
-        { loader: "css-loader" },
-        { loader: "sass-loader" }
-      ];
-    } else {
-      loaders = [
-        {
-          loader: "css-loader",
-          options: {
-            importLoaders: 1,
-            minimize: stage === "prod",
-            sourceMap: false
-          }
-        },
-        {
-          loader: "sass-loader",
-          options: { includePaths: ["src/"] }
-        }
-      ];
-
-      // Don't extract css to file during node build process
-      if (stage !== "node") {
-        loaders = ExtractTextPlugin.extract({
-          fallback: {
-            loader: "style-loader",
-            options: {
-              sourceMap: false,
-              hmr: false
-            }
-          },
-          use: loaders
-        });
-      }
-
+    if (stage !== "dev") {
       // UglifyJS for production build
       config.plugins.push(
         new UglifyJsPlugin({
@@ -108,20 +97,6 @@ export default {
         })
       );
     }
-
-    config.module.rules = [
-      {
-        oneOf: [
-          {
-            test: /\.s(a|c)ss$/,
-            use: loaders
-          },
-          defaultLoaders.cssLoader,
-          defaultLoaders.jsLoader,
-          defaultLoaders.fileLoader
-        ]
-      }
-    ];
 
     return config;
   },
