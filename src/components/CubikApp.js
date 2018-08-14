@@ -1,12 +1,65 @@
 import React from 'react';
 import { Head } from 'react-static';
+import styled, { keyframes } from 'styled-components';
 import Sidebar from './Sidebar';
 import Content from './Content';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
-import '../styles/App.scss';
-import { AuthContext } from "../App";
+import { AuthContext } from '../App';
+
+const LoaderWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const loader = keyframes`
+  0% {
+    opacity: .2;
+    height: 60%;
+  }
+  50% {
+    opacity: 1;
+    height: 100%;
+  }
+  100% {
+    opacity: .2;
+    height: 60%;
+  }
+`;
+
+const StyledLoader = styled.div`
+  width: 40px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+
+  .loader-items {
+    width: 20%;
+    background-color: #8EC5FC;
+    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    animation-name: ${loader};
+    animation-iteration-count: infinite;
+    animation-duration: 0.6s;
+  }
+
+  .loader__2 {
+    animation-delay: 0.15s;
+  }
+  
+  .loader__3 {
+    animation-delay: 0.3s;
+  }
+`;
+
+const StyledApp = styled.div`
+  display: flex;
+  height: 100%;
+`;
 
 export const DataContext = React.createContext({});
 
@@ -50,7 +103,7 @@ class Loading extends React.Component {
       });
     });
 
-    loadFirebaseAuthState.then((user => {
+    loadFirebaseAuthState.then((user => {    
       this.props.doneLoadingFirebaseAuth(!user.auth, user.id, user.lists, user.links);
       this.props.toggleAuth(user.auth, 'done');
     }));
@@ -61,13 +114,13 @@ class Loading extends React.Component {
         <Head>
           <title>Loading...</title>
         </Head>
-        <div className="loader-ctn">
-          <div className="loader">
+        <LoaderWrapper>
+          <StyledLoader>
             <div className="loader-items"></div>
             <div className="loader-items loader__2"></div>
             <div className="loader-items loader__3"></div>
-          </div>
-        </div>
+          </StyledLoader>
+        </LoaderWrapper>
       </React.Fragment>
     );
   }
@@ -135,10 +188,10 @@ class CubikApp extends React.Component {
                 links: this.state.links,
                 allLinks: this.state.allLinks
               }}>             
-                <div className="app">
+                <StyledApp>
                   <Sidebar toggleAuth={toggleAuth} />
                   <Content />
-                </div> 
+                </StyledApp> 
               </DataContext.Provider>
             )
           }

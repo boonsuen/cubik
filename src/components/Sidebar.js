@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-static';
+import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import auth from '../firebase/auth';
@@ -10,6 +11,97 @@ import Home from '../img/icons/home.svg';
 import Clock from '../img/icons/clock.svg';
 import Boxes from '../img/icons/boxes.svg';
 import Trash from '../img/icons/trash.svg';
+
+const AddListForm = styled.form`
+  input {
+    height: 35px;
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    border: 1px solid #c4c8d7;
+    transition: all 300ms;
+  }
+
+  input:focus {
+    border-color: #889fff;
+    background-color: #fcfcff;
+    outline: none;
+  }
+
+  button {
+    color: #fff;
+    height: 35px;
+    font-size: 14px;
+    border-radius: 2px;
+    padding: 0px 15px 0px 15px;
+    background: #7272fc;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  button.cancel {
+    background: #e5e5ff;
+    color: #6e6e99;
+  }
+`;
+
+const StyledSidebar = styled.div`
+  width: 259px;
+  box-shadow: 5px 0 5px rgba(235, 233, 255, 50%);
+  z-index: 1;
+  padding: 20px 29px 0 29px;
+  box-sizing: border-box;
+  overflow: scroll;
+`;
+
+const GivenLists = styled.div`
+  color: #56578c;
+  font-weight: 500;
+  border-bottom: 1px solid #e6e9ec;
+
+  a {
+    margin: 9px 0 9px 0;
+    display: flex;
+    align-items: center;
+    color: #56578c;
+  }
+
+  img {
+    margin-right: 10px;
+    width: 20px;
+  }
+`;
+
+const GivenListsText = styled.span`
+  margin-top: 5px;
+  display: inline-block;
+`;
+
+const UserLists = styled.div`
+  margin-top: 10px;
+
+  a {
+    color: #8080a2;
+    display: block;
+    padding: 8px 0 8px 0;
+  }
+
+  a.active {
+    color: #262660;
+    position: relative;
+  }
+
+  .active::before {
+    background: #6067f1;
+    position: absolute;
+    width: 2px;
+    height: 19px;
+    display: block;
+  }
+`;
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -37,7 +129,7 @@ class AddList extends React.Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="add-new-list">
+      <AddListForm onSubmit={this.handleSubmit}>
         <input 
           type="text" 
           placeholder="Name your list" 
@@ -48,7 +140,7 @@ class AddList extends React.Component {
           <button type="submit">Add</button>
           <button className="cancel" onClick={this.props.toggleAddList} type="button">Cancel</button>
         </div>
-      </form>
+      </AddListForm>
     );
   }
 }
@@ -114,45 +206,50 @@ class Sidebar extends React.Component {
   }
   render() {
     return (
-      <div className="sidebar">
-        <div className="given-lists">
+      <StyledSidebar>
+        <GivenLists>
           <Link to="/app">
-            <img src={Home} /><span className="given-lists__text">All links</span>
+            <img src={Home} alt="Home" />
+            <GivenListsText>All links</GivenListsText>
           </Link>
           <Link to="/app/reading-list">
-            <img src={Clock} /><span className="given-lists__text">Reading List</span>
+            <img src={Clock} alt="Reading List" />
+            <GivenListsText>Reading List</GivenListsText>
           </Link>
           <Link to="/app/uncategorised">
-            <img src={Boxes} /><span className="given-lists__text">Uncategorised</span>
+            <img src={Boxes} alt="Uncategorized" />
+            <GivenListsText>Uncategorised</GivenListsText>
           </Link>
           <Link to="/app/trash">
-            <img src={Trash} /><span className="given-lists__text">Trash</span>
+            <img src={Trash} alt="Trash" />
+            <GivenListsText>Trash</GivenListsText>
           </Link>
-        </div>
+        </GivenLists>  
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (
-              <div
-                className="user-lists"
-                ref={provided.innerRef}
-                style={getListStyle(snapshot.isDraggingOver)}
-              >
-                {this.state.lists.map((list, index) => (
-                  <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
-                    {(provided, snapshot) => (
-                      <p
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style
-                        )}
-                      ><Link to={`/app/${list.id}`}>{list.title}</Link></p>
-                    )}
-                  </Draggable>
-                ))}
-              </div>
+              <UserLists>
+                <div
+                  ref={provided.innerRef}
+                  style={getListStyle(snapshot.isDraggingOver)}
+                >
+                  {this.state.lists.map((list, index) => (
+                    <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
+                      {(provided, snapshot) => (
+                        <p
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style
+                          )}
+                        ><Link to={`/app/${list.id}`}>{list.title}</Link></p>
+                      )}
+                    </Draggable>
+                  ))}
+                </div>
+              </UserLists>
             )}
           </Droppable>
         </DragDropContext>
@@ -168,7 +265,7 @@ class Sidebar extends React.Component {
           <Link to="/app">back</Link>
           <button onClick={this.logoutUser}>Log out</button>
         </div>
-      </div>
+      </StyledSidebar>
     );
   }
 }

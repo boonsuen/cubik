@@ -9,10 +9,48 @@ import {
 } from 'react-static';
 import Routes from 'react-static-routes';
 import universal from 'react-universal-component';
+import styled from 'styled-components';
 
 const CubikApp = universal(import('./components/CubikApp'));
-import './styles/public.scss';
+import './injectGlobal.css';
 import favicon from './img/favicon.png';
+
+const Logo = styled(Link)`
+  font-size: 25px;
+  font-weight: 700;
+  color: #0d0d59;
+`;
+
+const NavWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding-top: 60px;
+`;
+
+const StyledNav = styled.nav`
+  margin-left: auto;
+  width: initial;
+`;
+
+const NavItem = styled(Link)`
+  font-size: 20px;
+  font-weight: 500;
+  color: #0d0d59;
+  margin-left: 38px;
+`;
+
+const StyledFooter = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100px;
+  color: #0d0d59;
+  font-weight: 500;
+  font-size: 20px;
+
+  a {
+    margin-right: 71px;
+  }
+`;
 
 export const AuthContext = React.createContext({
   auth: false,
@@ -45,8 +83,6 @@ class App extends React.Component {
     firebaseAuth: 'initial',
     toggleAuth: this.toggleAuth
   }
-  componentDidMount() {}
-  componentDidUpdate(prevProps, prevState) {}
   render() {
     const { auth, firebaseAuth } = this.state;
     return (
@@ -93,26 +129,26 @@ class App extends React.Component {
               />
             }
             <React.Fragment>
-              <div className="nav container">
-                <Link to="/" className="logo">Cubik</Link>
-                <nav className="nav__items">
-                  <Link className="nav__item" to="/about">About</Link>
-                  <Link className="nav__item" to="/blog">Blog</Link>
-                  <Link className="nav__item" to="/login">Login</Link>
-                  <Link className="nav__item" to="/signup">Signup</Link>
-                </nav>
-              </div>
+              <NavWrapper className="container">
+                <Logo exact to="/">Cubik</Logo>
+                <StyledNav>
+                  <NavItem to="/about">About</NavItem>
+                  <NavItem to="/blog">Blog</NavItem>
+                  <NavItem to="/login">Login</NavItem>
+                  <NavItem to="/signup">Signup</NavItem>
+                </StyledNav>
+              </NavWrapper>
               <div className="container">
                 <AuthContext.Provider value={this.state.toggleAuth}>
                   <Routes />
                 </AuthContext.Provider>
               </div>
-              <div className="footer container">
+              <StyledFooter className="container">
                 <Link to="/about">About</Link>
                 <a href="https://twitter.com/SatoshiJS" target="_blank">
                   Twitter
                 </a>
-              </div>
+              </StyledFooter>
             </React.Fragment>
           </Switch>
         </Router>
