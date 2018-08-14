@@ -3,7 +3,19 @@ import { Head } from 'react-static';
 
 import auth from '../firebase/auth';
 import { AuthContext } from '../App';
-import '../styles/Signup.scss';
+import {
+  StyledLogin,
+  LoginHeading,
+  LoginSubheading,
+  AuthFormGroup,
+  AuthFormLabel,
+  AuthFormInput,
+  AuthFormButton
+} from './Login';
+
+const SignupButton = AuthFormButton.extend`
+  width: 165px;
+`;
 
 class Signup extends React.Component {
   state = {
@@ -36,44 +48,41 @@ class Signup extends React.Component {
         <Head>
           <title>Sign Up</title>
         </Head>
-        <div className="login">
-          <h1 className="login__heading"> Sign Up
-            <small className="login__subheading">
+        <StyledLogin>
+          <LoginHeading> Sign Up
+            <LoginSubheading>
               Create an account and start collecting links today.
-            </small>
-          </h1>
+            </LoginSubheading>
+          </LoginHeading>
           <AuthContext.Consumer>
             {(toggleAuth) => (
               <form 
-                className="login-form" 
                 onSubmit={(e) => { 
                   this.handleSignup(e, toggleAuth);
                 }}
               >
-                <div className="login-form__group">
-                  <label className="login-form__label">Email</label>
-                  <input
-                    className="login-form__input" type="email" 
-                    placeholder="you@example.com" spellCheck="false" 
-                    onChange={this.onEmailChange}
+                <AuthFormGroup>
+                  <AuthFormLabel>Email</AuthFormLabel>
+                  <AuthFormInput
+                    type="email" placeholder="you@example.com" 
+                    spellCheck="false" onChange={this.onEmailChange}
                   />
-                </div>
-                <div className="login-form__group">
-                  <label className="login-form__label">Password</label>
-                  <input 
-                    className="login-form__input" type="password" 
-                    placeholder="Enter your password" spellCheck="false"
-                    onChange={this.onPasswordChange}
+                </AuthFormGroup>
+                <AuthFormGroup>
+                  <AuthFormLabel>Password</AuthFormLabel>
+                  <AuthFormInput 
+                    type="password" placeholder="Enter your password"
+                    spellCheck="false" onChange={this.onPasswordChange}                    
                   />
-                </div>
-                <div className="signup-actions">
-                  <button className="signup-form__button" type="submit">Create Account</button>
+                </AuthFormGroup>
+                <div>
+                  <SignupButton type="submit">Create Account</SignupButton>
                 </div>
               </form>
             )}
-          </AuthContext.Consumer>          
-        </div>
-      </React.Fragment>
+          </AuthContext.Consumer>
+        </StyledLogin>
+      </React.Fragment>  
     );
   }
 }

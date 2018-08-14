@@ -1,7 +1,17 @@
 import React from 'react';
 import { Head } from 'react-static';
 
+const ResetPasswordButton = AuthFormButton.extend`
+  width: 155px;
+`;
+
 import auth from '../firebase/auth';
+import {
+  AuthFormGroup,
+  AuthFormLabel,
+  AuthFormInput,
+  AuthFormButton
+} from './Login';
 
 class Amnesia extends React.Component {
   state = {
@@ -27,25 +37,21 @@ class Amnesia extends React.Component {
         <div style={{marginTop: '80px'}}>
           <h1>Reset your password</h1>
           <p>To reset your password, enter the email address you use to sign in.</p>
-          <form 
-            className="login-form" 
+          <form   
             onSubmit={(e) => { 
               e.preventDefault();
               this.handleSendResetEmail();
             }}
           >
-            <div className="login-form__group">
-              <label className="login-form__label">Email</label>
-              <input 
-                className="login-form__input" type="email" 
-                placeholder="Enter your account's email" spellCheck="false"
-                onChange={this.onEmailChange}
+            <AuthFormGroup>
+              <AuthFormLabel>Email</AuthFormLabel>
+              <AuthFormInput 
+                type="email" placeholder="Enter your account's email" 
+                spellCheck="false" onChange={this.onEmailChange}
               />
-            </div>
-            <div className="login__actions">
-              <button className="signup-form__button" type="submit">Get Reset Link</button>
-            </div>
-          </form>
+            </AuthFormGroup>
+            <ResetPasswordButton type="submit">Get Reset Link</ResetPasswordButton>
+          </form>          
         </div>
       </React.Fragment>
     );
