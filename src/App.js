@@ -11,6 +11,7 @@ import Routes from 'react-static-routes';
 import universal from 'react-universal-component';
 import styled from 'styled-components';
 
+const NoLayout = universal(import('./containers/NoLayout'));
 const CubikApp = universal(import('./components/CubikApp'));
 import './injectGlobal.css';
 import favicon from './img/favicon.png';
@@ -106,6 +107,7 @@ class App extends React.Component {
         </Head>
         <Router>
           <Switch>
+            <Route path="/nolayout" render={() => (<NoLayout />)} />
             <Route path="/app" render={({location}) => {
               if (firebaseAuth === 'done') {
                 return auth
@@ -127,7 +129,7 @@ class App extends React.Component {
                 path="/" 
                 render={() => <Redirect to="/app" />} 
               />
-            }
+            }        
             <React.Fragment>
               <NavWrapper className="container">
                 <Logo exact to="/">Cubik</Logo>

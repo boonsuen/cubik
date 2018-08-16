@@ -54,6 +54,10 @@ export default {
         component: 'src/components/CubikApp'
       },
       {
+        path: '/nolayout',
+        component: 'src/containers/NoLayout'
+      },
+      {
         is404: true,
         component: 'src/containers/404'
       }
