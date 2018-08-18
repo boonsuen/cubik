@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const AboutBoxTitle = styled.h2`
   color: #5554b9;
   font-size: 30px;
+  margin: 10px 0 10px 0;
 `;
 
 export const AboutBoxParagraph = styled.p`

@@ -58,7 +58,6 @@ const BioImg = styled.img`
 const WhyBox = styled.div`
   box-sizing: border-box;
   width: 670px;
-  height: 406px;
   box-shadow: 1px 1px 8px rgba(171, 133, 255, .5);
   padding: 42px;
   display: flex;
@@ -68,14 +67,15 @@ const WhyBox = styled.div`
 `;
 
 const SecondRow = styled.div`
+  margin-top: 60px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const HowBox = styled.div`
-  margin: 30px 0 30px 0;
+  box-sizing: border-box;
   width: 548px;
-  height: 250px;
   box-shadow: 1px 1px 8px rgba(171, 133, 255, .5);
   padding: 42px;
   font-weight: 500;
@@ -84,6 +84,7 @@ const HowBox = styled.div`
   justify-content: center;
 
   a {
+    margin-top: 10px;
     width: 198px;
     height: 55px;
     background: #939aff;
@@ -144,7 +145,10 @@ const About = () => (
         </AboutBoxParagraph>
         <a href="#">Read it on Medium</a>
       </HowBox>
-      <img src={ethereum} style={{width: 300}} alt="ethereum" />
+      <img src={ethereum} style={{
+        width: 300,
+        margin: 'auto'
+      }} alt="ethereum" />
     </SecondRow>
   </React.Fragment>
 );
