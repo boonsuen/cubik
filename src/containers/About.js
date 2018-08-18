@@ -6,8 +6,21 @@ import { AboutBoxTitle, AboutBoxParagraph } from './public.css';
 import avatar from '../img/avatar.png';
 import ethereum from '../img/ethereum.png';
 
+const Header = styled.div`
+  
+  p {
+    color: #102d3e;
+    font-size: 25px;
+  }
+`;
+
+const FirstRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Bio = styled.div`
-  width: 339px;
+  width: 340px;
   height: 170px;
   background: #fffafa;
   border: 1px solid #ffd1d1;
@@ -15,7 +28,7 @@ const Bio = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 31px;
+  padding: 30px;
   box-sizing: border-box;
 `;
 
@@ -24,13 +37,14 @@ const BioText = styled.div`
   margin-left: auto;
 
   h3 {
+    color: #102d3e;
     margin: 0;
     font-size: 25px;
     font-weight: 400;
   }
 
   p {
-    margin: 0;
+    margin: 4px 0 0 0;
     color: #2b2b77;
   }
 `;
@@ -42,14 +56,20 @@ const BioImg = styled.img`
 `;
 
 const WhyBox = styled.div`
-  margin-top: 30px;
-  width: 671px;
+  box-sizing: border-box;
+  width: 670px;
   height: 406px;
   box-shadow: 1px 1px 8px rgba(171, 133, 255, .5);
   padding: 42px;
   display: flex;
+  font-weight: 500;
   flex-direction: column;
   justify-content: center;
+`;
+
+const SecondRow = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const HowBox = styled.div`
@@ -58,6 +78,7 @@ const HowBox = styled.div`
   height: 250px;
   box-shadow: 1px 1px 8px rgba(171, 133, 255, .5);
   padding: 42px;
+  font-weight: 500;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,43 +103,49 @@ const About = () => (
     <Head>
       <title>About Cubik</title>
     </Head>
-    <h1>About</h1>
-    <p>Hey there, this is Boonsuen, I build and design Cubik.</p>
-    <Bio>
-      <BioImg src={avatar} />
-      <BioText>
-        <h3>Boonsuen Oh</h3>
-        <p>Not sure how much caffeine I've consumed.</p>
-      </BioText>
-    </Bio>
-    <WhyBox>
-      <AboutBoxTitle>Why I built it.</AboutBoxTitle>
-      <AboutBoxParagraph>
-        I always wanted to build 'something', since the very early day I
-        started learning to code and craft websites. By then, I had several 
-        ideas in mind but I didn't really execute on them or simply postspone 
-        them, mainly due to lack of required knowledge and skills.
-      </AboutBoxParagraph>
-      <AboutBoxParagraph>
-        Cubik is a right mix of both, in my opinion. It's neither too complex,
-        nor too simple. It's out of the reach of my domain of expertise. 
-      </AboutBoxParagraph>
-      <AboutBoxParagraph>
-        Also, Cubik served well as a project that let me practice my coding 
-        skill. Side projects are always the best way to let us developers
-        learn new stuff while actually building something useful.
-      </AboutBoxParagraph>
-    </WhyBox>
-    <HowBox>
-      <AboutBoxTitle>How I built it.</AboutBoxTitle>
-      <AboutBoxParagraph>
-        I wrote an blog post about some interesting technical 
-        challenges and process I've gone through when 
-        developing the webapp. 
-      </AboutBoxParagraph>
-      <a href="#">Read it on Medium</a>
-    </HowBox>
-    <img src={ethereum} style={{width: 300}} alt="ethereum" />
+    <Header>    
+      <h1>About</h1>
+      <p>Hey there, this is Boonsuen, I build and design Cubik.</p>
+    </Header>  
+    <FirstRow>
+      <Bio>
+        <BioImg src={avatar} />
+        <BioText>
+          <h3>Boonsuen Oh</h3>
+          <p>Not sure how much caffeine I've consumed.</p>
+        </BioText>
+      </Bio>
+      <WhyBox>
+        <AboutBoxTitle>Why I built it.</AboutBoxTitle>
+        <AboutBoxParagraph>
+          I always wanted to build 'something', since the very early day I
+          started learning to code and craft websites. By then, I had several 
+          ideas in mind but I didn't really execute on them or simply postspone 
+          them, mainly due to lack of required knowledge and skills.
+        </AboutBoxParagraph>
+        <AboutBoxParagraph>
+          Cubik is a right mix of both, in my opinion. It's neither too complex,
+          nor too simple. It's out of the reach of my domain of expertise. 
+        </AboutBoxParagraph>
+        <AboutBoxParagraph>
+          Also, Cubik served well as a project that let me practice my coding 
+          skill. Side projects are always the best way to let us developers
+          learn new stuff while actually building something useful.
+        </AboutBoxParagraph>
+      </WhyBox>
+    </FirstRow>
+    <SecondRow>
+      <HowBox>
+        <AboutBoxTitle>How I built it.</AboutBoxTitle>
+        <AboutBoxParagraph>
+          I wrote an blog post about some interesting technical 
+          challenges and process I've gone through when 
+          developing the webapp. 
+        </AboutBoxParagraph>
+        <a href="#">Read it on Medium</a>
+      </HowBox>
+      <img src={ethereum} style={{width: 300}} alt="ethereum" />
+    </SecondRow>
   </React.Fragment>
 );
 
