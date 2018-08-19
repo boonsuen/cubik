@@ -261,7 +261,7 @@ class Sidebar extends React.Component {
           />
         }
         <div className="sidebar__bottomOperation">
-          <button type="button" onClick={this.toggleAddList}>+ New List</button>
+          <button type="button" onClick={() => {this.props.openModal(true)}}>+ New List</button>
           <Link to="/app">back</Link>
           <button onClick={this.logoutUser}>Log out</button>
         </div>
