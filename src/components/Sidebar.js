@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-static';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import StyledModal from './ReactModal';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
@@ -122,32 +123,32 @@ const getListStyle = isDraggingOver => ({
   background: isDraggingOver && '#ffefef',
 });
 
-class AddList extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.addList(this.input.value);
-  }
-  render() {
-    return (
-      <AddListForm onSubmit={this.handleSubmit}>
-        <input 
-          type="text" 
-          placeholder="Name your list" 
-          ref={(el) => { this.input = el }}
-          autoFocus
-        />
-        <div>
-          <button type="submit">Add</button>
-          <button className="cancel" onClick={this.props.toggleAddList} type="button">Cancel</button>
-        </div>
-      </AddListForm>
-    );
-  }
-}
+// class AddList extends React.Component {
+//   handleSubmit = (e) => {
+//     e.preventDefault();
+//     this.props.addList(this.input.value);
+//   }
+//   render() {
+//     return (
+//       <AddListForm onSubmit={this.handleSubmit}>
+//         <input 
+//           type="text" 
+//           placeholder="Name your list" 
+//           ref={(el) => { this.input = el }}
+//           autoFocus
+//         />
+//         <div>
+//           <button type="submit">Add</button>
+//           <button className="cancel" onClick={this.props.toggleAddList} type="button">Cancel</button>
+//         </div>
+//       </AddListForm>
+//     );
+//   }
+// }
 
 class Sidebar extends React.Component {
   state = {
-    showAddListBtn: false,
+    showModal: false,
     lists: this.props.lists
   }
   componentDidUpdate() {
@@ -162,7 +163,7 @@ class Sidebar extends React.Component {
   handleAddList = (inputValue) => {
     if (!inputValue) return;
     this.setState((state) => ({
-      showAddList: !state.showAddList,
+      showModal: !state.showModal,
       lists: [...state.lists, {title: inputValue, id: 'temporary-id'}]
     }), () => {
       db.collection(`users/${this.props.userId}/lists`).add({
@@ -185,9 +186,9 @@ class Sidebar extends React.Component {
       });
     });
   }
-  toggleAddList = () => {
+  toggleModal = () => {
     this.setState({
-      showAddList: !this.state.showAddList
+      showModal: !this.state.showModal
     });
   }
   onDragEnd = (result) => {
@@ -261,10 +262,31 @@ class Sidebar extends React.Component {
           />
         }
         <div className="sidebar__bottomOperation">
-          <button type="button" onClick={() => {this.props.openModal(true)}}>+ New List</button>
+          <button type="button" onClick={this.toggleModal}>+ New List</button>
           <Link to="/app">back</Link>
           <button onClick={this.logoutUser}>Log out</button>
         </div>
+        <StyledModal
+          isOpen={this.state.showModal}
+          onRequestClose={this.toggleModal}
+          contentLabel="Create New List Modal"
+        >
+          <h2>Create new list</h2>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            this.handleAddList(this.input.value);
+          }}>
+            <input 
+              placeholder="Name your list"
+              ref={(el) => { this.input = el }} 
+              autoFocus  
+            />
+            <div>
+              <button type="submit">Add</button>
+              <button onClick={this.toggleModal} type="button">Cancel</button>
+            </div>
+          </form>
+        </StyledModal>
       </StyledSidebar>
     );
   }

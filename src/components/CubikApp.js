@@ -3,7 +3,6 @@ import { Head } from 'react-static';
 import styled, { keyframes } from 'styled-components';
 import Sidebar from './Sidebar';
 import Content from './Content';
-import StyledModal from './ReactModal';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
@@ -199,22 +198,7 @@ class CubikApp extends React.Component {
                 <StyledApp>
                   <Sidebar toggleAuth={toggleAuth} openModal={this.handleModal} />
                   <Content />
-                  <StyledModal
-                    isOpen={this.state.showModal}
-                    onRequestClose={() => {this.handleModal(false)}}
-                    contentLabel="Create New List Modal"
-                  >
-                    <h2>Create new list</h2>
-                    <form>
-                      <input placeholder="Name your list" autoFocus />
-                      <div>
-                        <button type="submit">Add</button>
-                        <button onClick={
-                          () => {this.handleModal(false)}
-                        } type="button">Cancel</button>
-                      </div>
-                    </form>
-                  </StyledModal>
+                  
                 </StyledApp>
               </DataContext.Provider>
             )
