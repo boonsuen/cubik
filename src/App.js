@@ -147,7 +147,7 @@ class App extends React.Component {
               </div>
               <StyledFooter className="container">
                 <Link to="/about">About</Link>
-                <a href="https://twitter.com/SatoshiJS" target="_blank">
+                <a href="https://twitter.com/boon_suen" target="_blank">
                   Twitter
                 </a>
               </StyledFooter>
