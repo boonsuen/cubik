@@ -52,7 +52,12 @@ const AddListForm = styled.form`
 const StyledSidebar = styled.div`
   width: 259px;
   box-shadow: 5px 0 5px rgba(235, 233, 255, 50%);
-  z-index: 1;
+  z-index: 1;  
+  display: flex;
+  flex-direction: column;
+`;
+
+const SidebarUpper = styled.div`
   padding: 20px 29px 0 29px;
   box-sizing: border-box;
   overflow: scroll;
@@ -104,6 +109,21 @@ const UserLists = styled.div`
   }
 `;
 
+const SidebarBottom = styled.div`
+  margin-top: auto;
+  box-sizing: border-box;
+  border-top: 1px solid #eceef2;
+  padding: 0 29px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+`;
+
+const NewListBtn = styled.button`
+  color: #8181b7;
+  font-weight: 500;
+`;
+
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -122,29 +142,6 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver && '#ffefef',
 });
-
-// class AddList extends React.Component {
-//   handleSubmit = (e) => {
-//     e.preventDefault();
-//     this.props.addList(this.input.value);
-//   }
-//   render() {
-//     return (
-//       <AddListForm onSubmit={this.handleSubmit}>
-//         <input 
-//           type="text" 
-//           placeholder="Name your list" 
-//           ref={(el) => { this.input = el }}
-//           autoFocus
-//         />
-//         <div>
-//           <button type="submit">Add</button>
-//           <button className="cancel" onClick={this.props.toggleAddList} type="button">Cancel</button>
-//         </div>
-//       </AddListForm>
-//     );
-//   }
-// }
 
 class Sidebar extends React.Component {
   state = {
@@ -208,64 +205,59 @@ class Sidebar extends React.Component {
   render() {
     return (
       <StyledSidebar>
-        <GivenLists>
-          <Link to="/app">
-            <img src={Home} alt="Home" />
-            <GivenListsText>All links</GivenListsText>
-          </Link>
-          <Link to="/app/reading-list">
-            <img src={Clock} alt="Reading List" />
-            <GivenListsText>Reading List</GivenListsText>
-          </Link>
-          <Link to="/app/uncategorised">
-            <img src={Boxes} alt="Uncategorized" />
-            <GivenListsText>Uncategorised</GivenListsText>
-          </Link>
-          <Link to="/app/trash">
-            <img src={Trash} alt="Trash" />
-            <GivenListsText>Trash</GivenListsText>
-          </Link>
-        </GivenLists>  
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
-              <UserLists>
-                <div
-                  ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
-                >
-                  {this.state.lists.map((list, index) => (
-                    <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
-                      {(provided, snapshot) => (
-                        <p
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(
-                            snapshot.isDragging,
-                            provided.draggableProps.style
-                          )}
-                        ><Link to={`/app/${list.id}`}>{list.title}</Link></p>
-                      )}
-                    </Draggable>
-                  ))}
-                </div>
-              </UserLists>
-            )}
-          </Droppable>
-        </DragDropContext>
-        {this.state.showAddList
-          && 
-          <AddList 
-            toggleAddList={this.toggleAddList} 
-            addList={this.handleAddList}
-          />
-        }
-        <div className="sidebar__bottomOperation">
-          <button type="button" onClick={this.toggleModal}>+ New List</button>
-          <Link to="/app">back</Link>
-          <button onClick={this.logoutUser}>Log out</button>
-        </div>
+        <SidebarUpper>
+          <GivenLists>
+            <Link to="/app">
+              <img src={Home} alt="Home" />
+              <GivenListsText>All links</GivenListsText>
+            </Link>
+            <Link to="/app/reading-list">
+              <img src={Clock} alt="Reading List" />
+              <GivenListsText>Reading List</GivenListsText>
+            </Link>
+            <Link to="/app/uncategorised">
+              <img src={Boxes} alt="Uncategorized" />
+              <GivenListsText>Uncategorised</GivenListsText>
+            </Link>
+            <Link to="/app/trash">
+              <img src={Trash} alt="Trash" />
+              <GivenListsText>Trash</GivenListsText>
+            </Link>
+          </GivenLists>  
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <UserLists>
+                  <div
+                    ref={provided.innerRef}
+                    style={getListStyle(snapshot.isDraggingOver)}
+                  >
+                    {this.state.lists.map((list, index) => (
+                      <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
+                        {(provided, snapshot) => (
+                          <p
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )}
+                          ><Link to={`/app/${list.id}`}>{list.title}</Link></p>
+                        )}
+                      </Draggable>
+                    ))}
+                  </div>
+                </UserLists>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </SidebarUpper>
+        <Link to="/app">back</Link>
+        <button onClick={this.logoutUser}>Log out</button>
+        <SidebarBottom>
+          <NewListBtn type="button" onClick={this.toggleModal}>+ New List</NewListBtn>          
+        </SidebarBottom>
         <StyledModal
           isOpen={this.state.showModal}
           onRequestClose={this.toggleModal}
