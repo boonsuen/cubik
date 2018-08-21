@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="14" width="14">
+  <defs>
+    <path id="path-0" opacity="1" d="M1,3 L13,3 C13.551915024494,3 14,3.448084975506 14,4 C14,4.551915024494 13.551915024494,5 13,5 L1,5 C0.448084975506,5 0,4.551915024494 0,4 C0,3.448084975506 0.448084975506,3 1,3Z"/>
+    <path id="path-1" opacity="1" d="M4,3 L10,3 C11.103830048988,3 12,3.8961699510120003 12,5 L12,12 C12,13.103830048988 11.103830048988,14 10,14 L4,14 C2.8961699510120003,14 2,13.103830048988 2,12 L2,5 C2,3.8961699510120003 2.8961699510120003,3 4,3Z"/>
+    <mask id="mask-2" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+      <rect opacity="1" x="0" y="0" width="14" height="14" fill="black"/>
+      <use xlink:href="#path-1" fill="white"/>
+    </mask>
+    <path id="path-3" opacity="1" d="M5,0 L9,0 C9.551915024494,0 10,0.448084975506 10,1 C10,1.5519150244939999 9.551915024494,2 9,2 L5,2 C4.448084975506,2 4,1.5519150244939999 4,1 C4,0.448084975506 4.448084975506,0 5,0Z"/>
+    <path id="path-4" opacity="1" d="M5.5,6 C5.775957512247,6 6,6.224042487753 6,6.5 L6,10.5 C6,10.775957512247 5.775957512247,11 5.5,11 C5.224042487753,11 5,10.775957512247 5,10.5 L5,6.5 C5,6.224042487753 5.224042487753,6 5.5,6 L5.5,6Z"/>
+    <path id="path-5" opacity="1" d="M8.5,6 C8.775957512247,6 9,6.224042487753 9,6.5 L9,10.5 C9,10.775957512247 8.775957512247,11 8.5,11 C8.224042487753,11 8,10.775957512247 8,10.5 L8,6.5 C8,6.224042487753 8.224042487753,6 8.5,6 L8.5,6Z"/>
+  </defs>
+  <g opacity="1">
+    <g opacity="1">
+      <use xlink:href="#path-0" fill="rgb(251,173,174)" fill-opacity="1"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-1" fill-opacity="0" stroke="rgb(251,173,174)" stroke-opacity="1" stroke-width="4" mask="url(#mask-2)"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-3" fill="rgb(251,173,174)" fill-opacity="1"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-4" fill="rgb(251,173,174)" fill-opacity="1"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-5" fill="rgb(251,173,174)" fill-opacity="1"/>
+    </g>
+  </g>
+</svg>

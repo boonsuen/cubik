@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import AddIcon from '../img/icons/add.svg';
+import EditIcon from '../img/icons/edit.svg';
+import DeleteIcon from '../img/icons/delete.svg';
+
 const LinksWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse;
@@ -31,15 +35,49 @@ const StyledLinks = styled.a`
   }
 `;
 
+const LinkAction = styled.div`
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+
+  button {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+  }
+`;
+
+const LeftIcon = styled.button`
+  margin-right: 10px;
+  background: #fcf4ff;
+`;
+
+const RightIcon = styled.button`
+  margin-left: auto;
+  background: #fff4f4;
+`
+
 export default class Links extends React.Component {
   render() {
     return (
       <LinksWrapper>
+        <LinkAction>
+          <LeftIcon type="button">
+            <img src={AddIcon} />
+          </LeftIcon>
+          <LeftIcon type="button">
+            <img src={EditIcon} />
+          </LeftIcon>
+          <RightIcon type="button">
+            <img src={DeleteIcon} />
+          </RightIcon>
+        </LinkAction>
         {this.props.links.map(link => (
           <StyledLinks key={link.id} href={link.url} target="_blank">
             {link.title}
           </StyledLinks>
-        ))}
+        ))}      
       </LinksWrapper>
     );
   }
