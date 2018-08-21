@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-static';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import StyledModal from './ReactModal';
+import { AddListModal } from './Modals';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
@@ -12,42 +12,6 @@ import Home from '../img/icons/home.svg';
 import Clock from '../img/icons/clock.svg';
 import Boxes from '../img/icons/boxes.svg';
 import Trash from '../img/icons/trash.svg';
-
-const AddListForm = styled.form`
-  input {
-    height: 35px;
-    width: 100%;
-    font-size: 14px;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border-radius: 2px;
-    border: 1px solid #c4c8d7;
-    transition: all 300ms;
-  }
-
-  input:focus {
-    border-color: #889fff;
-    background-color: #fcfcff;
-    outline: none;
-  }
-
-  button {
-    color: #fff;
-    height: 35px;
-    font-size: 14px;
-    border-radius: 2px;
-    padding: 0px 15px 0px 15px;
-    background: #7272fc;
-    display: inline-block;
-    margin-right: 10px;
-  }
-
-  button.cancel {
-    background: #e5e5ff;
-    color: #6e6e99;
-  }
-`;
 
 const StyledSidebar = styled.div`
   width: 259px;
@@ -157,6 +121,11 @@ class Sidebar extends React.Component {
       this.props.toggleAuth(false, 'done');
     });
   }
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  }
   handleAddList = (inputValue) => {
     if (!inputValue) return;
     this.setState((state) => ({
@@ -182,12 +151,7 @@ class Sidebar extends React.Component {
           console.error("Error adding document: ", error);
       });
     });
-  }
-  toggleModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
-  }
+  }  
   onDragEnd = (result) => {
     if (!result.destination) return;
     console.log(result);
@@ -258,7 +222,7 @@ class Sidebar extends React.Component {
         <SidebarBottom>
           <NewListBtn type="button" onClick={this.toggleModal}>+ New List</NewListBtn>          
         </SidebarBottom>
-        <StyledModal
+        <AddListModal
           isOpen={this.state.showModal}
           onRequestClose={this.toggleModal}
           contentLabel="Create New List Modal"
@@ -278,7 +242,7 @@ class Sidebar extends React.Component {
               <button onClick={this.toggleModal} type="button">Cancel</button>
             </div>
           </form>
-        </StyledModal>
+        </AddListModal>
       </StyledSidebar>
     );
   }

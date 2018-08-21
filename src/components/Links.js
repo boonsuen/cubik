@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AddLinkModal } from './Modals';
 
 import AddIcon from '../img/icons/add.svg';
 import EditIcon from '../img/icons/edit.svg';
@@ -49,7 +50,7 @@ const LinkAction = styled.div`
 `;
 
 const LeftIcon = styled.button`
-  margin-right: 10px;
+  margin-right: 20px;
   background: #fcf4ff;
 `;
 
@@ -59,11 +60,47 @@ const RightIcon = styled.button`
 `
 
 export default class Links extends React.Component {
+  state = {
+    showModal: false
+  }
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  }
+  handleAddLink = (url, title) => {
+    console.log(url, title);
+  }
   render() {
     return (
       <LinksWrapper>
+        <AddLinkModal
+          isOpen={this.state.showModal}
+          onRequestClose={this.toggleModal}
+          contentLabel="Add New Link Modal"
+        >
+          <h2>Add link</h2>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            this.handleAddLink(this.inputUrl.value, this.inputTitle.value);
+          }}>
+            <input 
+              placeholder="URL"
+              ref={(el) => { this.inputUrl = el }} 
+              autoFocus  
+            />
+            <input 
+              placeholder="Title"
+              ref={(el) => { this.inputTitle = el }} 
+            />
+            <div>
+              <button type="submit">Add</button>
+              <button onClick={this.toggleModal} type="button">Cancel</button>
+            </div>
+          </form>
+        </AddLinkModal>
         <LinkAction>
-          <LeftIcon type="button">
+          <LeftIcon type="button" onClick={this.toggleModal}>
             <img src={AddIcon} />
           </LeftIcon>
           <LeftIcon type="button">
