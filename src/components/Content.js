@@ -33,7 +33,7 @@ const ModalSublist = styled.div`
   div {
     margin-left: 20px;
     height: 32px;
-    width: 74px;
+    padding: 0 10px;
     border: 1px solid #9b7ae6;
     text-align: center;
     line-height: 32px;
@@ -54,11 +54,17 @@ const ModalButtons = styled.div`
 
 class Content extends React.Component {
   state = {
-    showModal: false
+    showModal: false,
+    modalSublistText: 'Ungrouped' 
   }
-  toggleModal = () => {
+  toggleModal = (modalSublistText) => {
     this.setState({
       showModal: !this.state.showModal
+    });
+  }
+  setModalSublistText = (modalSublistText) => {
+    this.setState({
+      modalSublistText
     });
   }
   handleAddLink = (url, title) => {
@@ -79,7 +85,11 @@ class Content extends React.Component {
           <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
             <React.Fragment>
               <h1>{list.title} {match.url.replace(/\/app\//, '')}</h1>
-              <Links links={this.props.ungrouppedLinks} toggleModal={this.toggleModal} />              
+              <Links 
+                links={this.props.ungroupedLinks} 
+                toggleModal={this.toggleModal} 
+                setModalSublistText={this.setModalSublistText}  
+              />              
               <LinksGroupContainer>
                 {Object.keys(this.props.sublistLinks).map((item, index) => (                
                   <Sublist 
@@ -87,6 +97,7 @@ class Content extends React.Component {
                     title={item} 
                     links={this.props.sublistLinks[item]} 
                     toggleModal={this.toggleModal}
+                    setModalSublistText={this.setModalSublistText}
                   />
                 ))}
               </LinksGroupContainer>
@@ -105,7 +116,7 @@ class Content extends React.Component {
           }}>
             <ModalSublist>
               <label>Sublist:</label>
-              <div>React</div>
+              <div>{this.state.modalSublistText}</div>
             </ModalSublist>
             <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
             <input 
@@ -138,7 +149,7 @@ export default props => (
           {...props} 
           lists={data.lists} 
           allLinks={data.allLinks}
-          ungrouppedLinks={data.links.filter(link => !link.sublist)} 
+          ungroupedLinks={data.links.filter(link => !link.sublist)} 
           sublistLinks={sublistLinks.reduce((accumulator, currentValue, currentIndex) => {
             if (accumulator[currentValue.sublist]) {
               accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);

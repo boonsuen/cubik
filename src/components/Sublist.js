@@ -20,7 +20,9 @@ export default class Sublist extends React.Component {
         <LinksGroupTitle>{this.props.title}</LinksGroupTitle>
         <Links 
           links={[...this.props.links].reverse()} 
-          toggleModal={this.props.toggleModal}  
+          toggleModal={this.props.toggleModal}    
+          setModalSublistText={this.props.setModalSublistText}
+          title={this.props.title}        
         />
       </LinksGroup>
     );

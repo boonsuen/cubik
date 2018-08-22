@@ -197,8 +197,7 @@ class CubikApp extends React.Component {
               }}>             
                 <StyledApp>
                   <Sidebar toggleAuth={toggleAuth} openModal={this.handleModal} />
-                  <Content />
-                  
+                  <Content />                  
                 </StyledApp>
               </DataContext.Provider>
             )

@@ -60,23 +60,20 @@ const RightIcon = styled.button`
 `
 
 export default class Links extends React.Component {
-  state = {
-    showModal: false
-  }
-  toggleModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
-  }
-  handleAddLink = (url, title) => {
-    console.log(url, title);
-  }
   render() {
     return (
       <LinksWrapper>      
         <LinkAction>
-          <LeftIcon type="button" onClick={this.props.toggleModal}>
-            <img src={AddIcon} />
+          <LeftIcon type="button" onClick={() => {
+            this.props.toggleModal();
+            if (this.props.title) {
+              this.props.setModalSublistText(this.props.title);
+            } else {
+              this.props.setModalSublistText('Ungrouped');
+            }            
+          }}>
+            <img src={AddIcon} 
+          />
           </LeftIcon>
           <LeftIcon type="button">
             <img src={EditIcon} />
