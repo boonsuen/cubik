@@ -62,17 +62,19 @@ class Signup extends React.Component {
                 }}
               >
                 <AuthFormGroup>
-                  <AuthFormLabel>Email</AuthFormLabel>
+                  <AuthFormLabel htmlFor="email">Email</AuthFormLabel>
                   <AuthFormInput
                     type="email" placeholder="you@example.com" 
                     spellCheck="false" onChange={this.onEmailChange}
+                    id="email"
                   />
                 </AuthFormGroup>
                 <AuthFormGroup>
-                  <AuthFormLabel>Password</AuthFormLabel>
+                  <AuthFormLabel htmlFor="password">Password</AuthFormLabel>
                   <AuthFormInput 
-                    type="password" placeholder="Enter your password"
-                    spellCheck="false" onChange={this.onPasswordChange}                    
+                    type="password" placeholder="Enter your password" 
+                    spellCheck="false" onChange={this.onPasswordChange}
+                    id="password"
                   />
                 </AuthFormGroup>
                 <div>
