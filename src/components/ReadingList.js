@@ -10,7 +10,12 @@ class ReadingList extends React.Component {
         <h1>Reading List</h1>
         <LinksGroupContainer>
           {this.props.allLinks.sublists.map((sublist) => (
-            <Sublist key={sublist.id} title={sublist.title} links={sublist.links} />
+            <Sublist 
+              key={sublist.id} 
+              title={sublist.title} 
+              links={sublist.links} 
+              toggleModal={this.props.toggleModal}  
+            />
           ))}
         </LinksGroupContainer>
       </React.Fragment>

@@ -130,7 +130,7 @@ const AddLinkModal = styled(ReactModalAdapter)`
 
   h2 {
     font-size: 25px;
-    margin-top: 0;
+    margin: 0 0 10px 0;
   }
 
   input {
@@ -154,11 +154,6 @@ const AddLinkModal = styled(ReactModalAdapter)`
     &::placeholder {
       color: #d4d4df;
     }
-  }
-
-  form div {
-    display: flex;
-    justify-content: space-between;
   }
 
   button {

@@ -10,7 +10,12 @@ class Uncategorised extends React.Component {
         <h1>Uncategorised links</h1>
         <LinksGroupContainer>
           {this.props.allLinks.sublists.map((sublist) => (
-            <Sublist key={sublist.id} title={sublist.title} links={sublist.links} />
+            <Sublist 
+              key={sublist.id} 
+              title={sublist.title} 
+              links={sublist.links} 
+              toggleModal={this.props.toggleModal}  
+            />
           ))}
         </LinksGroupContainer>
       </React.Fragment>

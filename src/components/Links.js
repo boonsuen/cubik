@@ -73,34 +73,9 @@ export default class Links extends React.Component {
   }
   render() {
     return (
-      <LinksWrapper>
-        <AddLinkModal
-          isOpen={this.state.showModal}
-          onRequestClose={this.toggleModal}
-          contentLabel="Add New Link Modal"
-        >
-          <h2>Add link</h2>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            this.handleAddLink(this.inputUrl.value, this.inputTitle.value);
-          }}>
-            <input 
-              placeholder="URL"
-              ref={(el) => { this.inputUrl = el }} 
-              autoFocus  
-            />
-            <input 
-              placeholder="Title"
-              ref={(el) => { this.inputTitle = el }} 
-            />
-            <div>
-              <button type="submit">Add</button>
-              <button onClick={this.toggleModal} type="button">Cancel</button>
-            </div>
-          </form>
-        </AddLinkModal>
+      <LinksWrapper>      
         <LinkAction>
-          <LeftIcon type="button" onClick={this.toggleModal}>
+          <LeftIcon type="button" onClick={this.props.toggleModal}>
             <img src={AddIcon} />
           </LeftIcon>
           <LeftIcon type="button">
