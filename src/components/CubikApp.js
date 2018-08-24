@@ -104,11 +104,10 @@ class Loading extends React.Component {
     });
 
     loadFirebaseAuthState.then((user => {    
-      if (user.auth === false) {
-        this.props.toggleAuth(user.auth, 'done');
-        return;
-      }
-      this.props.doneLoadingFirebaseAuth(!user.auth, user.id, user.lists, user.links);
+      this.props.toggleAuth(user.auth, 'done');
+      if (user.auth === true) {
+        this.props.doneLoadingFirebaseAuth(user.auth, user.id, user.lists, user.links);
+      }      
     }));
   }
   render() {
@@ -130,9 +129,9 @@ class Loading extends React.Component {
 }
 
 class CubikApp extends React.Component {
-  doneLoadingFirebaseAuth = (auth, userId, lists, links) => {
+  doneLoadingFirebaseAuth = (authStatus, userId, lists, links) => {
     this.setState({
-      loadingFirebaseAuth: auth,
+      loadingFirebaseAuth: !authStatus,
       user: {
         id: userId
       },
