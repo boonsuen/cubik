@@ -1,5 +1,6 @@
 import React from 'react';
 import { Head } from 'react-static';
+import styled from 'styled-components';
 
 import auth from '../firebase/auth';
 import { AuthContext } from '../App';
@@ -13,7 +14,7 @@ import {
   AuthFormButton
 } from './Login';
 
-const SignupButton = AuthFormButton.extend`
+const SignupButton = styled(AuthFormButton)`
   width: 165px;
 `;
 

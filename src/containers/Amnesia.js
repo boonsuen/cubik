@@ -1,7 +1,8 @@
 import React from 'react';
 import { Head } from 'react-static';
+import styled from 'styled-components';
 
-const ResetPasswordButton = AuthFormButton.extend`
+const ResetPasswordButton = styled(AuthFormButton)`
   width: 155px;
 `;
 

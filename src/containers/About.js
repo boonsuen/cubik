@@ -129,7 +129,7 @@ const About = () => (
           nor too simple. It's out of the reach of my domain of expertise. 
         </AboutBoxParagraph>
         <AboutBoxParagraph>
-          Also, Cubik served well as a project that let me practice my coding 
+          Also, Cubik serves well as a project that let me practice my coding 
           skill. Side projects are always the best way to let us developers
           learn new stuff while actually building something useful.
         </AboutBoxParagraph>
