@@ -15,7 +15,7 @@ const LinksWrapper = styled.div`
   width: 510px;
 `;
 
-const StyledLinks = styled.a`
+const StyledLink = styled.a`
   width: 100%;
   height: 105px;
   padding: 30px;
@@ -83,9 +83,9 @@ export default class Links extends React.Component {
           </RightIcon>
         </LinkAction>
         {this.props.links.map(link => (
-          <StyledLinks key={link.id} href={link.url} target="_blank">
+          <StyledLink key={link.id} href={link.url} target="_blank">
             {link.title}
-          </StyledLinks>
+          </StyledLink>
         ))}      
       </LinksWrapper>
     );
