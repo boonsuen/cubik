@@ -148,7 +148,7 @@ class Sidebar extends React.Component {
         });
       })
       .catch(function(error) {
-          console.error("Error adding document: ", error);
+        console.error("Error adding document: ", error);
       });
     });
   }  

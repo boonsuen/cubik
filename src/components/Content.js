@@ -9,6 +9,7 @@ import Trash from './Trash';
 import Links from './Links';
 import { AddLinkModal } from './Modals';
 
+import db from '../firebase/db';
 import { DataContext } from './CubikApp';
 import { LinksGroupContainer } from './app.css';
 
@@ -38,6 +39,9 @@ const ModalSublist = styled.div`
     text-align: center;
     line-height: 32px;
     border-radius: 5px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -69,6 +73,17 @@ class Content extends React.Component {
   }
   handleAddLink = (url, title) => {
     console.log(url, title);
+    db.collection(`users/${this.props.userId}/lists/4W8P97ezy7tkgvtuSAcu/links`).add({
+      sublist: 'Closures',
+      title,
+      url,
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
   }
   render () {
     return (
@@ -112,7 +127,10 @@ class Content extends React.Component {
           <h2>Add link</h2>
           <form onSubmit={(e) => {
             e.preventDefault();
-            this.handleAddLink(this.inputUrl.value, this.inputTitle.value);
+            this.handleAddLink(
+              this.inputUrl.value, 
+              this.inputTitle.value,
+            );
           }}>
             <ModalSublist>
               <label>Sublist:</label>
@@ -147,6 +165,7 @@ export default props => (
         const sublistLinks = data.links.filter(link => link.sublist);
         return <Content 
           {...props} 
+          userId={data.user.id}
           lists={data.lists} 
           allLinks={data.allLinks}
           ungroupedLinks={data.links.filter(link => !link.sublist)} 
