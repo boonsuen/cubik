@@ -61,7 +61,7 @@ class Content extends React.Component {
     showModal: false,
     modalSublistText: 'Ungrouped' 
   }
-  toggleModal = (modalSublistText) => {
+  toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
     });
@@ -71,10 +71,10 @@ class Content extends React.Component {
       modalSublistText
     });
   }
-  handleAddLink = (url, title) => {
-    console.log(url, title);
+  handleAddLink = (sublist, url, title) => {
+    console.log(sublist, url, title);
     db.collection(`users/${this.props.userId}/lists/4W8P97ezy7tkgvtuSAcu/links`).add({
-      sublist: 'Closures',
+      sublist,
       title,
       url,
     })
@@ -127,9 +127,11 @@ class Content extends React.Component {
           <h2>Add link</h2>
           <form onSubmit={(e) => {
             e.preventDefault();
+            const sublist = this.state.modalSublistText === 'Ungrouped' ? null : this.state.modalSublistText;
             this.handleAddLink(
+              sublist,
               this.inputUrl.value, 
-              this.inputTitle.value,
+              this.inputTitle.value,        
             );
           }}>
             <ModalSublist>

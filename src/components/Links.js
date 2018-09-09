@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AddLinkModal } from './Modals';
 
 import AddIcon from '../img/icons/add.svg';
 import EditIcon from '../img/icons/edit.svg';
