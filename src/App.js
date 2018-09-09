@@ -110,6 +110,7 @@ class App extends React.Component {
             <Route path="/nolayout" render={() => (<NoLayout />)} />
             <Route path="/app" render={({location}) => {
               if (firebaseAuth === 'done') {
+                console.log("firebaseAuth === 'done'");
                 return auth
                   ? (
                     <AuthContext.Provider value={this.state}>
@@ -117,6 +118,7 @@ class App extends React.Component {
                     </AuthContext.Provider>
                   ) : <Redirect to="/login" />
               } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {
+                console.log("firebaseAuth === 'loading' || firebaseAuth === 'initial'");
                 return (
                   <AuthContext.Provider value={this.state}>
                     <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
