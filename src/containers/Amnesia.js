@@ -2,10 +2,6 @@ import React from 'react';
 import { Head } from 'react-static';
 import styled from 'styled-components';
 
-const ResetPasswordButton = styled(AuthFormButton)`
-  width: 155px;
-`;
-
 import auth from '../firebase/auth';
 import {
   AuthFormGroup,
@@ -13,6 +9,10 @@ import {
   AuthFormInput,
   AuthFormButton
 } from './Login';
+
+const ResetPasswordButton = styled(AuthFormButton)`
+  width: 155px;
+`;
 
 class Amnesia extends React.Component {
   state = {
