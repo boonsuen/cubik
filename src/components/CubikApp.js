@@ -174,7 +174,7 @@ class CubikApp extends React.Component {
     return (
       <React.Fragment>
         <Head>
-          <title>App</title>
+          <title>Dashboard - Cubik</title>
         </Head>
         <AuthContext.Consumer>
         {({auth, firebaseAuth, toggleAuth}) => {

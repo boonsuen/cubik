@@ -138,14 +138,12 @@ class Sidebar extends React.Component {
       })
       .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
-        this.setState((state) => {
-          return {
-            lists: [
-              ...state.lists.filter(list => list.id !== 'temporary-id'),
-              {title: inputValue, id: docRef.id}
-            ]
-          }
-        });
+        this.setState((state) => ({
+          lists: [
+            ...state.lists.filter(list => list.id !== 'temporary-id'),
+            {title: inputValue, id: docRef.id}
+          ]
+        }));
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);

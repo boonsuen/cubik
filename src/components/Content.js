@@ -59,7 +59,8 @@ const ModalButtons = styled.div`
 class Content extends React.Component {
   state = {
     showModal: false,
-    modalSublistText: 'Ungrouped' 
+    modalSublistText: 'Ungrouped',
+    sublistLinks: this.props.sublistLinks
   }
   toggleModal = () => {
     this.setState({
@@ -80,8 +81,24 @@ class Content extends React.Component {
     })
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
+      this.setState((state) => {
+        const sublistLinks = {...state.sublistLinks}
+        sublistLinks[sublist].push({
+          id: docRef.id,
+          sublist,
+          title,
+          url
+        });
+        return {
+          sublistLinks
+        }
+      }, () => {
+        this.setState((state) => ({
+          showModal: !state.showModal,
+        }));
+      });
     })
-    .catch(function(error) {
+    .catch((error) => {
       console.error("Error adding document: ", error);
     });
   }
@@ -106,11 +123,11 @@ class Content extends React.Component {
                 setModalSublistText={this.setModalSublistText}  
               />              
               <LinksGroupContainer>
-                {Object.keys(this.props.sublistLinks).map((item, index) => (                
+                {Object.keys(this.state.sublistLinks).map((item, index) => (                
                   <Sublist 
                     key={`SublistLinks-${index}`} 
                     title={item} 
-                    links={this.props.sublistLinks[item]} 
+                    links={this.state.sublistLinks[item]} 
                     toggleModal={this.toggleModal}
                     setModalSublistText={this.setModalSublistText}
                   />
