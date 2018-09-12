@@ -158,13 +158,13 @@ class Content extends React.Component {
             <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
             <input 
               id="link-url" placeholder="https://..."
-              ref={(el) => { this.inputUrl = el }} 
+              ref={(el) => { this.inputUrl = el }} autoComplete="off"
               autoFocus  
             />
             <ModalInputLabel htmlFor="link-title">Title</ModalInputLabel>
             <input 
               id="link-title" placeholder="Enter the title (optional)"
-              ref={(el) => { this.inputTitle = el }} 
+              ref={(el) => { this.inputTitle = el }} autoComplete="off"
             />
             <ModalButtons>
               <button type="submit">Add</button>
