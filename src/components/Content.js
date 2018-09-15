@@ -81,18 +81,15 @@ class Content extends React.Component {
     })
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
-      this.setState((state) => {
-        const sublistLinks = {...state.sublistLinks}
-        sublistLinks[sublist].push({
-          id: docRef.id,
-          sublist,
-          title,
-          url
-        });
-        return {
-          sublistLinks
+      this.setState(prevState => ({
+        sublistLinks: {
+          ...prevState.sublistLinks,
+          [sublist]: [
+            ...prevState.sublistLinks[sublist],
+            { id: docRef.id, sublist, title, url }
+          ]        
         }
-      }, () => {
+      }), () => {
         this.setState((state) => ({
           showModal: !state.showModal,
         }));
