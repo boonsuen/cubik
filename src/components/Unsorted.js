@@ -3,11 +3,11 @@ import Sublist from './Sublist';
 
 import { LinksGroupContainer } from './app.css';
 
-class Uncategorised extends React.Component {
+class Unsorted extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Uncategorised links</h1>
+        <h1>Unsorted links</h1>
         <LinksGroupContainer>
           {this.props.allLinks.sublists.map((sublist) => (
             <Sublist 
@@ -23,4 +23,4 @@ class Uncategorised extends React.Component {
   }
 }
 
-export default Uncategorised;
+export default Unsorted;

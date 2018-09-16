@@ -177,9 +177,9 @@ class Sidebar extends React.Component {
               <img src={Clock} alt="Reading List" />
               <GivenListsText>Reading List</GivenListsText>
             </Link>
-            <Link to="/app/uncategorised">
-              <img src={Boxes} alt="Uncategorized" />
-              <GivenListsText>Uncategorised</GivenListsText>
+            <Link to="/app/unsorted">
+              <img src={Boxes} alt="Unsorted" />
+              <GivenListsText>Unsorted</GivenListsText>
             </Link>
             <Link to="/app/trash">
               <img src={Trash} alt="Trash" />

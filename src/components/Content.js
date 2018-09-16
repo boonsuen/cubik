@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Sublist from './Sublist';
 import AllLinks from './AllLinks';
 import ReadingList from './ReadingList';
-import Uncategorised from './Uncategorised';
+import Unsorted from './Unsorted';
 import Trash from './Trash';
 import Links from './Links';
 import { AddLinkModal } from './Modals';
@@ -106,8 +106,8 @@ class Content extends React.Component {
           () => <AllLinks allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />
         <Route path="/app/reading-list" render={
           () => <ReadingList allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
-        <Route path="/app/uncategorised" render={
-          () => <Uncategorised allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
+        <Route path="/app/unsorted" render={
+          () => <Unsorted allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
         <Route path="/app/trash" render={
           () => <Trash allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
         {this.props.lists.map((list) => (
