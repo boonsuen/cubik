@@ -12,6 +12,7 @@ const LinksWrapper = styled.div`
   margin-bottom: 20px;
   background: white;
   width: 510px;
+  border-radius: 5px;
 `;
 
 const StyledLink = styled.a`
@@ -32,6 +33,11 @@ const StyledLink = styled.a`
     box-shadow: 0 2px 8px #8f94ff;
     z-index: 1;
     border-radius: 5px;
+  }
+
+  &:last-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 `;
 
