@@ -6060,7 +6060,7 @@ react-dev-utils@^4.0.1:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-react-dom@^16, react-dom@^16.0.0:
+react-dom@16.4.1, react-dom@^16:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.1.tgz#7f8b0223b3a5fbe205116c56deb85de32685dad6"
   dependencies:
@@ -6163,9 +6163,9 @@ react-static-plugin-styled-components@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-static-plugin-styled-components/-/react-static-plugin-styled-components-1.0.6.tgz#0016a0ba93fafe6a01b3a5e77b88285352963320"
 
-react-static@^5.9.7:
-  version "5.9.7"
-  resolved "https://registry.yarnpkg.com/react-static/-/react-static-5.9.7.tgz#86a420c4ef267bedb1603db5d7b1d6ebe5ffdaab"
+react-static@^5.9.8:
+  version "5.9.8"
+  resolved "https://registry.yarnpkg.com/react-static/-/react-static-5.9.8.tgz#043c04948bda99efb98186de3c10ed9aa4a52974"
   dependencies:
     "@types/react" "^16.0.18"
     "@types/react-helmet" "^5.0.3"
@@ -6243,7 +6243,7 @@ react-universal-component@^2.8.1:
     hoist-non-react-statics "^2.2.1"
     prop-types "^15.5.10"
 
-react@^16, react@^16.0.0:
+react@16.4.1, react@^16:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
   dependencies:
