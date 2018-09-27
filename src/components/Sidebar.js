@@ -170,12 +170,12 @@ class Sidebar extends React.Component {
         <SidebarUpper>
           <GivenLists>
             <Link to="/app">
-              <img src={Home} alt="Home" />
+              <img src={Home} alt="All Links" />
               <GivenListsText>All links</GivenListsText>
             </Link>
             <Link to="/app/reading-list">
-              <img src={Clock} alt="Reading List" />
-              <GivenListsText>Reading List</GivenListsText>
+              <img src={Clock} alt="Reading list" />
+              <GivenListsText>Reading list</GivenListsText>
             </Link>
             <Link to="/app/unsorted">
               <img src={Boxes} alt="Unsorted" />
