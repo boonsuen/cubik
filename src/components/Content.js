@@ -19,6 +19,10 @@ const StyledContent = styled.div`
   box-sizing: border-box;
   padding: 50px;
   overflow-y: scroll;
+
+  h1 {
+    font-size: 36px;
+  }
 `;
 
 const ModalSublist = styled.div`
