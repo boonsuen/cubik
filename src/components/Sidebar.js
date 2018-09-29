@@ -54,6 +54,9 @@ const UserLists = styled.div`
   margin-top: 10px;
 
   a {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #8080a2;
     display: block;
     padding: 8px 0 8px 0;
