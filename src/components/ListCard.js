@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import LinkIcon from '../img/icons/link.svg';
 import GroupIcon from '../img/icons/group.svg';
 
-const StyledListCard = styled.div`
+const StyledListCard = styled.a`
   width: 300px;
   height: 180px;
   background: #fff;
@@ -31,7 +31,7 @@ const ListCardStats = styled.div`
   span {
     display: inline-flex;
     align-items: flex-end;
-    margin-right: 12px;
+    margin-right: 16px;
     height: 28px;
   }
 
@@ -51,20 +51,20 @@ const Underlying = styled.div`
   border-radius: 10px;
   top: 4px;
   right: -6px;
-  background: #c2c4ff;
+  background: ${props => props.bgColor ? props.bgColor : '#c2c4ff'};
   z-index: -1;
   position: absolute;
 `;
 
-const ListCard = ({ title }) => (
-  <StyledListCard>
+const ListCard = ({ title, bgColor }) => (
+  <StyledListCard href="#">
     <ListCardStats>
       <span><img src={LinkIcon} />30 links</span>
       <span><img src={GroupIcon} />5 groups</span>
     </ListCardStats>
     <h3>{title}</h3>
     <span>Last updated on 29th Sep 18</span>
-    <Underlying />
+    <Underlying bgColor={bgColor} />
   </StyledListCard>
 );
 

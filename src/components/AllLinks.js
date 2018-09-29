@@ -18,10 +18,10 @@ const TabButton = styled.button`
   box-shadow: ${props => props.primary && '0 1px 5px #c8afff'};
 `;
 
-const CardContainer = styled.div`
-  display: flex;
+const CardsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
   justify-content: space-between;
-  flex-wrap: wrap;
   margin-top: 60px;
   position: relative;
   z-index: 0;
@@ -49,12 +49,13 @@ class AllLinks extends React.Component {
           onClick={this.handleTabSwitch} type="button"
           primary={this.state.activeTab === 'alllinks'}>All links
         </TabButton>
-        <CardContainer>
+        <CardsContainer>
           <ListCard title="JavaScript" />
-          <ListCard title="GraphQL" />
-          <ListCard title="Serverless" />
-          <ListCard title="Learning Materials" />
-        </CardContainer>
+          <ListCard title="GraphQL" bgColor="#a5bdfd" />
+          <ListCard title="Serverless" bgColor="#cec2ff" />
+          <ListCard title="Learning Materials" bgColor="#d9f2ff" />
+          <ListCard title="Web Performance & Optimization" bgColor="#eed6ff" />
+        </CardsContainer>
     
         <LinksGroupContainer>
           {this.props.allLinks.sublists.map((sublist) => (
