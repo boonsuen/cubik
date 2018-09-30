@@ -106,8 +106,13 @@ class Content extends React.Component {
   render () {
     return (
       <StyledContent>
-        <Route path="/app" render={
-          () => <AllLinks allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />
+        <Route path="/app" render={() => (
+          <AllLinks 
+            allLinks={this.props.allLinks} 
+            lists={this.props.lists}
+            toggleModal={this.toggleModal} 
+          /> 
+        )} exact />
         <Route path="/app/reading-list" render={
           () => <ReadingList allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
         <Route path="/app/unsorted" render={
@@ -200,11 +205,13 @@ export default props => (
           }, {})}
         />
       } else {
-        return <Content 
-          {...props} 
-          lists={data.lists} 
-          allLinks={data.allLinks}
-        />
+        return (
+          <Content 
+            {...props} 
+            lists={data.lists} 
+            allLinks={data.allLinks}
+          />
+        );
       }
     }}
   </DataContext.Consumer>

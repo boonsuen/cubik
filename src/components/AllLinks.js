@@ -38,6 +38,12 @@ class AllLinks extends React.Component {
     }));
   }
   render() {
+    const colors = ['#c2c4ff', '#a5bdfd', '#cec2ff', '#d9f2ff', '#eed6ff'];
+    const newListsArr = this.props.lists.map((list, i) => ({
+      ...list, 
+      bgColor: colors[i]
+    }));
+
     return (
       <React.Fragment>
         <h1>Your links</h1>
@@ -50,11 +56,14 @@ class AllLinks extends React.Component {
           primary={this.state.activeTab === 'alllinks'}>All links
         </TabButton>
         <CardsContainer>
-          <ListCard title="JavaScript" />
+          {newListsArr.map((list, i) => 
+            <ListCard key={`ListCard-${i}`} title={list.title} bgColor={list.bgColor} />
+          )}
+          {/* <ListCard title="JavaScript" />
           <ListCard title="GraphQL" bgColor="#a5bdfd" />
           <ListCard title="Serverless" bgColor="#cec2ff" />
           <ListCard title="Learning Materials" bgColor="#d9f2ff" />
-          <ListCard title="Web Performance & Optimization" bgColor="#eed6ff" />
+          <ListCard title="Web Performance & Optimization" bgColor="#eed6ff" /> */}
         </CardsContainer>
     
         <LinksGroupContainer>
