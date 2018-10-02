@@ -56,8 +56,13 @@ class AllLinks extends React.Component {
           primary={this.state.activeTab === 'alllinks'}>All links
         </TabButton>
         <CardsContainer>
-          {newListsArr.map((list, i) => 
-            <ListCard key={`ListCard-${i}`} title={list.title} bgColor={list.bgColor} />
+          {newListsArr.map(list => 
+            <ListCard 
+              id={list.id} 
+              title={list.title} 
+              bgColor={list.bgColor} 
+              key={`ListCard-${list.id}`} 
+            />
           )}
           {/* <ListCard title="JavaScript" />
           <ListCard title="GraphQL" bgColor="#a5bdfd" />

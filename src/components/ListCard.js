@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-static';
 
 import LinkIcon from '../img/icons/link.svg';
 import GroupIcon from '../img/icons/group.svg';
 
-const StyledListCard = styled.a`
+const StyledListCard = styled(Link)`
   width: 300px;
   height: 180px;
   background: #fff;
@@ -56,8 +57,8 @@ const Underlying = styled.div`
   position: absolute;
 `;
 
-const ListCard = ({ title, bgColor }) => (
-  <StyledListCard href="#">
+const ListCard = ({ id, title, bgColor }) => (
+  <StyledListCard to={`/app/${id}`}>
     <ListCardStats>
       <span><img src={LinkIcon} />30 links</span>
       <span><img src={GroupIcon} />5 groups</span>
