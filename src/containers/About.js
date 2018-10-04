@@ -20,39 +20,23 @@ const FirstRow = styled.div`
 `;
 
 const Bio = styled.div`
-  width: 340px;
+  width: 220px;
   height: 170px;
   background: #fffafa;
   border: 1px solid #ffd1d1;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 30px;
   box-sizing: border-box;
-`;
-
-const BioText = styled.div`
-  width: 172px;
-  margin-left: auto;
-
-  h3 {
-    color: #102d3e;
-    margin: 0;
-    font-size: 25px;
-    font-weight: 400;
-  }
-
-  p {
-    margin: 4px 0 0 0;
-    color: #2b2b77;
-  }
 `;
 
 const BioImg = styled.img`
   width: 85px;
   height: 85px;
   border-radius: 50%;
+  box-shadow: 0 1px 7px #ecedff;
 `;
 
 const WhyBox = styled.div`
@@ -111,10 +95,6 @@ const About = () => (
     <FirstRow>
       <Bio>
         <BioImg src={avatar} />
-        <BioText>
-          <h3>Boonsuen Oh</h3>
-          <p>Not sure how much caffeine I've consumed.</p>
-        </BioText>
       </Bio>
       <WhyBox>
         <AboutBoxTitle>Why I built it.</AboutBoxTitle>
