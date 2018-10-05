@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
   plugins: ['react-static-plugin-styled-components'],
