@@ -129,7 +129,7 @@ class Content extends React.Component {
                 setModalSublistText={this.setModalSublistText}  
               />              
               <LinksGroupContainer>
-                {Object.keys(this.state.sublistLinks).map((item, index) => (                
+                {Object.keys(this.state.sublistLinks).map((item, index) => (
                   <Sublist 
                     key={`SublistLinks-${index}`} 
                     title={item} 
