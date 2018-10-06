@@ -1,6 +1,6 @@
 # Cubik
 A webapp for saving and organising links.  
-Some usage includes knowledge base, reading list, or simple reference. Use it the way you like it.
+Some usage includes knowledge base, reading list, or simple reference. Use it the way you like.
 
 The stack:
 - React Static

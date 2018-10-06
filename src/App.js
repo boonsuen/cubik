@@ -131,10 +131,10 @@ class App extends React.Component {
                 path="/" 
                 render={() => <Redirect to="/app" />} 
               />
-            }        
+            } 
             <React.Fragment>
               <NavWrapper className="container">
-                <Logo exact to="/">Cubik</Logo>
+                <Logo to="/">Cubik</Logo>
                 <StyledNav>
                   <NavItem to="/about">About</NavItem>
                   <NavItem to="/blog">Blog</NavItem>

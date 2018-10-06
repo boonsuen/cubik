@@ -1,7 +1,6 @@
 {
   "name": "cubik",
   "version": "1.0.1",
-  "main": "index.js",
   "repository": "github:boonsuen/cubik",
   "license": "MIT",
   "scripts": {

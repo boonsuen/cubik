@@ -49,13 +49,13 @@ export default {
         component: 'src/containers/Amnesia'
       },
       {
-        path: '/app',
-        component: 'src/components/CubikApp'
-      },
-      {
         path: '/nolayout',
         component: 'src/containers/NoLayout'
       },
+      {
+        path: '/app',
+        component: 'src/components/CubikApp'
+      },      
       {
         is404: true,
         component: 'src/containers/404'
