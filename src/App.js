@@ -5,13 +5,15 @@ import {
   Route, 
   Head, 
   Switch, 
-  Redirect 
+  Redirect,
+  cleanPath
 } from 'react-static';
 import Routes from 'react-static-routes';
 import universal from 'react-universal-component';
 import styled from 'styled-components';
 
 const NoLayout = universal(import('./containers/NoLayout'));
+const NonStatic = universal(import('./containers/NonStatic'));
 const CubikApp = universal(import('./components/CubikApp'));
 import './injectGlobal.css';
 import favicon from './img/favicon.png';
@@ -68,7 +70,65 @@ const getLocalAuth = (name) => {
   }
 }
 
-class App extends React.Component {
+const LayoutWrapper = ({ children, toggleAuth }) => (
+  <React.Fragment>
+    <NavWrapper className="container">
+      <Logo to="/">Cubik</Logo>
+      <StyledNav>
+        <NavItem to="/about">About</NavItem>
+        <NavItem to="/blog">Blog</NavItem>
+        <NavItem to="/login">Login</NavItem>
+        <NavItem to="/signup">Signup</NavItem>
+      </StyledNav>
+    </NavWrapper>
+    <div className="container">
+      <AuthContext.Provider value={toggleAuth}>
+        {children}
+      </AuthContext.Provider>
+    </div>
+    <StyledFooter className="container">
+      <Link to="/about">About</Link>
+      <a href="https://twitter.com/boon_suen" target="_blank">
+        Twitter
+      </a>
+    </StyledFooter>
+  </React.Fragment>
+);
+
+// The magic :)
+const RenderRoutes = ({ getComponentForPath, staticURL, toggleAuth }) => (
+  <Route
+    path="*"
+    render={props => {
+      // Get the component for the path
+      let Comp = getComponentForPath(cleanPath(props.location.pathname))
+      if (!Comp) {
+        Comp = getComponentForPath('404')
+      }
+      if (staticURL) {
+        if (props.location.pathname === '/404') {
+          // Not having any prerendered content for static routes
+          return null;
+        }
+        return (
+          // The flash, the prerendered        
+          <LayoutWrapper toggleAuth={toggleAuth}>
+            <Comp {...props} />
+          </LayoutWrapper>
+        );
+      } else {
+        return (          
+          // The final, when React hydrated
+          <LayoutWrapper toggleAuth={toggleAuth}>
+            <Comp {...props} />
+          </LayoutWrapper>
+        );
+      }
+    }}
+  />
+);
+
+export default class App extends React.Component {
   toggleAuth = (auth, firebaseAuth) => {
     this.setState({
       auth,
@@ -108,6 +168,7 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route path="/nolayout" render={() => (<NoLayout />)} />
+            <Route path="/nonstatic" render={() => (<NonStatic />)} />
             <Route path="/app" render={({location}) => {
               if (firebaseAuth === 'done') {
                 console.log("firebaseAuth === 'done'");
@@ -132,33 +193,16 @@ class App extends React.Component {
                 render={() => <Redirect to="/app" />} 
               />
             } 
-            <React.Fragment>
-              <NavWrapper className="container">
-                <Logo to="/">Cubik</Logo>
-                <StyledNav>
-                  <NavItem to="/about">About</NavItem>
-                  <NavItem to="/blog">Blog</NavItem>
-                  <NavItem to="/login">Login</NavItem>
-                  <NavItem to="/signup">Signup</NavItem>
-                </StyledNav>
-              </NavWrapper>
-              <div className="container">
-                <AuthContext.Provider value={this.state.toggleAuth}>
-                  <Routes />
-                </AuthContext.Provider>
-              </div>
-              <StyledFooter className="container">
-                <Link to="/about">About</Link>
-                <a href="https://twitter.com/boon_suen" target="_blank">
-                  Twitter
-                </a>
-              </StyledFooter>
-            </React.Fragment>
+            <Routes render={
+              ({ getComponentForPath }) =>
+                <RenderRoutes
+                  toggleAuth={this.state.toggleAuth}
+                  getComponentForPath={getComponentForPath}
+                />
+            } />
           </Switch>
         </Router>
       </React.Fragment>
     );
   }
 }
-
-export default App;
