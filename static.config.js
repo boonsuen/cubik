@@ -96,5 +96,6 @@ export default {
 
     return config;
   },
-  disableRouteInfoWarning: true
+  disableRouteInfoWarning: true,
+  bundleAnalyzer: false
 };
