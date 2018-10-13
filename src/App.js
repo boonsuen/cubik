@@ -96,37 +96,40 @@ const LayoutWrapper = ({ children, toggleAuth }) => (
 );
 
 // The magic :)
-const RenderRoutes = ({ getComponentForPath, staticURL, toggleAuth }) => (
-  <Route
-    path="*"
-    render={props => {
-      // Get the component for the path
-      let Comp = getComponentForPath(cleanPath(props.location.pathname))
-      if (!Comp) {
-        Comp = getComponentForPath('404')
-      }
-      if (staticURL) {
-        if (props.location.pathname === '/404') {
-          // Not having any prerendered content for static routes
-          return null;
+const RenderRoutes = ({ getComponentForPath, toggleAuth }) => {
+  return (
+    <Route
+      path="*"
+      render={props => {
+        // Get the component for the path
+        let Comp = getComponentForPath(cleanPath(props.location.pathname));
+        if (!Comp) {
+          Comp = getComponentForPath('404');
         }
-        return (
-          // The flash, the prerendered        
-          <LayoutWrapper toggleAuth={toggleAuth}>
-            <Comp {...props} />
-          </LayoutWrapper>
-        );
-      } else {
-        return (          
-          // The final, when React hydrated
-          <LayoutWrapper toggleAuth={toggleAuth}>
-            <Comp {...props} />
-          </LayoutWrapper>
-        );
-      }
-    }}
-  />
-);
+        // If exporting static HTML
+        if (typeof document === 'undefined') {
+          if (props.location.pathname === '/404') {
+            // Not having any prerendered content for static routes
+            return null;
+          }
+          return (
+            // The flash, the prerendered        
+            <LayoutWrapper toggleAuth={toggleAuth}>
+              <Comp {...props} />
+            </LayoutWrapper>
+          );
+        } else {
+          return (          
+            // The final, when React hydrated
+            <LayoutWrapper toggleAuth={toggleAuth}>
+              <Comp {...props} />
+            </LayoutWrapper>
+          );
+        }
+      }}
+    />
+  );
+};
 
 export default class App extends React.Component {
   toggleAuth = (auth, firebaseAuth) => {
