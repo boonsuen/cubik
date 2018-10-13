@@ -172,19 +172,19 @@ class Sidebar extends React.Component {
       <StyledSidebar>
         <SidebarUpper>
           <GivenLists>
-            <Link to="/app">
+            <Link to="/app" prefetch={false}>
               <img src={Home} alt="All Links" />
               <GivenListsText>All links</GivenListsText>
             </Link>
-            <Link to="/app/reading-list">
+            <Link to="/app/reading-list" prefetch={false}>
               <img src={Clock} alt="Reading list" />
               <GivenListsText>Reading list</GivenListsText>
             </Link>
-            <Link to="/app/unsorted">
+            <Link to="/app/unsorted" prefetch={false}>
               <img src={Boxes} alt="Unsorted" />
               <GivenListsText>Unsorted</GivenListsText>
             </Link>
-            <Link to="/app/trash">
+            <Link to="/app/trash" prefetch={false}>
               <img src={Trash} alt="Trash" />
               <GivenListsText>Trash</GivenListsText>
             </Link>
@@ -208,7 +208,7 @@ class Sidebar extends React.Component {
                               snapshot.isDragging,
                               provided.draggableProps.style
                             )}
-                          ><Link to={`/app/${list.id}`}>{list.title}</Link></p>
+                          ><Link to={`/app/${list.id}`} prefetch={false}>{list.title}</Link></p>
                         )}
                       </Draggable>
                     ))}
@@ -218,7 +218,7 @@ class Sidebar extends React.Component {
             </Droppable>
           </DragDropContext>
         </SidebarUpper>
-        <Link to="/app">back</Link>
+        <Link to="/app" prefetch={false}>back</Link>
         <button onClick={this.logoutUser}>Log out</button>
         <SidebarBottom>
           <NewListBtn type="button" onClick={this.toggleModal}>+ New List</NewListBtn>          
