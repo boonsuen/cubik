@@ -55,7 +55,11 @@ export default {
       {
         path: '/app',
         component: 'src/components/CubikApp'
-      },      
+      },
+      {
+        path: '/app/reading-list',
+        component: 'src/components/ReadingList'
+      },
       {
         is404: true,
         component: 'src/containers/404'
