@@ -58,7 +58,7 @@ const Underlying = styled.div`
 `;
 
 const ListCard = ({ id, title, bgColor }) => (
-  <StyledListCard to={`/app/${id}`} prefetch={false}>
+  <StyledListCard to={`/app/${id}`} prefetch={true}>
     <ListCardStats>
       <span><img src={LinkIcon} />30 links</span>
       <span><img src={GroupIcon} />5 groups</span>

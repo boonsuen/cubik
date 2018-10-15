@@ -7194,10 +7194,9 @@ react-static-plugin-styled-components@^1.0.6:
   resolved "https://registry.yarnpkg.com/react-static-plugin-styled-components/-/react-static-plugin-styled-components-1.0.6.tgz#0016a0ba93fafe6a01b3a5e77b88285352963320"
   integrity sha512-x05qzi1F25eCwMWNkS+p+vV8RL6ydoftYoSBc1JyS+SrUjUwKG0fBBMLG51SR3VGBFCvaW3g742vI972nk1e5w==
 
-react-static@^5.9.12:
+"react-static@git+https://git@github.com/boonsuen/react-static.git#templateLoadedBug":
   version "5.9.12"
-  resolved "https://registry.yarnpkg.com/react-static/-/react-static-5.9.12.tgz#4dd5e24b9fa53531c2ccbe966c4223f8b6d0d1bc"
-  integrity sha512-JoK39FMWkF8rtA80R5hx3a50r1WNOIaOoabJgrW4Xs+sCyuldhytiS2SGpk3Q0xrfQrRb4hDrqKBULneNDRThA==
+  resolved "git+https://git@github.com/boonsuen/react-static.git#0421e95e115873d06bf78b9a736f442a2c8b989f"
   dependencies:
     "@types/react" "^16.0.18"
     "@types/react-helmet" "^5.0.3"

@@ -172,19 +172,19 @@ class Sidebar extends React.Component {
       <StyledSidebar>
         <SidebarUpper>
           <GivenLists>
-            <Link to="/app" prefetch={false}>
+            <Link to="/app" prefetch={true}>
               <img src={Home} alt="All Links" />
               <GivenListsText>All links</GivenListsText>
             </Link>
-            <Link to="/app/reading-list" prefetch={false}>
+            <Link to="/app/reading-list" prefetch={true}>
               <img src={Clock} alt="Reading list" />
               <GivenListsText>Reading list</GivenListsText>
             </Link>
-            <Link to="/app/unsorted" prefetch={false}>
+            <Link to="/app/unsorted" prefetch={true}>
               <img src={Boxes} alt="Unsorted" />
               <GivenListsText>Unsorted</GivenListsText>
             </Link>
-            <Link to="/app/trash" prefetch={false}>
+            <Link to="/app/trash" prefetch={true}>
               <img src={Trash} alt="Trash" />
               <GivenListsText>Trash</GivenListsText>
             </Link>
@@ -208,7 +208,7 @@ class Sidebar extends React.Component {
                               snapshot.isDragging,
                               provided.draggableProps.style
                             )}
-                          ><Link to={`/app/${list.id}`} prefetch={false}>{list.title}</Link></p>
+                          ><Link to={`/app/${list.id}`} prefetch={true}>{list.title}</Link></p>
                         )}
                       </Draggable>
                     ))}
@@ -218,7 +218,7 @@ class Sidebar extends React.Component {
             </Droppable>
           </DragDropContext>
         </SidebarUpper>
-        <Link to="/app" prefetch={false}>back</Link>
+        <Link to="/app" prefetch={true}>back</Link>
         <button onClick={this.logoutUser}>Log out</button>
         <SidebarBottom>
           <NewListBtn type="button" onClick={this.toggleModal}>+ New List</NewListBtn>          
