@@ -141,8 +141,6 @@ class CubikApp extends React.Component {
   handleModal = (boolean) => {
     this.setState({showModal: boolean});
   }
-  componentDidMount() {}
-  componentDidUpdate(prevProps, prevState, snapshot) {}
   state = {
     loadingFirebaseAuth: true,
     showModal: false,

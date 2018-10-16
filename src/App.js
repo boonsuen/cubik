@@ -15,7 +15,7 @@ import styled from 'styled-components';
 const NoLayout = universal(import('./containers/NoLayout'));
 const NonStatic = universal(import('./containers/NonStatic'));
 const CubikApp = universal(import('./components/CubikApp'));
-import './injectGlobal.css';
+import GlobalStyle from './GlobalStyle.css';
 import favicon from './img/favicon.png';
 
 const Logo = styled(Link)`
@@ -167,9 +167,10 @@ export default class App extends React.Component {
             }
           `}
           </script>
-        </Head>
+        </Head>      
+        <GlobalStyle />
         <Router>
-          <Switch>
+          <Switch>            
             <Route path="/nolayout" render={() => (<NoLayout />)} />
             <Route path="/nonstatic" render={() => (<NonStatic />)} />
             <Route path="/app" render={({location}) => {
@@ -178,7 +179,7 @@ export default class App extends React.Component {
                 return auth
                   ? (
                     <AuthContext.Provider value={this.state}>
-                      <CubikApp />
+                      <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
                     </AuthContext.Provider>
                   ) : <Redirect to="/login" />
               } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {

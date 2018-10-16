@@ -1,6 +1,6 @@
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: "Avenir Next";
     src: url('/fonts/AvenirNextLTPro-Regular-subset.woff2') format('woff2'),
@@ -81,3 +81,5 @@ injectGlobal`
     margin: auto;
   }
 `;
+
+export default GlobalStyle;
