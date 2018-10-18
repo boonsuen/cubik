@@ -60,6 +60,7 @@ const UserLists = styled.div`
     color: #8080a2;
     display: block;
     padding: 8px 0 8px 0;
+    transition: color .2s;
   }
 
   a.active {
