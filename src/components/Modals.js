@@ -12,6 +12,7 @@ const ReactModalAdapter = ({ className, ...props }) => {
       portalClassName={className}
       className={contentClassName}
       overlayClassName={overlayClassName}
+      closeTimeoutMS={200}
       {...props}
     />
   )
@@ -27,6 +28,19 @@ const AddListModal = styled(ReactModalAdapter)`
     bottom: 0px; 
     background-color: rgba(3, 53, 153, 0.1);
     z-index: 1;
+  }
+
+  .ReactModal__Content {
+    opacity: 0;
+  }
+
+  .ReactModal__Content--after-open {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  .ReactModal__Content--before-close {
+    opacity: 0;
   }
 
   &__content {
@@ -169,6 +183,19 @@ const AddLinkModal = styled(ReactModalAdapter)`
     width: 101px;
     background: #e5e5ff;
     color: #102d3e;
+  }
+
+  .ReactModal__Content {
+    opacity: 0;
+  }
+
+  .ReactModal__Content--after-open {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  .ReactModal__Content--before-close {
+    opacity: 0;
   }
 `;
 
