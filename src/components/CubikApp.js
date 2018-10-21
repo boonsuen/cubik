@@ -63,7 +63,7 @@ const StyledApp = styled.div`
 
 export const DataContext = React.createContext({});
 
-class Loading extends React.Component {
+class InitialLoading extends React.Component {
   componentDidMount() {
     const loadFirebaseAuthState = new Promise((resolve, reject) => {
       auth.onAuthStateChanged(user => {
@@ -176,7 +176,7 @@ class CubikApp extends React.Component {
         <AuthContext.Consumer>
         {({auth, firebaseAuth, toggleAuth}) => {
           return this.state.loadingFirebaseAuth 
-            ? <Loading 
+            ? <InitialLoading 
                 loadingFirebaseAuth={this.state.loadingFirebaseAuth}
                 doneLoadingFirebaseAuth={this.doneLoadingFirebaseAuth}
                 toggleAuth={toggleAuth}
