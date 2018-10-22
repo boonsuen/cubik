@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-static';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Sublist from './Sublist';
 import AllLinks from './AllLinks';
 import ReadingList from './ReadingList';
@@ -60,6 +60,23 @@ const ModalButtons = styled.div`
   justify-content: space-between;
 `;
 
+const rotate = keyframes`
+  to {
+    transform: rotate(1turn)
+  }
+`;
+
+const LoadingContent = styled.span`
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  border: 5px solid rgba(189,189,189 ,0.25);
+  border-left-color: #7a97ff;
+  border-top-color: #4f6cff;
+  border-radius: 50%;
+  animation: ${rotate} 600ms infinite linear;
+`;
+
 class Content extends React.Component {
   state = {
     showModal: false,
@@ -104,6 +121,13 @@ class Content extends React.Component {
     });
   }
   render () {
+    if (!this.state.sublistLinks && window.location.pathname !== '/app') {
+      return (
+        <StyledContent>
+          <LoadingContent />
+        </StyledContent>
+      );
+    }
     return (
       <StyledContent>
         <Route path="/app" render={() => (
@@ -188,22 +212,24 @@ export default props => (
     {data => {
       if (data.links) {
         const sublistLinks = data.links.filter(link => link.sublist);
-        return <Content 
-          {...props} 
-          userId={data.user.id}
-          lists={data.lists} 
-          allLinks={data.allLinks}
-          ungroupedLinks={data.links.filter(link => !link.sublist)} 
-          sublistLinks={sublistLinks.reduce((accumulator, currentValue, currentIndex) => {
-            if (accumulator[currentValue.sublist]) {
-              accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
-            } else {
-              accumulator[currentValue.sublist] = [];
-              accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
-            }
-            return accumulator;
-          }, {})}
-        />
+        return (
+          <Content 
+            {...props} 
+            userId={data.user.id}
+            lists={data.lists} 
+            allLinks={data.allLinks}
+            ungroupedLinks={data.links.filter(link => !link.sublist)} 
+            sublistLinks={sublistLinks.reduce((accumulator, currentValue, currentIndex) => {
+              if (accumulator[currentValue.sublist]) {
+                accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
+              } else {
+                accumulator[currentValue.sublist] = [];
+                accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
+              }
+              return accumulator;
+            }, {})}
+          />
+        );
       } else {
         return (
           <Content 
