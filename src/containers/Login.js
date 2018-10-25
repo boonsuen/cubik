@@ -72,6 +72,7 @@ export const AuthFormButton = styled.button`
   background-color: #8096ff;
   color: #fff;
   width: 109px;
+  font-weight: 500;
 `;
 
 const AuthFormOtherLinks = styled.div`
