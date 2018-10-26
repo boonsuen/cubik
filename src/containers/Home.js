@@ -31,7 +31,7 @@ const HeroButton = styled(Link)`
   height: 55px;
   display: inline-block;
   border-radius: 5px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff;
   font-size: 16px;
   box-sizing: border-box;
