@@ -102,7 +102,7 @@ class Home extends React.Component {
       <React.Fragment>
         <HeroWrapper>
           <Hero>
-            <HeroTitle>Curate & save links</HeroTitle>
+            <HeroTitle>Curate & save the Web</HeroTitle>
             <HeroSubtitle>Stay organized, always be resourceful.</HeroSubtitle>
             <HeroButton to="/signup">Get Started</HeroButton>
           </Hero>
