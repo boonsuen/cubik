@@ -11,7 +11,7 @@ const TabButton = styled.button`
   background: ${props => props.primary ? '#5c87ff' : '#fff'};
   color: ${props => props.primary ? '#fff' : '#5c87ff'};
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0 18px;
   border-radius: 5px;
   margin-right: 22px;
@@ -81,7 +81,7 @@ class AllLinks extends React.Component {
             />
           ))}
         </LinksGroupContainer>
-      </React.Fragment>
+      </React.Fragment>      
     );
   }
 }
