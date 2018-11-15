@@ -15,8 +15,8 @@ import styled from 'styled-components';
 const NoLayout = universal(import('./containers/NoLayout'));
 const NonStatic = universal(import('./containers/NonStatic'));
 const CubikApp = universal(import('./components/CubikApp'));
-import GlobalStyle from './GlobalStyle.css';
-import favicon from './img/favicon.png';
+import GlobalStyle, { fontFaceRules } from './GlobalStyle.css';
+import favicon from './assets/img/favicon.png';
 
 const Logo = styled(Link)`
   font-size: 25px;
@@ -109,7 +109,7 @@ const RenderRoutes = ({ getComponentForPath, toggleAuth }) => {
         // If exporting static HTML
         if (typeof document === 'undefined') {
           if (props.location.pathname === '/404') {
-            // Not having any prerendered content for static routes
+            // Not having any prerendered content for non-static routes
             return null;
           }
           return (
@@ -119,7 +119,7 @@ const RenderRoutes = ({ getComponentForPath, toggleAuth }) => {
             </LayoutWrapper>
           );
         } else {
-          return (          
+          return (
             // The final, when React hydrated
             <LayoutWrapper toggleAuth={toggleAuth}>
               <Comp {...props} />
@@ -132,6 +132,10 @@ const RenderRoutes = ({ getComponentForPath, toggleAuth }) => {
 };
 
 export default class App extends React.Component {
+  state = {
+    auth: getLocalAuth('localAuth'),
+    firebaseAuth: 'initial'
+  }
   toggleAuth = (auth, firebaseAuth) => {
     this.setState({
       auth,
@@ -142,11 +146,6 @@ export default class App extends React.Component {
     });
     console.log('toggleAuth');
   }
-  state = {
-    auth: getLocalAuth('localAuth'),
-    firebaseAuth: 'initial',
-    toggleAuth: this.toggleAuth
-  }
   render() {
     const { auth, firebaseAuth } = this.state;
     return (
@@ -154,6 +153,7 @@ export default class App extends React.Component {
         <Head>
           <title>Cubik</title>
           <link rel="icon" href={favicon} />
+          <style>{fontFaceRules}</style>
           <script>
           {`
             const pFL = localStorage.getItem('preventFlashLoad');
@@ -173,19 +173,19 @@ export default class App extends React.Component {
           <Switch>            
             <Route path="/nolayout" render={() => (<NoLayout />)} />
             <Route path="/nonstatic" render={() => (<NonStatic />)} />
-            <Route path="/app" render={({location}) => {
+            <Route path="/app" render={({ location }) => {
               if (firebaseAuth === 'done') {
                 console.log("firebaseAuth === 'done'");
                 return auth
                   ? (
-                    <AuthContext.Provider value={this.state}>
+                    <AuthContext.Provider value={this.toggleAuth}>
                       <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
                     </AuthContext.Provider>
                   ) : <Redirect to="/login" />
               } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {
                 console.log("firebaseAuth === 'loading' || firebaseAuth === 'initial'");
                 return (
-                  <AuthContext.Provider value={this.state}>
+                  <AuthContext.Provider value={this.toggleAuth}>
                     <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
                   </AuthContext.Provider>
                 );
@@ -200,7 +200,7 @@ export default class App extends React.Component {
             <Routes render={
               ({ getComponentForPath }) =>
                 <RenderRoutes
-                  toggleAuth={this.state.toggleAuth}
+                  toggleAuth={this.toggleAuth}
                   getComponentForPath={getComponentForPath}
                 />
             } />

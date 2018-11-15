@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-static';
 
-import LinkIcon from '../img/icons/link.svg';
-import GroupIcon from '../img/icons/group.svg';
+import LinkIcon from '../assets/img/icons/link.svg';
+import GroupIcon from '../assets/img/icons/group.svg';
 
 const StyledListCard = styled(Link)`
   width: 300px;

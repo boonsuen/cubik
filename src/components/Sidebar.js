@@ -6,12 +6,12 @@ import { AddListModal } from './Modals';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
-import { DataContext } from './CubikApp';
+import { InitialDataContext } from './CubikApp';
 
-import Home from '../img/icons/home.svg';
-import Clock from '../img/icons/clock.svg';
-import Boxes from '../img/icons/boxes.svg';
-import Trash from '../img/icons/trash.svg';
+import Home from '../assets/img/icons/home.svg';
+import Clock from '../assets/img/icons/clock.svg';
+import Boxes from '../assets/img/icons/boxes.svg';
+import Trash from '../assets/img/icons/trash.svg';
 
 const StyledSidebar = styled.div`
   width: 259px;
@@ -251,7 +251,7 @@ class Sidebar extends React.Component {
 }
 
 export default props => (
-  <DataContext.Consumer>
+  <InitialDataContext.Consumer>
     {data => <Sidebar {...props} lists={data.lists} userId={data.user.id} />}
-  </DataContext.Consumer>
+  </InitialDataContext.Consumer>
 );

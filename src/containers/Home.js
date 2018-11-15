@@ -2,7 +2,7 @@ import React from 'react';
 import { withSiteData, Link } from 'react-static';
 import styled from 'styled-components';
 
-import box from '../img/box.svg';
+import box from '../assets/img/box.svg';
 
 const HeroWrapper = styled.div`
   display: flex;

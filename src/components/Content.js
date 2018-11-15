@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Route } from 'react-static';
 import styled, { keyframes } from 'styled-components';
 import Sublist from './Sublist';
@@ -8,10 +8,11 @@ import Unsorted from './Unsorted';
 import Trash from './Trash';
 import Links from './Links';
 import { AddLinkModal } from './Modals';
+import UserListRoute from './UserListRoute';
 
 import db from '../firebase/db';
-import { DataContext } from './CubikApp';
-import { LinksGroupContainer } from './app.css';
+import { InitialDataContext } from './CubikApp';
+// import { LinksGroupContainer } from './app.css';
 
 const StyledContent = styled.div`
   background: #f7f8fe;
@@ -77,11 +78,41 @@ const LoadingContent = styled.span`
   animation: ${rotate} 600ms infinite linear;
 `;
 
+class ContentLoader extends React.Component {
+  state = {
+    loading: !this.props.fetched,
+    links: []
+  }
+  componentDidMount() {
+    const fetchData = new Promise((resolve, reject) => {
+      const { userId, listId } = this.props;
+      if (!this.props.fetched) {
+        db.collection(`/users/${userId}/lists/${listId}/links`).get().then((querySnapshot) => {
+          let links = [];
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data().title);
+            links.push({...doc.data(), id: doc.id});
+          });
+          resolve({ links });
+        });
+      }
+    });
+    fetchData.then(({ links }) => this.setState({
+      loading: false,
+      links
+    }));
+  }
+  render () {
+    return this.state.loading ? <LoadingContent /> : this.props.render(this.state.links);
+  }
+}
+
 class Content extends React.Component {
   state = {
     showModal: false,
     modalSublistText: 'Ungrouped',
-    sublistLinks: this.props.sublistLinks
+    sublistLinks: this.props.sublistLinks || [],
+    ungroupedLinks: this.props.ungroupedLinks || []
   }
   toggleModal = () => {
     this.setState({
@@ -121,13 +152,6 @@ class Content extends React.Component {
     });
   }
   render () {
-    if (!this.state.sublistLinks && window.location.pathname !== '/app') {
-      return (
-        <StyledContent>
-          <LoadingContent />
-        </StyledContent>
-      );
-    }
     return (
       <StyledContent>
         <Route path="/app" render={() => (
@@ -144,27 +168,41 @@ class Content extends React.Component {
         <Route path="/app/trash" render={
           () => <Trash allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
         {this.props.lists.map((list) => (
-          <Route key={`listRoute-${list.id}`} path={`/app/${list.id}`} render={({match}) => (
-            <React.Fragment>
-              <h1>{list.title} {match.url.replace(/\/app\//, '')}</h1>
-              <Links 
-                links={this.props.ungroupedLinks} 
-                toggleModal={this.toggleModal} 
-                setModalSublistText={this.setModalSublistText}  
-              />              
-              <LinksGroupContainer>
-                {Object.keys(this.state.sublistLinks).map((item, index) => (
-                  <Sublist 
-                    key={`SublistLinks-${index}`} 
-                    title={item} 
-                    links={this.state.sublistLinks[item]} 
-                    toggleModal={this.toggleModal}
-                    setModalSublistText={this.setModalSublistText}
-                  />
-                ))}
-              </LinksGroupContainer>
-            </React.Fragment>
-          )} />
+          <Route 
+            key={`listRoute-${list.id}`} 
+            path={`/app/${list.id}`} 
+            render={({match, location}) => {
+              return (
+                <ContentLoader 
+                  location={location}
+                  fetched={false}
+                  listId={list.id}
+                  userId={this.props.userId}
+                  render={(links) => {
+                    const sublistLinks = links.filter(link => link.sublist);
+                    return (
+                      <UserListRoute 
+                        list={list} 
+                        match={match}
+                        ungroupedLinks={links.filter(link => !link.sublist)}
+                        sublistLinks={sublistLinks.reduce((accumulator, currentValue, currentIndex) => {
+                          if (accumulator[currentValue.sublist]) {
+                            accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
+                          } else {
+                            accumulator[currentValue.sublist] = [];
+                            accumulator[currentValue.sublist].push(sublistLinks[currentIndex]);
+                          }
+                          return accumulator;
+                        }, {})}
+                        toggleModal={this.toggleModal}
+                        setModalSublistText={this.setModalSublistText}
+                      />
+                    )              
+                  }}             
+                />
+              );
+            }}  
+          />
         ))}
         <AddLinkModal
           isOpen={this.state.showModal}
@@ -208,7 +246,7 @@ class Content extends React.Component {
 }
 
 export default props => (
-  <DataContext.Consumer>
+  <InitialDataContext.Consumer>
     {data => {
       if (data.links) {
         const sublistLinks = data.links.filter(link => link.sublist);
@@ -233,12 +271,13 @@ export default props => (
       } else {
         return (
           <Content 
-            {...props} 
+            {...props}
+            userId={data.user.id} 
             lists={data.lists} 
             allLinks={data.allLinks}
           />
         );
       }
     }}
-  </DataContext.Consumer>
+  </InitialDataContext.Consumer>
 );

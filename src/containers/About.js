@@ -3,8 +3,8 @@ import { Head } from 'react-static';
 import styled from 'styled-components';
 
 import { AboutBoxTitle, AboutBoxParagraph } from './public.css';
-import avatar from '../img/avatar.png';
-import ethereum from '../img/ethereum.png';
+import avatar from '../assets/img/avatar.png';
+import ethereum from '../assets/img/ethereum.png';
 
 const Header = styled.div`
   

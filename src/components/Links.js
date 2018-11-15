@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import AddIcon from '../img/icons/add.svg';
-import EditIcon from '../img/icons/edit.svg';
-import DeleteIcon from '../img/icons/delete.svg';
+import AddIcon from '../assets/img/icons/add.svg';
+import EditIcon from '../assets/img/icons/edit.svg';
+import DeleteIcon from '../assets/img/icons/delete.svg';
 
 const LinksWrapper = styled.div`
   display: flex;

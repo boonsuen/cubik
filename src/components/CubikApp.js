@@ -61,7 +61,7 @@ const StyledApp = styled.div`
   height: 100%;
 `;
 
-export const DataContext = React.createContext({});
+export const InitialDataContext = React.createContext({});
 
 class InitialLoading extends React.Component {
   componentDidMount() {
@@ -143,12 +143,12 @@ class CubikApp extends React.Component {
   }
   state = {
     loadingFirebaseAuth: true,
-    showModal: false,
     user: {
       id: ''
     },
     lists: [],
     links: [],
+    showModal: false,
     allLinks: {
       id: 'allLinks',
       ungrouppedLinks: [{}],
@@ -156,7 +156,7 @@ class CubikApp extends React.Component {
         id: 'allLinksSublist',
         title: 'Home GraphQL',
         links: [{
-          id: 'cnene',
+          id: 'nene',
           title: 'Introduction to GraphQL',
           url: 'https://flaviocopes.com/graphql-guide/'
         }, {
@@ -174,31 +174,31 @@ class CubikApp extends React.Component {
           <title>Dashboard - Cubik</title>
         </Head>
         <AuthContext.Consumer>
-        {({auth, firebaseAuth, toggleAuth}) => {
-          return this.state.loadingFirebaseAuth 
-            ? <InitialLoading 
-                loadingFirebaseAuth={this.state.loadingFirebaseAuth}
-                doneLoadingFirebaseAuth={this.doneLoadingFirebaseAuth}
-                toggleAuth={toggleAuth}
-                routeListId={this.props.routeListId}
-              /> 
-            : (
-              <DataContext.Provider value={{
-                user: {
-                  id: this.state.user.id
-                },
-                lists: this.state.lists, 
-                links: this.state.links,
-                allLinks: this.state.allLinks
-              }}>             
-                <StyledApp>
-                  <Sidebar toggleAuth={toggleAuth} openModal={this.handleModal} />
-                  <Content /> 
-                </StyledApp>
-              </DataContext.Provider>
-            )
+          {toggleAuth => {
+            return this.state.loadingFirebaseAuth 
+              ? <InitialLoading 
+                  loadingFirebaseAuth={this.state.loadingFirebaseAuth}
+                  doneLoadingFirebaseAuth={this.doneLoadingFirebaseAuth}
+                  toggleAuth={toggleAuth}
+                  routeListId={this.props.routeListId}
+                /> 
+              : (
+                <InitialDataContext.Provider value={{
+                  user: {
+                    id: this.state.user.id
+                  },
+                  lists: this.state.lists, 
+                  links: this.state.links,
+                  allLinks: this.state.allLinks
+                }}>             
+                  <StyledApp>
+                    <Sidebar toggleAuth={toggleAuth} openModal={this.handleModal} />
+                    <Content /> 
+                  </StyledApp>
+                </InitialDataContext.Provider>
+              )
+            }
           }
-        }
         </AuthContext.Consumer>
       </React.Fragment>
     );
