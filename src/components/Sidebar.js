@@ -8,50 +8,114 @@ import auth from '../firebase/auth';
 import db from '../firebase/db';
 import { InitialDataContext } from './CubikApp';
 
+import Setting from '../assets/img/icons/setting.svg';
+import SettingArrow from '../assets/img/icons/setting_arrow.svg';
+import Search from '../assets/img/icons/search.svg';
 import Home from '../assets/img/icons/home.svg';
 import Clock from '../assets/img/icons/clock.svg';
 import Boxes from '../assets/img/icons/boxes.svg';
 import Trash from '../assets/img/icons/trash.svg';
+import AddList_Icon from '../assets/img/icons/AddList.svg';
 
 const StyledSidebar = styled.div`
-  width: 259px;
+  width: 260px;
   box-shadow: 5px 0 5px rgba(235, 233, 255, 50%);
   z-index: 1;  
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 
-const SidebarUpper = styled.div`
-  padding: 20px 29px 0 29px;
-  box-sizing: border-box;
+const Scrollable = styled.div`
   overflow: scroll;
 `;
 
-const GivenLists = styled.div`
+const Topbar = styled.div`
+  height: 50px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eceef2;
+  padding: 0 29px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SettingDropdownContainer = styled.button`
+  display: flex;
+  align-items: center;
+`;
+
+const SettingIcon = styled.img`
+  width: 20px;
+  margin-right: 5px;
+`;
+
+const QuickFind = styled.button`
+  display: flex;
+  align-items: center;
+  color: #8b8dac;
+  font-weight: 500;
+`;
+
+const SearchIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 27px;
+  height: 27px;
+  margin-right: 7px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px #e4e0ff;
+`;
+
+const QuickFindText = styled.div`
+  margin-top: 5px;
+`;
+
+const RoutesContainer = styled.div`
+  padding: 0 29px;
+`;
+
+const MainRoutes = styled.div`
+  padding: 9px 0;
+  border-bottom: 1px solid #e6e9ec;
+  margin-bottom: 16px;
+`;
+
+const LinkWithIcon = styled(Link)`
+  margin: 9px 0;
+  display: flex;
+  align-items: center;
   color: #56578c;
   font-weight: 500;
-  border-bottom: 1px solid #e6e9ec;
-
-  a {
-    margin: 9px 0 9px 0;
-    display: flex;
-    align-items: center;
-    color: #56578c;
-  }
 
   img {
     margin-right: 10px;
     width: 20px;
   }
+
+  span {
+    margin-top: 5px;
+    display: inline-block;
+  }
 `;
 
-const GivenListsText = styled.span`
-  margin-top: 5px;
-  display: inline-block;
+const TemplateRoutesContainer = styled.div`
+  margin-bottom: 16px;
+`;
+
+const UserListsContainer = styled.div`
+  
+`;
+
+const Label = styled.div`
+  color: #7172a6;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const UserLists = styled.div`
-  margin-top: 10px;
+  margin: 5px 0 15px 0;
 
   a {
     white-space: nowrap; 
@@ -59,7 +123,7 @@ const UserLists = styled.div`
     text-overflow: ellipsis;
     color: #8080a2;
     display: block;
-    padding: 8px 0 8px 0;
+    padding: 7px 0;
     transition: color .2s;
   }
 
@@ -78,18 +142,21 @@ const UserLists = styled.div`
 `;
 
 const SidebarBottom = styled.div`
-  margin-top: auto;
   box-sizing: border-box;
   border-top: 1px solid #eceef2;
   padding: 0 29px;
-  height: 60px;
+  flex: 0 0 60px;
   display: flex;
   align-items: center;
 `;
 
-const NewListBtn = styled.button`
-  color: #8181b7;
+const AddListBtn = styled.button`
+  color: #65659d;
   font-weight: 500;
+
+  img {
+    margin-right: 8px;
+  }
 `;
 
 // a little function to help us with reordering the result
@@ -171,58 +238,81 @@ class Sidebar extends React.Component {
   render() {
     return (
       <StyledSidebar>
-        <SidebarUpper>
-          <GivenLists>
-            <Link to="/app" prefetch={true}>
-              <img src={Home} alt="All Links" />
-              <GivenListsText>All links</GivenListsText>
-            </Link>
-            <Link to="/app/reading-list" prefetch={true}>
-              <img src={Clock} alt="Reading list" />
-              <GivenListsText>Reading list</GivenListsText>
-            </Link>
-            <Link to="/app/unsorted" prefetch={true}>
-              <img src={Boxes} alt="Unsorted" />
-              <GivenListsText>Unsorted</GivenListsText>
-            </Link>
-            <Link to="/app/trash" prefetch={true}>
-              <img src={Trash} alt="Trash" />
-              <GivenListsText>Trash</GivenListsText>
-            </Link>
-          </GivenLists>  
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppable">
-              {(provided, snapshot) => (
-                <UserLists>
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
-                  >
-                    {this.state.lists.map((list, index) => (
-                      <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
-                        {(provided, snapshot) => (
-                          <p
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(
-                              snapshot.isDragging,
-                              provided.draggableProps.style
+        <Scrollable>
+          <Topbar>
+            <SettingDropdownContainer>
+              <SettingIcon src={Setting} alt="Setting" />
+              <img src={SettingArrow} alt="down arrow" />
+            </SettingDropdownContainer>            
+            <QuickFind>
+              <SearchIcon>
+                <img src={Search} alt="Search" />
+              </SearchIcon>
+              <QuickFindText>Quick Find</QuickFindText>
+            </QuickFind>
+          </Topbar>
+          <RoutesContainer>
+            <MainRoutes>
+              <LinkWithIcon to="/app" prefetch={true}>
+                <img src={Home} alt="All Links" />
+                <span>All links</span>
+              </LinkWithIcon>
+              <LinkWithIcon to="/app/unsorted" prefetch={true}>
+                <img src={Boxes} alt="Unsorted" />
+                <span>Unsorted</span>
+              </LinkWithIcon>
+              <LinkWithIcon to="/app/trash" prefetch={true}>
+                <img src={Trash} alt="Trash" />
+                <span>Trash</span>
+              </LinkWithIcon>
+            </MainRoutes>  
+            <TemplateRoutesContainer>
+              <Label>Templates</Label>
+              <LinkWithIcon to="/app/reading-list" prefetch={true}>
+                <img src={Clock} alt="Reading list" />
+                <span>Reading list</span>
+              </LinkWithIcon>
+            </TemplateRoutesContainer>     
+            <UserListsContainer>
+              <Label>My Lists</Label>
+              <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId="droppable">
+                  {(provided, snapshot) => (
+                    <UserLists>
+                      <div
+                        ref={provided.innerRef}
+                        style={getListStyle(snapshot.isDraggingOver)}
+                      >
+                        {this.state.lists.map((list, index) => (
+                          <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
+                            {(provided, snapshot) => (
+                              <p
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={getItemStyle(
+                                  snapshot.isDragging,
+                                  provided.draggableProps.style
+                                )}
+                              ><Link to={`/app/${list.id}`} prefetch={true}>{list.title}</Link></p>
                             )}
-                          ><Link to={`/app/${list.id}`} prefetch={true}>{list.title}</Link></p>
-                        )}
-                      </Draggable>
-                    ))}
-                  </div>
-                </UserLists>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </SidebarUpper>
-        <Link to="/app" prefetch={true}>back</Link>
-        <button onClick={this.logoutUser}>Log out</button>
+                          </Draggable>
+                        ))}
+                      </div>
+                    </UserLists>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </UserListsContainer>            
+          </RoutesContainer>
+        </Scrollable>
         <SidebarBottom>
-          <NewListBtn type="button" onClick={this.toggleModal}>+ New List</NewListBtn>          
+          <AddListBtn 
+            type="button" 
+            onClick={this.toggleModal}
+          >
+            <img src={AddList_Icon} alt="Add List"/> New List
+          </AddListBtn>          
         </SidebarBottom>
         <AddListModal
           isOpen={this.state.showModal}
