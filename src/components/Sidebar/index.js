@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-static';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import SettingDropdown from './SettingDropdown';
 import MainRoutes from './MainRoutes';
 import SidebarBottom from './SidebarBottom';
 
@@ -9,8 +10,6 @@ import auth from '../../firebase/auth';
 import db from '../../firebase/db';
 import { InitialDataContext } from '../CubikApp';
 
-import Setting from '../../assets/img/icons/setting.svg';
-import SettingArrow from '../../assets/img/icons/setting_arrow.svg';
 import Search from '../../assets/img/icons/search.svg';
 import Clock from '../../assets/img/icons/clock.svg';
 
@@ -35,16 +34,7 @@ const Topbar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-const SettingDropdownContainer = styled.button`
-  display: flex;
-  align-items: center;
-`;
-
-const SettingIcon = styled.img`
-  width: 20px;
-  margin-right: 5px;
+  position: relative;
 `;
 
 const QuickFind = styled.button`
@@ -206,10 +196,9 @@ class Sidebar extends React.Component {
       <StyledSidebar>
         <Scrollable>
           <Topbar>
-            <SettingDropdownContainer>
-              <SettingIcon src={Setting} alt="Setting" />
-              <img src={SettingArrow} alt="down arrow" />
-            </SettingDropdownContainer>            
+            <SettingDropdown 
+              logoutUser={this.logoutUser}
+            />   
             <QuickFind>
               <SearchIcon>
                 <img src={Search} alt="Search" />
