@@ -196,9 +196,7 @@ class Sidebar extends React.Component {
       <StyledSidebar>
         <Scrollable>
           <Topbar>
-            <SettingDropdown 
-              logoutUser={this.logoutUser}
-            />   
+            <SettingDropdown logoutUser={this.logoutUser} />   
             <QuickFind>
               <SearchIcon>
                 <img src={Search} alt="Search" />

@@ -20,6 +20,10 @@ const AddListBtn = styled.button`
   img {
     margin-right: 8px;
   }
+
+  div {
+    margin-top: 3px;
+  }
 `;
 
 export default class SidebarBottom extends React.Component {
@@ -39,7 +43,8 @@ export default class SidebarBottom extends React.Component {
             type="button" 
             onClick={this.toggleModal}
           >
-            <img src={AddList_Icon} alt="Add List"/> New List
+            <img src={AddList_Icon} alt="Add List"/>
+            <div>New List</div>
           </AddListBtn>          
         </StyledSidebarBottom>
         <AddListModal
