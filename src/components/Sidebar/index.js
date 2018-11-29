@@ -210,7 +210,7 @@ class Sidebar extends React.Component {
               <Label>Templates</Label>
               <LinkWithIcon to="/app/reading-list" prefetch={true}>
                 <img src={Clock} alt="Reading list" />
-                <span>Reading list</span>
+                <span>Reading List</span>
               </LinkWithIcon>
             </TemplateRoutesContainer>     
             <UserListsContainer>

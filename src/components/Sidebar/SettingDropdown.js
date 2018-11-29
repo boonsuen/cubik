@@ -74,7 +74,7 @@ class SettingDropdown extends React.Component {
   };
   render() {
     return (
-      <DropdownContainer tabIndex="1">
+      <DropdownContainer>
         <ButtonContainer onClick={this.toggleDropdown}>
           <SettingIcon src={Setting} alt="Setting" />
           <ArrowDown rotate={this.state.dropdownOpen ? 1 : 0} src={SettingArrow} alt="down arrow" />        
