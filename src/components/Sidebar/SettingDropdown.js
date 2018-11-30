@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import onClickOutside from 'react-onclickoutside';
 
-import Setting from '../../assets/img/icons/setting.svg';
-import SettingArrow from '../../assets/img/icons/setting_arrow.svg';
+import img_setting from '../../assets/img/icons/setting.svg';
+import img_settingArrow from '../../assets/img/icons/setting_arrow.svg';
+import img_preference from '../../assets/img/icons/dropdown/preference.svg';
+import img_account from '../../assets/img/icons/dropdown/account.svg';
+import img_signout from '../../assets/img/icons/dropdown/signout.svg';
 
 const DropdownContainer = styled.div`
 
@@ -29,16 +32,13 @@ const DropdownList = styled.ul`
   top: 12px;
   right: 29px;
   width: 158px;
-  height: 123px;
   margin: 0;
+  padding: 0px;
   box-sizing: border-box;
   background: #fff;
-  box-shadow: 0 1px 4px #98b1d9;
+  box-shadow: 0 1px 8px #e8d8ff;
   border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #8b8dac;
+  color: #7e81a8;
   list-style: none;
   font-weight: 500;
   font-size: 15px;
@@ -52,12 +52,31 @@ const DropdownList = styled.ul`
 `;
 
 const ListItem = styled.li`
-  padding: 4px 0;
+  padding-left: 25px;
+  height: 39px;
   transition: color .3s;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    color: #4e69ae;
+    color: #626593;
+    cursor: pointer;
   }
+
+  div {
+    width: 25px;
+  }
+
+  img {
+    width: 14px;
+    margin-top: 2px;
+  }
+`;
+
+const ListItem_Signout = styled(ListItem)`
+  background: #fafbff;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 `;
 
 class SettingDropdown extends React.Component {
@@ -76,14 +95,19 @@ class SettingDropdown extends React.Component {
     return (
       <DropdownContainer>
         <ButtonContainer onClick={this.toggleDropdown}>
-          <SettingIcon src={Setting} alt="Setting" />
-          <ArrowDown rotate={this.state.dropdownOpen ? 1 : 0} src={SettingArrow} alt="down arrow" />        
+          <SettingIcon src={img_setting} alt="Setting" />
+          <ArrowDown rotate={this.state.dropdownOpen ? 1 : 0} src={img_settingArrow} alt="down arrow" />        
         </ButtonContainer>       
         <DropdownList visible={this.state.dropdownOpen ? 1 : 0}>
-          <ListItem>Preference</ListItem>
-          <ListItem>Plan</ListItem>
-          <ListItem>Settings</ListItem>
-          <ListItem onClick={this.props.logoutUser}>Sign out</ListItem>
+          <ListItem>
+            <div><img src={img_preference} /></div>Preference
+          </ListItem>
+          <ListItem>
+            <div><img src={img_account} /></div>Account
+          </ListItem>
+          <ListItem_Signout onClick={this.props.logoutUser}>
+            <div><img src={img_signout} /></div>Sign out
+          </ListItem_Signout>
         </DropdownList>
       </DropdownContainer>
     );
