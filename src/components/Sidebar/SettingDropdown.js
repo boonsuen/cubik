@@ -42,13 +42,15 @@ const DropdownList = styled.ul`
   list-style: none;
   font-weight: 500;
   font-size: 15px;
+  transform: ${props => props.visible
+    ? 'translateY(0)' 
+    : 'translateY(8px)'};
 
   visibility: ${props => props.visible ? 'visible' : 'hidden' };
   opacity: ${props => props.visible ? '1' : '0' };
-  transition: ${props => props.visible 
-    ? 'opacity .3s;'
-    : 'visibility 0s .3s, opacity .3s'
-  };
+  transition: transform .2s ease-in-out, ${props => props.visible 
+    ? 'opacity .3s'
+    : 'visibility 0s .3s, opacity .3s'};
 `;
 
 const ListItem = styled.li`
@@ -60,7 +62,6 @@ const ListItem = styled.li`
 
   &:hover {
     color: #626593;
-    cursor: pointer;
   }
 
   div {
@@ -77,6 +78,10 @@ const ListItem_Signout = styled(ListItem)`
   background: #fafbff;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 class SettingDropdown extends React.Component {
