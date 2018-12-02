@@ -1,18 +1,15 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Route } from 'react-static';
 import styled, { keyframes } from 'styled-components';
-import Sublist from './Sublist';
 import AllLinks from './AllLinks';
 import ReadingList from './ReadingList';
 import Unsorted from './Unsorted';
 import Trash from './Trash';
-import Links from './Links';
 import { AddLinkModal } from './Modals';
 import UserListRoute from './UserListRoute';
 
 import db from '../firebase/db';
 import { InitialDataContext } from './CubikApp';
-// import { LinksGroupContainer } from './app.css';
 
 const StyledContent = styled.div`
   background: #f7f8fe;

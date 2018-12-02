@@ -32,7 +32,6 @@ class AllLinks extends React.Component {
     activeTab: 'overview'
   }
   handleTabSwitch = () => {
-    console.log('handle');
     this.setState((prevState) => ({
       activeTab: prevState.activeTab === 'overview' ? 'alllinks' : 'overview'
     }));
