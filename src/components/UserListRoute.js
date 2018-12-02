@@ -1,8 +1,8 @@
 import React from 'react';
 import Links from './Links';
-import Sublist from './Sublist';
+import Group from './Group';
 
-import { LinksGroupContainer } from './app.css';
+import { GroupsContainer } from './app.css';
 
 export default class UserListRoute extends React.Component {
   render () {
@@ -14,9 +14,9 @@ export default class UserListRoute extends React.Component {
           toggleModal={this.props.toggleModal} 
           setModalSublistText={this.props.setModalSublistText}  
         />
-        <LinksGroupContainer>
+        <GroupsContainer>
           {Object.keys(this.props.sublistLinks).map((item, index) => (
-            <Sublist 
+            <Group 
               key={`SublistLinks-${index}`} 
               title={item} 
               links={this.props.sublistLinks[item]} 
@@ -24,7 +24,7 @@ export default class UserListRoute extends React.Component {
               setModalSublistText={this.props.setModalSublistText}
             />
           ))}
-        </LinksGroupContainer>
+        </GroupsContainer>
       </React.Fragment>
     );
   }

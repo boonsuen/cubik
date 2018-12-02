@@ -1,23 +1,23 @@
 import React from 'react';
-import Sublist from './Sublist';
+import Group from './Group';
 
-import { LinksGroupContainer } from './app.css';
+import { GroupsContainer } from './app.css';
 
 class Unsorted extends React.Component {
   render() {
     return (
       <React.Fragment>
         <h1>Unsorted links</h1>
-        <LinksGroupContainer>
+        <GroupsContainer>
           {this.props.allLinks.sublists.map((sublist) => (
-            <Sublist 
+            <Group 
               key={sublist.id} 
               title={sublist.title} 
               links={sublist.links} 
               toggleModal={this.props.toggleModal}  
             />
           ))}
-        </LinksGroupContainer>
+        </GroupsContainer>
       </React.Fragment>
     );
   }

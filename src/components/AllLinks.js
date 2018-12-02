@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import ListCard from './ListCard';
-import Sublist from './Sublist';
+import Group from './Group';
 
-import { LinksGroupContainer } from './app.css';
+import { GroupsContainer } from './app.css';
 
 const TabButton = styled.button`
   display: inline-block;
@@ -70,16 +70,16 @@ class AllLinks extends React.Component {
           <ListCard title="Web Performance & Optimization" bgColor="#eed6ff" /> */}
         </CardsContainer>
     
-        <LinksGroupContainer>
+        <GroupsContainer>
           {this.props.allLinks.sublists.map((sublist) => (
-            <Sublist 
+            <Group 
               key={sublist.id} 
               title={sublist.title} 
               links={sublist.links} 
               toggleModal={this.props.toggleModal}  
             />
           ))}
-        </LinksGroupContainer>
+        </GroupsContainer>
       </React.Fragment>      
     );
   }
