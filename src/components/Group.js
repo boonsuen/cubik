@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Links from './Links';
 
-const GroupCtn = styled.div`
+const GroupWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
 `; 
@@ -16,7 +16,7 @@ const GroupTitle = styled.h2`
 export default class Group extends React.Component {
   render() {
     return (
-      <GroupCtn>
+      <GroupWrapper>
         <GroupTitle>{this.props.title}</GroupTitle>
         <Links 
           links={[...this.props.links].reverse()} 
@@ -24,7 +24,7 @@ export default class Group extends React.Component {
           setModalSublistText={this.props.setModalSublistText}
           title={this.props.title}        
         />
-      </GroupCtn>
+      </GroupWrapper>
     );
   }
 }
