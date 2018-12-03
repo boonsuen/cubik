@@ -17,6 +17,10 @@ const NonStatic = universal(import('./containers/NonStatic'));
 const CubikApp = universal(import('./components/CubikApp'));
 import GlobalStyle, { fontFaceRules } from './GlobalStyle.css';
 import favicon from './assets/img/favicon.png';
+import AvenirNextRegularSubsetWoff2 from './assets/fonts/AvenirNextLTPro-Regular-subset.woff2';
+import AvenirNextMediumSubsetWoff2 from './assets/fonts/AvenirNextLTPro-Medium-subset.woff2';
+import AvenirNextDemiSubsetWoff2 from './assets/fonts/AvenirNextLTPro-Demi-subset.woff2';
+import AvenirNextBoldSubsetWoff2 from './assets/fonts/AvenirNextLTPro-Bold-subset.woff2';
 
 const Logo = styled(Link)`
   font-size: 25px;
@@ -152,6 +156,10 @@ export default class App extends React.Component {
       <React.Fragment>
         <Head>
           <title>Cubik</title>
+          <link rel="preload" as="font" href={AvenirNextRegularSubsetWoff2} type="font/woff2" />
+          <link rel="preload" as="font" href={AvenirNextMediumSubsetWoff2} type="font/woff2" />
+          <link rel="preload" as="font" href={AvenirNextDemiSubsetWoff2} type="font/woff2" />
+          <link rel="preload" as="font" href={AvenirNextBoldSubsetWoff2} type="font/woff2" />
           <link rel="icon" href={favicon} />
           <style>{fontFaceRules}</style>
           <script>
