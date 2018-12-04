@@ -20,32 +20,28 @@ import AvenirNextBoldSubsetWoff from './assets/fonts/AvenirNextLTPro-Bold-subset
 export const fontFaceRules = `
   @font-face {
     font-family: "Avenir Next";
-    src: local("Avenir Next Regular"), local("AvenirNext-Regular"),
-        url(${AvenirNextRegularSubsetWoff2}) format('woff2'),
+    src: url(${AvenirNextRegularSubsetWoff2}) format('woff2'),
         url(${AvenirNextRegularSubsetWoff}) format('woff');
     font-weight: 400;
   }
 
   @font-face {
     font-family: "Avenir Next";
-    src: local("Avenir Next Medium"), local("AvenirNext-Medium"),
-        url(${AvenirNextMediumSubsetWoff2}) format('woff2'),
+    src: url(${AvenirNextMediumSubsetWoff2}) format('woff2'),
         url(${AvenirNextMediumSubsetWoff}) format('woff');
     font-weight: 500;
   }
 
   @font-face {
     font-family: "Avenir Next";
-    src: local("Avenir Next Demi Bold"), local("AvenirNext-Demi"),
-        url(${AvenirNextDemiSubsetWoff2}) format('woff2'),
+    src: url(${AvenirNextDemiSubsetWoff2}) format('woff2'),
         url(${AvenirNextDemiSubsetWoff}) format('woff');
     font-weight: 600;
   }
 
   @font-face {
     font-family: "Avenir Next";
-    src: local("Avenir Next Bold"), local("AvenirNext-Bold"),
-        url(${AvenirNextBoldSubsetWoff2}) format('woff2'),
+    src: url(${AvenirNextBoldSubsetWoff2}) format('woff2'),
         url(${AvenirNextBoldSubsetWoff}) format('woff');
     font-weight: 700;
   }
