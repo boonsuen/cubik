@@ -156,10 +156,10 @@ export default class App extends React.Component {
       <React.Fragment>
         <Head>
           <title>Cubik</title>
-          {/* <link rel="preload" as="font" href={AvenirNextRegularSubsetWoff2} type="font/woff2" crossOrigin="anonymous" />
+          <link rel="preload" as="font" href={AvenirNextRegularSubsetWoff2} type="font/woff2" crossOrigin="anonymous" />
           <link rel="preload" as="font" href={AvenirNextMediumSubsetWoff2} type="font/woff2" crossOrigin="anonymous" />
           <link rel="preload" as="font" href={AvenirNextDemiSubsetWoff2} type="font/woff2" crossOrigin="anonymous" />
-          <link rel="preload" as="font" href={AvenirNextBoldSubsetWoff2} type="font/woff2" crossOrigin="anonymous" /> */}
+          <link rel="preload" as="font" href={AvenirNextBoldSubsetWoff2} type="font/woff2" crossOrigin="anonymous" />
           <link rel="icon" href={favicon} />
           <style>{fontFaceRules}</style>
           <script>
