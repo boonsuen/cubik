@@ -23,6 +23,7 @@ export const fontFaceRules = `
     src: url(${AvenirNextRegularSubsetWoff2}) format('woff2'),
         url(${AvenirNextRegularSubsetWoff}) format('woff');
     font-weight: 400;
+    font-display: swap;
   }
 
   @font-face {
@@ -30,6 +31,7 @@ export const fontFaceRules = `
     src: url(${AvenirNextMediumSubsetWoff2}) format('woff2'),
         url(${AvenirNextMediumSubsetWoff}) format('woff');
     font-weight: 500;
+    font-display: swap;
   }
 
   @font-face {
@@ -37,6 +39,7 @@ export const fontFaceRules = `
     src: url(${AvenirNextDemiSubsetWoff2}) format('woff2'),
         url(${AvenirNextDemiSubsetWoff}) format('woff');
     font-weight: 600;
+    font-display: swap;
   }
 
   @font-face {
@@ -44,6 +47,7 @@ export const fontFaceRules = `
     src: url(${AvenirNextBoldSubsetWoff2}) format('woff2'),
         url(${AvenirNextBoldSubsetWoff}) format('woff');
     font-weight: 700;
+    font-display: swap;
   }
 `;
 
