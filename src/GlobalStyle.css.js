@@ -28,7 +28,8 @@ export const fontFaceRules = `
 
   @font-face {
     font-family: "Avenir Next";
-    src: url(${AvenirNextMediumSubsetWoff2}) format('woff2'),
+    src: local("Avenir Next Medium"), local("AvenirNext-Medium"),
+        url(${AvenirNextMediumSubsetWoff2}) format('woff2'),
         url(${AvenirNextMediumSubsetWoff}) format('woff');
     font-weight: 500;
   }
