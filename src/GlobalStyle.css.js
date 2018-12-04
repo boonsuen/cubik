@@ -36,14 +36,16 @@ export const fontFaceRules = `
 
   @font-face {
     font-family: "Avenir Next";
-    src: url(${AvenirNextDemiSubsetWoff2}) format('woff2'),
+    src: local("Avenir Next Demi Bold"), local("AvenirNext-Demi"),
+        url(${AvenirNextDemiSubsetWoff2}) format('woff2'),
         url(${AvenirNextDemiSubsetWoff}) format('woff');
     font-weight: 600;
   }
 
   @font-face {
     font-family: "Avenir Next";
-    src: url(${AvenirNextBoldSubsetWoff2}) format('woff2'),
+    src: local("Avenir Next Bold"), local("AvenirNext-Bold"),
+        url(${AvenirNextBoldSubsetWoff2}) format('woff2'),
         url(${AvenirNextBoldSubsetWoff}) format('woff');
     font-weight: 700;
   }
