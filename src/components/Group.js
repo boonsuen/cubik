@@ -7,7 +7,7 @@ const GroupWrapper = styled.div`
   flex-direction: column;
 `; 
 
-const GroupTitle = styled.h2`
+export const GroupTitle = styled.h2`
   font-weight: 600;
   font-size: 26px;
   color: #000b9f;

@@ -72,7 +72,7 @@ class InitialLoading extends React.Component {
           status = 'verified';
           console.log(
             `%c AUTH %c Logged in `,
-            "background: #00d334; color: #fff; padding: 3px;", "background: #7cffc0; padding: 3px;",
+            "background: #00d334; color: #fff; padding: 3px;", "background: #7cffc0; padding: 3px; color: #777;",
             user
           );
           db.collection(`/users/${user.uid}/lists`).get().then((querySnapshot) => {

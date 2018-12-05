@@ -85,6 +85,7 @@ class ContentLoader extends React.Component {
       const { userId, listId } = this.props;
       if (!this.props.fetched) {
         db.collection(`/users/${userId}/lists/${listId}/links`).get().then((querySnapshot) => {
+          console.log('snapshot size', querySnapshot.size);
           let links = [];
           querySnapshot.forEach((doc) => {
             console.log(doc.data().title);
