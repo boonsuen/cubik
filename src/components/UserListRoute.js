@@ -5,6 +5,13 @@ import Group, { GroupTitle } from './Group';
 import { GroupsContainer } from './app.css';
 import img_addGroup from '../assets/img/icons/addgroup.svg';
 
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 91px;
+`;
+
 const AddGroupBtn = styled.button`
   width: 142px;
   height: 48px;
@@ -13,7 +20,7 @@ const AddGroupBtn = styled.button`
   color: #fff;
   font-weight: 500;
 
-  img { margin: 0 9px -1px 0; }
+  img { margin: -1px 9px 0 0; }
 
   span { margin-top: 5px; }
 `;
@@ -22,10 +29,12 @@ export default class UserListRoute extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <h1>{this.props.list.title} {this.props.match.url.replace(/\/app\//, '')}</h1>        
-        <AddGroupBtn>
-          <img src={img_addGroup} /><span>Add group</span>
-        </AddGroupBtn>
+        <Header>
+          <h1>{this.props.list.title} {this.props.match.url.replace(/\/app\//, '')}</h1>        
+          <AddGroupBtn>
+            <img src={img_addGroup} /><span>Add group</span>
+          </AddGroupBtn>
+        </Header>
         <GroupsContainer>
           {Object.keys(this.props.sublistLinks).map((item, index) => (
             <Group 
