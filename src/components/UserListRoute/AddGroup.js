@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   StyledAddGroup,
   TextField,
@@ -11,19 +10,6 @@ import {
 
 import img_addGroup from '../../assets/img/icons/addgroup/addgroup.svg';
 import img_tick from '../../assets/img/icons/addgroup/tick.svg';
-
-// const AddGroupBtn = styled.button`
-//   width: 142px;
-//   height: 48px;
-//   background: linear-gradient(128.71deg, #5859BF 0%, #9495F5 100%);
-//   box-shadow: 0 2px 15px rgba(217,138,255,0.5);
-//   color: #fff;
-//   font-weight: 500;
-
-//   img { margin: -1px 9px 0 0; }
-
-//   span { margin-top: 5px; }
-// `;
 
 class AddGroup extends React.Component {
   state = {

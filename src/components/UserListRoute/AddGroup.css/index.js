@@ -177,7 +177,7 @@ const AddGroupBtn = styled.button`
     margin: -1px 9px 0 0;
   }
   span {
-    margin-top: 2px;
+    margin-top: 5px;
   }
 
   img:first-child,
