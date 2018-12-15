@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components';
 import {
-  topBubbles, 
-  bottomBubbles, 
   hori, 
   vert, 
   fadeOut, 
@@ -35,16 +33,6 @@ const TextField = styled.input`
     transition: opacity 0.3s 0.7s;
     opacity: ${props => (props.showTextField ? 1 : 0)};
   }
-`;
-
-const bubbleColor = "#db9eff";
-
-const topMixin = css`
-  animation: ${topBubbles} 0.75s ease-in-out forwards;
-`;
-
-const bottomMixin = css`
-  animation: ${bottomBubbles} 0.75s ease-in-out forwards;
 `;
 
 const horiMixin = css`
@@ -95,78 +83,6 @@ const AddGroupBtn = styled.button`
 
   &:focus {
     outline: 0;
-  }
-
-  &:focus {
-    outline: 0;
-  }
-
-  &:before,
-  &:after {
-    position: absolute;
-    content: "";
-    display: block;
-    width: 140%;
-    height: 100%;
-    left: -20%;
-    transition: all ease-in-out 0.5s;
-    background-repeat: no-repeat;
-    z-index: -1;
-  }
-
-  &:before {
-    ${props => (props.animatingBubbles ? topMixin : null)};
-    display: ${props => (props.animatingBubbles ? "block" : "none")};
-    top: -75%;
-    background-image: radial-gradient(
-        circle,
-        ${bubbleColor} 20%,
-        transparent 20%
-      ),
-      radial-gradient(
-        circle,
-        transparent 20%,
-        ${bubbleColor} 20%,
-        transparent 30%
-      ),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(
-        circle,
-        transparent 10%,
-        ${bubbleColor} 15%,
-        transparent 20%
-      ),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%);
-    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-      15% 15%, 10% 10%, 18% 18%;
-  }
-
-  &:after {
-    ${props => (props.animatingBubbles ? bottomMixin : null)};
-    display: ${props => (props.animatingBubbles ? "block" : "none")};
-    bottom: -75%;
-    background-image: radial-gradient(
-        circle,
-        ${bubbleColor} 20%,
-        transparent 20%
-      ),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(
-        circle,
-        transparent 10%,
-        ${bubbleColor} 15%,
-        transparent 20%
-      ),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%),
-      radial-gradient(circle, ${bubbleColor} 20%, transparent 20%);
-    background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-      20% 20%;
   }
 
   &:active {

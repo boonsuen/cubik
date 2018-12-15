@@ -13,23 +13,13 @@ import img_tick from '../../assets/img/icons/addgroup/tick.svg';
 
 class AddGroup extends React.Component {
   state = {
-    animatingBubbles: false,
     showTextField: false,
     submitStatus: "initial",
     prevStatusIsInitial: false,
     value: ""
   };
-  animateBubbles = _ => {
-    this.setState({ animatingBubbles: false }, _ => {
-      this.setState({ animatingBubbles: true });
-    });
-    setTimeout(() => {
-      this.setState({ animatingBubbles: false });
-    }, 700);
-  };
   handleSubmit = e => {
     e.preventDefault();
-    this.animateBubbles();
     const { submitStatus } = this.state;
 
     if (this.state.showTextField) {
@@ -137,7 +127,6 @@ class AddGroup extends React.Component {
           onBlur={this.textFieldOnBlur}
         />
         <AddGroupBtn
-          animatingBubbles={this.state.animatingBubbles}
           showTextField={this.state.showTextField}
           type="submit"
         >
