@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AddLinkModal as CreateGroupModal } from '../Modals';
 
 import img_emptyState from '../../assets/img/illustration/emptystate.svg';
 
@@ -44,16 +45,75 @@ const Or = styled.span`
   font-weight: 700;
 `;
 
+const ModalInputLabel = styled.label`
+  color: #71718a;
+  margin-bottom: 3px;
+  display: inline-block;
+`;
+
+const ModalButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 class EmptyState extends React.Component {
+  state = {
+    showModal: false
+  };
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
+  handleCreateGroup = (groupName) => {
+    console.log(groupName);
+  };
   render() {
     return (
       <Container>
         <img src={img_emptyState} />
         <h2>What will you save?</h2>
         <p>You don't have any links here yet.</p>
-        <AddLinkBtn type="button">Add a link</AddLinkBtn>
+        <AddLinkBtn
+          type="button"
+          onClick={() => {
+            this.props.toggleModal();
+            this.props.setModalSublistText('Ungrouped');
+          }}
+        >
+          Add a link
+        </AddLinkBtn>
         <Or>or</Or>
-        <CreateGroupBtn type="button">Create a group</CreateGroupBtn>
+        <CreateGroupBtn 
+          type="button"
+          onClick={() => {
+            this.toggleModal();
+          }}
+        >
+          Create a group
+        </CreateGroupBtn>
+        <CreateGroupModal
+          isOpen={this.state.showModal}
+          onRequestClose={this.toggleModal}
+          contentLabel="Create new group modal"
+        >
+          <h2>Create new group</h2>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            this.handleCreateGroup(this.inputName.value);
+          }}>
+            <ModalInputLabel htmlFor="group-name">Name</ModalInputLabel>
+            <input 
+              id="group-name" placeholder="Enter a name"
+              ref={(el) => { this.inputName = el }} autoComplete="off"
+              autoFocus  
+            />
+            <ModalButtons>
+              <button type="submit">Create</button>
+              <button onClick={this.toggleModal} type="button">Cancel</button>
+            </ModalButtons>
+          </form>
+        </CreateGroupModal>
       </Container>
     );
   }

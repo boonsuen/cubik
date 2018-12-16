@@ -41,7 +41,10 @@ export default class UserListRoute extends React.Component {
             />
           </GroupsContainer>
         ) : (
-          <EmptyState />
+          <EmptyState 
+            toggleModal={this.props.toggleModal}
+            setModalSublistText={this.props.setModalSublistText}
+          />
         )}
       </React.Fragment>
     );
