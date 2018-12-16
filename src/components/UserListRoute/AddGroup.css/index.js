@@ -15,6 +15,8 @@ const TextField = styled.input`
   width: ${props => (props.showTextField ? "177px" : "142px")};
   box-sizing: border-box;
   height: 48px;
+  padding-left: 14px;
+  padding-right: 62px;
   border-radius: 5px;
   border: none;
   outline: none;
@@ -22,7 +24,7 @@ const TextField = styled.input`
   font-family: "Avenir Next";
   font-size: 14px;
   font-weight: 500;
-  padding-left: 14px;
+  line-height: 48px;
   position: absolute;
   top: 0;
   right: 0;
