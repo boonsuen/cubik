@@ -78,30 +78,38 @@ const LoadingContent = styled.span`
 class ContentLoader extends React.Component {
   state = {
     loading: !this.props.fetched,
-    links: []
-  }
+    links: [],
+    isEmptyState: null
+  };
   componentDidMount() {
     const fetchData = new Promise((resolve, reject) => {
       const { userId, listId } = this.props;
       if (!this.props.fetched) {
-        db.collection(`/users/${userId}/lists/${listId}/links`).get().then((querySnapshot) => {
-          console.log('snapshot size', querySnapshot.size);
-          let links = [];
-          querySnapshot.forEach((doc) => {
-            console.log(doc.data().title);
-            links.push({...doc.data(), id: doc.id});
-          });
-          resolve({ links });
-        });
+        db.collection(`/users/${userId}/lists/${listId}/links`).get()
+          .then((querySnapshot) => {
+            let isEmptyState = false;
+            if (querySnapshot.size === 0) {
+              isEmptyState = true;
+            }
+            let links = [];
+            querySnapshot.forEach((doc) => {
+              links.push({...doc.data(), id: doc.id});
+            });
+            resolve({ links, isEmptyState });
+          })
+          .catch(err => console.log(err));
       }
     });
-    fetchData.then(({ links }) => this.setState({
+    fetchData.then(({ links, isEmptyState }) => this.setState({
       loading: false,
-      links
+      links,
+      isEmptyState
     }));
   }
-  render () {
-    return this.state.loading ? <LoadingContent /> : this.props.render(this.state.links);
+  render() {
+    return this.state.loading 
+      ? <LoadingContent /> 
+      : this.props.render(this.state.links, this.state.isEmptyState);
   }
 }
 
@@ -176,10 +184,11 @@ class Content extends React.Component {
                   fetched={false}
                   listId={list.id}
                   userId={this.props.userId}
-                  render={(links) => {
+                  render={(links, isEmptyState) => {
                     const sublistLinks = links.filter(link => link.sublist);
                     return (
                       <UserListRoute 
+                        isEmptyState={isEmptyState}
                         list={list} 
                         match={match}
                         ungroupedLinks={links.filter(link => !link.sublist)}
@@ -195,7 +204,7 @@ class Content extends React.Component {
                         toggleModal={this.toggleModal}
                         setModalSublistText={this.setModalSublistText}
                       />
-                    )              
+                    );         
                   }}             
                 />
               );
