@@ -17,7 +17,7 @@ export default class Group extends React.Component {
   render() {
     return (
       <GroupWrapper>
-        <GroupTitle>{this.props.title}</GroupTitle>
+        <GroupTitle>{this.props.name}</GroupTitle>
         <Links 
           links={[...this.props.links].reverse()} 
           title={this.props.title}

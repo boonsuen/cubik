@@ -26,7 +26,7 @@ export default class UserListRoute extends React.Component {
             {Object.keys(this.props.sublistLinks).map((item, index) => (
               <Group
                 key={`Group-${index}`}
-                title={item}
+                name={item}
                 links={this.props.sublistLinks[item]}
                 toggleModal={this.props.toggleModal}
                 setModalSublistText={this.props.setModalSublistText}
@@ -34,7 +34,7 @@ export default class UserListRoute extends React.Component {
             ))}
             <Group
               key={`Group-ungrouped`}
-              title="Ungrouped"
+              name="Ungrouped"
               links={this.props.ungroupedLinks}
               toggleModal={this.props.toggleModal}
               setModalSublistText={this.props.setModalSublistText}
