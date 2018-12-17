@@ -20,9 +20,9 @@ export default class Group extends React.Component {
         <GroupTitle>{this.props.title}</GroupTitle>
         <Links 
           links={[...this.props.links].reverse()} 
+          title={this.props.title}
           toggleModal={this.props.toggleModal}    
-          setModalSublistText={this.props.setModalSublistText}
-          title={this.props.title}        
+          setModalSublistText={this.props.setModalSublistText}        
         />
       </GroupWrapper>
     );
