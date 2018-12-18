@@ -9,11 +9,11 @@ class Unsorted extends React.Component {
       <React.Fragment>
         <h1>Unsorted links</h1>
         <GroupsContainer>
-          {this.props.allLinks.sublists.map((sublist) => (
+          {this.props.allLinks.groups.map(group => (
             <Group 
-              key={sublist.id} 
-              title={sublist.title} 
-              links={sublist.links} 
+              key={group.id} 
+              name={group.name} 
+              links={group.links} 
               toggleModal={this.props.toggleModal}  
             />
           ))}

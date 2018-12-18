@@ -152,9 +152,9 @@ class CubikApp extends React.Component {
     allLinks: {
       id: 'allLinks',
       ungrouppedLinks: [{}],
-      sublists: [{
-        id: 'allLinksSublist',
-        title: 'Home GraphQL',
+      groups: [{
+        id: 'allLinksGroup',
+        name: 'Home GraphQL',
         links: [{
           id: 'nene',
           title: 'Introduction to GraphQL',

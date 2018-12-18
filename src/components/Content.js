@@ -10,7 +10,6 @@ import UserListRoute from './UserListRoute';
 
 import db from '../firebase/db';
 import { InitialDataContext } from './CubikApp';
-import { arch } from 'os';
 
 const StyledContent = styled.div`
   background: #f7f8fe;
@@ -120,30 +119,6 @@ class ContentLoader extends React.Component {
         });
       });
     }
-
-    // const fetchData = new Promise((resolve, reject) => {
-    //   const { userId, listId } = this.props;
-    //   if (!this.props.fetched) {
-    //     db.collection(`/users/${userId}/lists/${listId}/links`).get()
-    //       .then((querySnapshot) => {
-    //         let isEmptyState = false;
-    //         if (querySnapshot.size === 0) {
-    //           isEmptyState = true;
-    //         }
-    //         let links = [];
-    //         querySnapshot.forEach((doc) => {
-    //           links.push({...doc.data(), id: doc.id});
-    //         });
-    //         resolve({ links, isEmptyState });
-    //       })
-    //       .catch(err => console.log(err));
-    //   }
-    // });
-    // fetchData.then(({ links, isEmptyState }) => this.setState({
-    //   loading: false,
-    //   links,
-    //   isEmptyState
-    // }));
   }
   render() {
     return this.state.loading 
@@ -280,7 +255,7 @@ class Content extends React.Component {
             );
           }}>
             <ModalSublist>
-              <label>Sublist:</label>
+              <label>Group:</label>
               <div>{this.state.modalSublistText}</div>
             </ModalSublist>
             <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>

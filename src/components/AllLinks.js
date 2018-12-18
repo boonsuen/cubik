@@ -71,11 +71,11 @@ class AllLinks extends React.Component {
         </CardsContainer>
     
         <GroupsContainer>
-          {this.props.allLinks.sublists.map((sublist) => (
+          {this.props.allLinks.groups.map(group => (
             <Group 
-              key={sublist.id} 
-              title={sublist.title} 
-              links={sublist.links} 
+              key={group.id} 
+              name={group.name} 
+              links={group.links} 
               toggleModal={this.props.toggleModal}  
             />
           ))}
