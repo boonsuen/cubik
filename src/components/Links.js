@@ -18,8 +18,8 @@ const LinksWrapper = styled.div`
 const StyledLink = styled.a`
   width: 100%;
   height: 105px;
-  padding: 30px;
   box-sizing: border-box;
+  padding: 30px;
   display: flex;
   align-items: center;
   background: #fff;
@@ -39,6 +39,19 @@ const StyledLink = styled.a`
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }
+`;
+
+const EmptyLink = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 105px;
+  box-sizing: border-box;
+  padding: 30px;
+  box-shadow: 0 2px 8px #ecedff;
+  color: #818195;
+  font-style: italic;
 `;
 
 const LinkAction = styled.div`
@@ -71,7 +84,7 @@ export default class Links extends React.Component {
         <LinkAction>
           <LeftIcon type="button" onClick={() => {
             this.props.toggleModal();
-            this.props.setModalSublistText(this.props.title);
+            this.props.setModalSublistText(this.props.name);
           }}>
             <img src={AddIcon} 
           />
@@ -83,11 +96,15 @@ export default class Links extends React.Component {
             <img src={DeleteIcon} />
           </RightIcon>
         </LinkAction>
-        {this.props.links.map(link => (
-          <StyledLink key={link.id} href={link.url} target="_blank">
-            {link.title}
-          </StyledLink>
-        ))}      
+        {this.props.links.length !== 0 ? (
+          this.props.links.map(link => (
+            <StyledLink key={link.id} href={link.url} target="_blank">
+              {link.title}
+            </StyledLink>
+          ))
+        ) : (
+          <EmptyLink>No links here</EmptyLink>
+        )}  
       </LinksWrapper>
     );
   }

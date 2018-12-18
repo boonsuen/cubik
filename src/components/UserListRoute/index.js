@@ -23,11 +23,11 @@ export default class UserListRoute extends React.Component {
         </Header>
         {!this.props.isEmptyState ? (
           <GroupsContainer>
-            {Object.keys(this.props.sublistLinks).map((item, index) => (
+            {this.props.groupsData.map((group, index) => (
               <Group
-                key={`Group-${index}`}
-                name={item}
-                links={this.props.sublistLinks[item]}
+                key={`Group-${group.id}`}
+                name={group.name}
+                links={group.links}
                 toggleModal={this.props.toggleModal}
                 setModalSublistText={this.props.setModalSublistText}
               />
