@@ -138,9 +138,6 @@ class CubikApp extends React.Component {
       links
     });
   }
-  handleModal = (boolean) => {
-    this.setState({showModal: boolean});
-  }
   state = {
     loadingFirebaseAuth: true,
     user: {
@@ -167,6 +164,28 @@ class CubikApp extends React.Component {
       }]
     }
   }
+  handleAddList = (inputValue) => {
+    this.setState(state => ({
+      lists: [...state.lists, {title: inputValue, id: 'temporary-id'}]
+    }), () => {
+      db.collection(`users/${this.state.user.id}/lists`).add({
+        title: inputValue,
+        order: this.state.lists.length - 1,
+      })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+        this.setState((state) => ({
+          lists: [
+            ...state.lists.filter(list => list.id !== 'temporary-id'),
+            {title: inputValue, id: docRef.id}
+          ]
+        }));
+      })
+      .catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
+    });
+  }  
   render() {
     return (
       <React.Fragment>
@@ -190,9 +209,12 @@ class CubikApp extends React.Component {
                   lists: this.state.lists, 
                   links: this.state.links,
                   allLinks: this.state.allLinks
-                }}>             
+                }}>
                   <StyledApp>
-                    <Sidebar toggleAuth={toggleAuth} openModal={this.handleModal} />
+                    <Sidebar 
+                      toggleAuth={toggleAuth}  
+                      handleAddList={this.handleAddList}
+                    />
                     <Content /> 
                   </StyledApp>
                 </InitialDataContext.Provider>

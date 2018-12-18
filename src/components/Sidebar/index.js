@@ -169,7 +169,6 @@ class Sidebar extends React.Component {
     });
   }
   handleAddList = (inputValue) => {
-    if (!inputValue) return;
     this.setState((state) => ({
       lists: [...state.lists, {title: inputValue, id: 'temporary-id'}]
     }), () => {
@@ -190,7 +189,7 @@ class Sidebar extends React.Component {
         console.error("Error adding document: ", error);
       });
     });
-  }  
+  };
   render() {
     return (
       <StyledSidebar>
@@ -217,36 +216,38 @@ class Sidebar extends React.Component {
               <Label>My Lists</Label>
               <DragDropContext onDragEnd={this.onDragEnd}>
                 <Droppable droppableId="droppable">
-                  {(provided, snapshot) => (
-                    <UserLists>
-                      <div
-                        ref={provided.innerRef}
-                        style={getListStyle(snapshot.isDraggingOver)}
-                      >
-                        {this.state.lists.map((list, index) => (
-                          <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
-                            {(provided, snapshot) => (
-                              <p
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                style={getItemStyle(
-                                  snapshot.isDragging,
-                                  provided.draggableProps.style
-                                )}
-                              ><Link to={`/app/${list.id}`} prefetch={true}>{list.title}</Link></p>
-                            )}
-                          </Draggable>
-                        ))}
-                      </div>
+                  {(provided, snapshot) => {
+                    return (
+                      <UserLists>
+                        <div
+                          ref={provided.innerRef}
+                          style={getListStyle(snapshot.isDraggingOver)}
+                        >
+                          {this.props.lists.map((list, index) => (
+                            <Draggable key={`listTitle-${list.id}`} draggableId={list.id} index={index}>
+                              {(provided, snapshot) => (
+                                <p
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  style={getItemStyle(
+                                    snapshot.isDragging,
+                                    provided.draggableProps.style
+                                  )}
+                                ><Link to={`/app/${list.id}`} prefetch={true}>{list.title}</Link></p>
+                              )}
+                            </Draggable>
+                          ))}
+                        </div>
                     </UserLists>
-                  )}
+                    );
+                  }}
                 </Droppable>
               </DragDropContext>
             </UserListsContainer>            
           </RoutesContainer>
         </Scrollable>
-        <SidebarBottom handleAddList={this.handleAddList} />      
+        <SidebarBottom handleAddList={this.props.handleAddList} />      
       </StyledSidebar>
     );
   }

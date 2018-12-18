@@ -55,6 +55,7 @@ export default class SidebarBottom extends React.Component {
           <h2>Create new list</h2>
           <form onSubmit={(e) => {
             e.preventDefault();
+            if (!this.input.value) return;
             this.toggleModal();
             this.props.handleAddList(this.input.value);
           }}>
