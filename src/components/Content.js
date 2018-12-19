@@ -152,38 +152,41 @@ class ContentLoader extends React.Component {
 class Content extends React.Component {
   state = {
     showModal: false,
-    modalGroupText: 'Ungrouped'
-  }
+    selectedGroup: {
+      listId: null,
+      id: null,
+      name: null
+    }
+  };
   toggleModal = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
+  setSelectedGroup = group => {
     this.setState({
-      showModal: !this.state.showModal
+      selectedGroup: group
     });
-  }
-  setModalGroupText = (modalGroupText) => {
-    this.setState({ modalGroupText });
-  }
-  handleAddLink = (sublist, url, title) => {
-    console.log(sublist, url, title);
-    db.collection(`users/${this.props.userId}/lists/4W8P97ezy7tkgvtuSAcu/links`).add({
-      sublist,
-      title,
-      url,
+  };
+  handleAddLink = (listId, groupId, title, url) => {
+    console.log(listId, groupId, title, url);
+    db.collection(`users/${this.props.userId}/lists/${listId}/links`).add({
+      groupId, title, url
     })
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
-      this.setState(prevState => ({
-        sublistLinks: {
-          ...prevState.sublistLinks,
-          [sublist]: [
-            ...prevState.sublistLinks[sublist],
-            { id: docRef.id, sublist, title, url }
-          ]        
-        }
-      }), () => {
-        this.setState((state) => ({
-          showModal: !state.showModal,
-        }));
-      });
+      const link = { groupId, title, url, id: docRef.id };
+      // this.setState(prevState => ({
+      //   sublistLinks: {
+      //     ...prevState.sublistLinks,
+      //     [sublist]: [
+      //       ...prevState.sublistLinks[sublist],
+      //       { id: docRef.id, sublist, title, url }
+      //     ]        
+      //   }
+      // }), () => {
+      //   this.setState((state) => ({
+      //     showModal: !state.showModal,
+      //   }));
+      // });
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -196,7 +199,7 @@ class Content extends React.Component {
           <AllLinks 
             allLinks={this.props.allLinks} 
             lists={this.props.lists}
-            toggleModal={this.toggleModal} 
+            toggleModal={this.toggleModal}
           />
         )} exact />
         <Route path="/app/reading-list" render={
@@ -216,17 +219,17 @@ class Content extends React.Component {
                   fetched={false}
                   listId={list.id}
                   userId={this.props.userId}
-                  render={(groupsData, ungroupedLinks) => {
-                    return <UserListRoute
+                  render={(groupsData, ungroupedLinks) => (
+                    <UserListRoute
                       userId={this.props.userId}
                       groupsData={groupsData}
                       ungroupedLinks={ungroupedLinks}
                       list={list}
                       match={match}
                       toggleModal={this.toggleModal}
-                      setModalGroupText={this.setModalGroupText}
+                      setSelectedGroup={this.setSelectedGroup}
                     />
-                  }}         
+                  )}
                 />
               );
             }}  
@@ -240,16 +243,17 @@ class Content extends React.Component {
           <h2>Add link</h2>
           <form onSubmit={(e) => {
             e.preventDefault();
-            const sublist = this.state.modalSublistText === 'Ungrouped' ? null : this.state.modalSublistText;
+            const { selectedGroup: { 
+              listId,
+              id: groupId
+            } } = this.state;
             this.handleAddLink(
-              sublist,
-              this.inputUrl.value, 
-              this.inputTitle.value,        
+              listId, groupId, this.inputTitle.value, this.inputUrl.value
             );
           }}>
             <ModalSublist>
               <label>Group:</label>
-              <div>{this.state.modalGroupText}</div>
+              <div>{this.state.selectedGroup.name}</div>
             </ModalSublist>
             <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
             <input 

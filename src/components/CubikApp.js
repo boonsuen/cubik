@@ -75,9 +75,9 @@ class InitialLoading extends React.Component {
             "background: #00d334; color: #fff; padding: 3px;", "background: #7cffc0; padding: 3px; color: #777;",
             user
           );
-          db.collection(`/users/${user.uid}/lists`).get().then((querySnapshot) => {
+          db.collection(`/users/${user.uid}/lists`).get().then(querySnapshot => {
             let lists = [];
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(doc => {
               lists.push({...doc.data(), id: doc.id});
             });
             if (this.props.routeListId !== '/app') {

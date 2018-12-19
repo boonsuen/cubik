@@ -19,10 +19,12 @@ export default class Group extends React.Component {
       <GroupWrapper>
         <GroupTitle>{this.props.name}</GroupTitle>
         <Links 
-          links={[...this.props.links].reverse()} 
+          listId={this.props.listId}
+          groupId={this.props.id}
           name={this.props.name}
+          links={[...this.props.links].reverse()}           
           toggleModal={this.props.toggleModal}    
-          setModalGroupText={this.props.setModalGroupText}        
+          setSelectedGroup={this.props.setSelectedGroup}        
         />
       </GroupWrapper>
     );

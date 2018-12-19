@@ -84,7 +84,11 @@ export default class Links extends React.Component {
         <LinkAction>
           <LeftIcon type="button" onClick={() => {
             this.props.toggleModal();
-            this.props.setModalGroupText(this.props.name);
+            this.props.setSelectedGroup({
+              listId: this.props.listId,
+              id: this.props.groupId,
+              name: this.props.name
+            });
           }}>
             <img src={AddIcon} 
           />

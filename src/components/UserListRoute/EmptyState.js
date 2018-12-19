@@ -75,7 +75,11 @@ class EmptyState extends React.Component {
           type="button"
           onClick={() => {
             this.props.toggleModal();
-            this.props.setModalGroupText('Ungrouped');
+            this.props.setSelectedGroup({
+              listId: this.props.listId,
+              id: null,
+              name: 'Ungrouped'
+            });
           }}
         >
           Add a link
@@ -91,7 +95,9 @@ class EmptyState extends React.Component {
         </CreateGroupBtn>
         <CreateGroupModal
           isOpen={this.state.showCreateGroupModal}
-          onRequestClose={this.toggleCreateGroupModal}
+          onRequestClose={() => {
+            this.toggleCreateGroupModal();
+          }}
           contentLabel="Create new group modal"
         >
           <h2>Create new group</h2>
@@ -108,7 +114,9 @@ class EmptyState extends React.Component {
             />
             <ModalButtons>
               <button type="submit">Create</button>
-              <button onClick={this.toggleCreateGroupModal} type="button">Cancel</button>
+              <button onClick={() => {
+                this.toggleCreateGroupModal();
+              }} type="button">Cancel</button>
             </ModalButtons>
           </form>
         </CreateGroupModal>

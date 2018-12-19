@@ -63,24 +63,29 @@ export default class UserListRoute extends React.Component {
             {this.state.groupsData.map(group => (
               <Group
                 key={`Group-${group.id}`}
+                listId={this.props.list.id}
+                id={group.id}
                 name={group.name}
                 links={group.links}
                 toggleModal={this.props.toggleModal}
-                setModalGroupText={this.props.setModalGroupText}
+                setSelectedGroup={this.props.setSelectedGroup}
               />
             ))}
             <Group
               key="Group-ungrouped"
+              listId={this.props.list.id}
+              id={null}
               name="Ungrouped"
               links={this.state.ungroupedLinks}
               toggleModal={this.props.toggleModal}
-              setModalGroupText={this.props.setModalGroupText}
+              setSelectedGroup={this.props.setSelectedGroup}
             />
           </GroupsContainer>
         ) : (
           <EmptyState 
+            listId={this.props.list.id}
             toggleModal={this.props.toggleModal}
-            setModalGroupText={this.props.setModalGroupText}
+            setSelectedGroup={this.props.setSelectedGroup}
             handleCreateGroup={this.handleCreateGroup}
           />
         )}
