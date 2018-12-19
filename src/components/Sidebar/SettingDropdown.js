@@ -93,7 +93,6 @@ class SettingDropdown extends React.Component {
     this.setState(state => ({dropdownOpen: !state.dropdownOpen}));
   }
   handleClickOutside = e => {
-    console.log('handleClickOutside');
     this.setState({dropdownOpen: false});
   };
   render() {

@@ -7,7 +7,6 @@ import MainRoutes from './MainRoutes';
 import SidebarBottom from './SidebarBottom';
 
 import auth from '../../firebase/auth';
-import db from '../../firebase/db';
 import { InitialDataContext } from '../CubikApp';
 
 import Search from '../../assets/img/icons/search.svg';
@@ -166,28 +165,6 @@ class Sidebar extends React.Component {
 
     this.setState({
       lists,
-    });
-  }
-  handleAddList = (inputValue) => {
-    this.setState((state) => ({
-      lists: [...state.lists, {title: inputValue, id: 'temporary-id'}]
-    }), () => {
-      db.collection(`users/${this.props.userId}/lists`).add({
-        title: inputValue,
-        order: this.state.lists.length - 1,
-      })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        this.setState((state) => ({
-          lists: [
-            ...state.lists.filter(list => list.id !== 'temporary-id'),
-            {title: inputValue, id: docRef.id}
-          ]
-        }));
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error);
-      });
     });
   };
   render() {

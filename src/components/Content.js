@@ -78,9 +78,8 @@ const LoadingContent = styled.span`
 class ContentLoader extends React.Component {
   state = {
     loading: !this.props.fetched,
-    links: [],
-    groups: [],
-    isEmptyState: null
+    groupsData: [],
+    ungroupedLinks: []
   };
   componentDidMount() {
     const { userId, listId } = this.props;
@@ -111,19 +110,42 @@ class ContentLoader extends React.Component {
 
       Promise.all([fetchLinks, fetchGroups]).then(values => {
         const [ links, groups ] = values;
+        const groupIds = groups.reduce((acc, val, i) => {
+          acc[val.id] = i;
+          return acc;
+        }, {});                    
+        const ungroupedLinks = [];
+        const groupedLinks = links.reduce((acc, val) => {
+          if (groupIds.hasOwnProperty(val.groupId)) {
+            acc.push(val);
+          } else {
+            ungroupedLinks.push(val);
+          }
+          return acc;
+        }, []);
+        let groupsDataCount = 0;
+        const groupsData = groups.reduce((acc, val, i) => {
+            acc.push({
+              id: groups[groupsDataCount].id,
+              name: groups[groupsDataCount].name,
+              links: groupedLinks.filter(link => link.groupId === groups[groupsDataCount].id)
+            });
+            groupsDataCount += 1;
+          return acc;
+        }, []);
         this.setState({
           loading: false,
-          links,
-          groups,
-          isEmptyState: links.length === 0 && groups.length === 0
+          groupsData,
+          ungroupedLinks
         });
       });
     }
   }
   render() {
+    const { groupsData, ungroupedLinks } = this.state;
     return this.state.loading 
       ? <LoadingContent /> 
-      : this.props.render(this.state.links, this.state.groups, this.state.isEmptyState);
+      : this.props.render(groupsData, ungroupedLinks);
   }
 }
 
@@ -187,7 +209,7 @@ class Content extends React.Component {
           () => <Unsorted allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
         <Route path="/app/trash" render={
           () => <Trash allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
-        {this.props.lists.map((list) => (
+        {this.props.lists.map(list => (
           <Route 
             key={`listRoute-${list.id}`} 
             path={`/app/${list.id}`} 
@@ -198,42 +220,17 @@ class Content extends React.Component {
                   fetched={false}
                   listId={list.id}
                   userId={this.props.userId}
-                  render={(links, groups, isEmptyState) => {
-                    const groupIds = groups.reduce((acc, val, i) => {
-                      acc[val.id] = i;
-                      return acc;
-                    }, {});                    
-                    const ungroupedLinks = [];
-                    const groupedLinks = links.reduce((acc, val) => {
-                      if (groupIds.hasOwnProperty(val.groupId)) {
-                        acc.push(val);
-                      } else {
-                        ungroupedLinks.push(val);
-                      }
-                      return acc;
-                    }, []);
-                    let groupsDataCount = 0;
-                    const groupsData = groups.reduce((acc, val, i) => {
-                        acc.push({
-                          id: groups[groupsDataCount].id,
-                          name: groups[groupsDataCount].name,
-                          links: groupedLinks.filter(link => link.groupId === groups[groupsDataCount].id)
-                        });
-                        groupsDataCount += 1;
-                      return acc;
-                    }, []);
-                    return (
-                      <UserListRoute 
-                        isEmptyState={isEmptyState}
-                        list={list} 
-                        match={match}
-                        ungroupedLinks={ungroupedLinks}
-                        groupsData={groupsData}
-                        toggleModal={this.toggleModal}
-                        setModalSublistText={this.setModalSublistText}
-                      />
-                    );         
-                  }}             
+                  render={(groupsData, ungroupedLinks) => {
+                    return <UserListRoute
+                      userId={this.props.userId}
+                      groupsData={groupsData}
+                      ungroupedLinks={ungroupedLinks}
+                      list={list}
+                      match={match}
+                      toggleModal={this.toggleModal}
+                      setModalSublistText={this.setModalSublistText}
+                    />
+                  }}         
                 />
               );
             }}  
