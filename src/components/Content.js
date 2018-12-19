@@ -152,19 +152,15 @@ class ContentLoader extends React.Component {
 class Content extends React.Component {
   state = {
     showModal: false,
-    modalSublistText: 'Ungrouped',
-    sublistLinks: this.props.sublistLinks || [],
-    ungroupedLinks: this.props.ungroupedLinks || []
+    modalGroupText: 'Ungrouped'
   }
   toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
     });
   }
-  setModalSublistText = (modalSublistText) => {
-    this.setState({
-      modalSublistText
-    });
+  setModalGroupText = (modalGroupText) => {
+    this.setState({ modalGroupText });
   }
   handleAddLink = (sublist, url, title) => {
     console.log(sublist, url, title);
@@ -201,7 +197,7 @@ class Content extends React.Component {
             allLinks={this.props.allLinks} 
             lists={this.props.lists}
             toggleModal={this.toggleModal} 
-          /> 
+          />
         )} exact />
         <Route path="/app/reading-list" render={
           () => <ReadingList allLinks={this.props.allLinks} toggleModal={this.toggleModal} />} exact />    
@@ -228,7 +224,7 @@ class Content extends React.Component {
                       list={list}
                       match={match}
                       toggleModal={this.toggleModal}
-                      setModalSublistText={this.setModalSublistText}
+                      setModalGroupText={this.setModalGroupText}
                     />
                   }}         
                 />
@@ -253,7 +249,7 @@ class Content extends React.Component {
           }}>
             <ModalSublist>
               <label>Group:</label>
-              <div>{this.state.modalSublistText}</div>
+              <div>{this.state.modalGroupText}</div>
             </ModalSublist>
             <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
             <input 

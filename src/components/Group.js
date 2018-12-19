@@ -22,7 +22,7 @@ export default class Group extends React.Component {
           links={[...this.props.links].reverse()} 
           name={this.props.name}
           toggleModal={this.props.toggleModal}    
-          setModalSublistText={this.props.setModalSublistText}        
+          setModalGroupText={this.props.setModalGroupText}        
         />
       </GroupWrapper>
     );

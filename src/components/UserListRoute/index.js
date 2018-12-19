@@ -66,7 +66,7 @@ export default class UserListRoute extends React.Component {
                 name={group.name}
                 links={group.links}
                 toggleModal={this.props.toggleModal}
-                setModalSublistText={this.props.setModalSublistText}
+                setModalGroupText={this.props.setModalGroupText}
               />
             ))}
             <Group
@@ -74,13 +74,13 @@ export default class UserListRoute extends React.Component {
               name="Ungrouped"
               links={this.state.ungroupedLinks}
               toggleModal={this.props.toggleModal}
-              setModalSublistText={this.props.setModalSublistText}
+              setModalGroupText={this.props.setModalGroupText}
             />
           </GroupsContainer>
         ) : (
           <EmptyState 
             toggleModal={this.props.toggleModal}
-            setModalSublistText={this.props.setModalSublistText}
+            setModalGroupText={this.props.setModalGroupText}
             handleCreateGroup={this.handleCreateGroup}
           />
         )}

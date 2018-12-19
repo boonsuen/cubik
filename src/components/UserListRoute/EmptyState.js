@@ -75,7 +75,7 @@ class EmptyState extends React.Component {
           type="button"
           onClick={() => {
             this.props.toggleModal();
-            this.props.setModalSublistText('Ungrouped');
+            this.props.setModalGroupText('Ungrouped');
           }}
         >
           Add a link
