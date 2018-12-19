@@ -22,8 +22,8 @@ export default class Group extends React.Component {
           listId={this.props.listId}
           groupId={this.props.id}
           name={this.props.name}
-          links={[...this.props.links].reverse()}           
-          toggleModal={this.props.toggleModal}    
+          links={[...this.props.links].reverse()}         
+          toggleAddLinkModal={this.props.toggleAddLinkModal}    
           setSelectedGroup={this.props.setSelectedGroup}        
         />
       </GroupWrapper>

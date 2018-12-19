@@ -5,7 +5,6 @@ import AllLinks from './AllLinks';
 import ReadingList from './ReadingList';
 import Unsorted from './Unsorted';
 import Trash from './Trash';
-import { AddLinkModal } from './Modals';
 import UserListRoute from './UserListRoute';
 
 import db from '../firebase/db';
@@ -21,41 +20,6 @@ const StyledContent = styled.div`
   h1 {
     font-size: 36px;
   }
-`;
-
-const ModalSublist = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
-
-  label {
-    font-weight: 500;
-    color: #495f8a;
-  }
-  
-  div {
-    margin-left: 20px;
-    height: 32px;
-    padding: 0 10px;
-    border: 1px solid #9b7ae6;
-    text-align: center;
-    line-height: 32px;
-    border-radius: 5px;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-const ModalInputLabel = styled.label`
-  color: #71718a;
-  margin-bottom: 3px;
-  display: inline-block;
-`;
-
-const ModalButtons = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const rotate = keyframes`
@@ -149,23 +113,7 @@ class ContentLoader extends React.Component {
   }
 }
 
-class Content extends React.Component {
-  state = {
-    showModal: false,
-    selectedGroup: {
-      listId: null,
-      id: null,
-      name: null
-    }
-  };
-  toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal });
-  };
-  setSelectedGroup = group => {
-    this.setState({
-      selectedGroup: group
-    });
-  };
+class Content extends React.Component {  
   handleAddLink = (listId, groupId, title, url) => {
     console.log(listId, groupId, title, url);
     db.collection(`users/${this.props.userId}/lists/${listId}/links`).add({
@@ -227,51 +175,13 @@ class Content extends React.Component {
                       list={list}
                       match={match}
                       toggleModal={this.toggleModal}
-                      setSelectedGroup={this.setSelectedGroup}
                     />
                   )}
                 />
               );
             }}  
           />
-        ))}
-        <AddLinkModal
-          isOpen={this.state.showModal}
-          onRequestClose={this.toggleModal}
-          contentLabel="Add New Link Modal"
-        >
-          <h2>Add link</h2>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const { selectedGroup: { 
-              listId,
-              id: groupId
-            } } = this.state;
-            this.handleAddLink(
-              listId, groupId, this.inputTitle.value, this.inputUrl.value
-            );
-          }}>
-            <ModalSublist>
-              <label>Group:</label>
-              <div>{this.state.selectedGroup.name}</div>
-            </ModalSublist>
-            <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
-            <input 
-              id="link-url" placeholder="https://..."
-              ref={(el) => { this.inputUrl = el }} autoComplete="off"
-              autoFocus  
-            />
-            <ModalInputLabel htmlFor="link-title">Title</ModalInputLabel>
-            <input 
-              id="link-title" placeholder="Enter the title (optional)"
-              ref={(el) => { this.inputTitle = el }} autoComplete="off"
-            />
-            <ModalButtons>
-              <button type="submit">Add</button>
-              <button onClick={this.toggleModal} type="button">Cancel</button>
-            </ModalButtons>
-          </form>
-        </AddLinkModal>
+        ))}        
       </StyledContent>
     );
   }

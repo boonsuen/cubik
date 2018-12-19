@@ -83,7 +83,7 @@ export default class Links extends React.Component {
       <LinksWrapper>      
         <LinkAction>
           <LeftIcon type="button" onClick={() => {
-            this.props.toggleModal();
+            this.props.toggleAddLinkModal();
             this.props.setSelectedGroup({
               listId: this.props.listId,
               id: this.props.groupId,
