@@ -108,7 +108,7 @@ export default class UserListRoute extends React.Component {
       console.error("Error adding document: ", error);
     });
   };
-  handleCreateGroup = (groupName, toggleCreateGroupModal) => {
+  handleCreateGroup = (groupName, fromEmptyState) => {
     this.setState(state => ({
       groupsData: [
         ...state.groupsData, 
@@ -116,10 +116,9 @@ export default class UserListRoute extends React.Component {
       ],
       isEmptyState: false
     }), () => {
-      toggleCreateGroupModal();
       const { userId, list } = this.props;
       db.collection(`users/${userId}/lists/${list.id}/groups`).add({
-        name: groupName,
+        name: groupName
       })
       .then(docRef => {
         console.log("Document written with ID: ", docRef.id);  

@@ -99,7 +99,11 @@ class EmptyState extends React.Component {
           <form onSubmit={(e) => {
             e.preventDefault();
             if (!this.inputName.value) return;
-            this.props.handleCreateGroup(this.inputName.value, this.toggleCreateGroupModal);
+            this.setState(state => ({
+              showCreateGroupModal: !state.showCreateGroupModal
+            }), () => {
+              this.props.handleCreateGroup(this.inputName.value, true);
+            });
           }}>
             <ModalInputLabel htmlFor="group-name">Name</ModalInputLabel>
             <input 
