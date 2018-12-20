@@ -113,34 +113,8 @@ class ContentLoader extends React.Component {
   }
 }
 
-class Content extends React.Component {  
-  handleAddLink = (listId, groupId, title, url) => {
-    console.log(listId, groupId, title, url);
-    db.collection(`users/${this.props.userId}/lists/${listId}/links`).add({
-      groupId, title, url
-    })
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-      const link = { groupId, title, url, id: docRef.id };
-      // this.setState(prevState => ({
-      //   sublistLinks: {
-      //     ...prevState.sublistLinks,
-      //     [sublist]: [
-      //       ...prevState.sublistLinks[sublist],
-      //       { id: docRef.id, sublist, title, url }
-      //     ]        
-      //   }
-      // }), () => {
-      //   this.setState((state) => ({
-      //     showModal: !state.showModal,
-      //   }));
-      // });
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-  }
-  render () {
+class Content extends React.Component {    
+  render() {
     return (
       <StyledContent>
         <Route path="/app" render={() => (

@@ -64,12 +64,48 @@ export default class UserListRoute extends React.Component {
       this.props.groupsData.length === 0 &&
       this.props.ungroupedLinks.length === 0
   };
-  toggleAddLinkModal = () => {
+  showAddLinkModal = group => {
+    this.setState({ 
+      showAddLinkModal: !this.state.showAddLinkModal,
+      selectedGroup: group
+    });
+  };
+  hideAddLinkModal = () => {
     this.setState({ showAddLinkModal: !this.state.showAddLinkModal });
   };
-  setSelectedGroup = group => {
-    this.setState({
-      selectedGroup: group
+  handleAddLink = (listId, groupId, title, url) => {
+    db.collection(`users/${this.props.userId}/lists/${listId}/links`).add({
+      groupId, title, url
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+      const link = { groupId, title, url, id: docRef.id };
+      if (link.groupId) {
+        const groupsData = this.state.groupsData.map(group => {
+          if (group.id === groupId) {
+            return {
+              ...group,
+              links: [
+                ...group.links,
+                link
+              ]
+            }
+          }
+        });
+        this.setState({ groupsData });
+      } else {
+        this.setState(state => ({
+          ungroupedLinks: [
+            ...state.ungroupedLinks,
+            link
+          ],
+          isEmptyState: false
+        }));
+      }
+      this.hideAddLinkModal();
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
     });
   };
   handleCreateGroup = (groupName, toggleCreateGroupModal) => {    
@@ -117,8 +153,7 @@ export default class UserListRoute extends React.Component {
                 id={group.id}
                 name={group.name}
                 links={group.links}
-                toggleAddLinkModal={this.toggleAddLinkModal}
-                setSelectedGroup={this.setSelectedGroup}
+                showAddLinkModal={this.showAddLinkModal}
               />
             ))}
             <Group
@@ -127,21 +162,19 @@ export default class UserListRoute extends React.Component {
               id={null}
               name="Ungrouped"
               links={this.state.ungroupedLinks}
-              toggleAddLinkModal={this.toggleAddLinkModal}
-              setSelectedGroup={this.setSelectedGroup}
+              showAddLinkModal={this.showAddLinkModal}
             />
           </GroupsContainer>
         ) : (
           <EmptyState 
             listId={this.props.list.id}
-            toggleAddLinkModal={this.toggleAddLinkModal}
-            setSelectedGroup={this.setSelectedGroup}
+            showAddLinkModal={this.showAddLinkModal}
             handleCreateGroup={this.handleCreateGroup}
           />
         )}
         <AddLinkModal
           isOpen={this.state.showAddLinkModal}
-          onRequestClose={this.toggleAddLinkModal}
+          onRequestClose={this.hideAddLinkModal}
           contentLabel="Add New Link Modal"
         >
           <h2>Add link</h2>
@@ -172,7 +205,7 @@ export default class UserListRoute extends React.Component {
             />
             <ModalButtons>
               <button type="submit">Add</button>
-              <button onClick={this.toggleModal} type="button">Cancel</button>
+              <button onClick={this.hideAddLinkModal} type="button">Cancel</button>
             </ModalButtons>
           </form>
         </AddLinkModal>

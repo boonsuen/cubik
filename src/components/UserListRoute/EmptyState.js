@@ -74,8 +74,7 @@ class EmptyState extends React.Component {
         <AddLinkBtn
           type="button"
           onClick={() => {
-            this.props.toggleAddLinkModal();
-            this.props.setSelectedGroup({
+            this.props.showAddLinkModal({
               listId: this.props.listId,
               id: null,
               name: 'Ungrouped'
