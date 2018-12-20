@@ -108,13 +108,15 @@ export default class UserListRoute extends React.Component {
       console.error("Error adding document: ", error);
     });
   };
-  handleCreateGroup = (groupName, toggleCreateGroupModal) => {    
+  handleCreateGroup = (groupName, toggleCreateGroupModal) => {
     this.setState(state => ({
       groupsData: [
         ...state.groupsData, 
         { id: 'temporary-id', name: groupName, links: [] }
-      ]
+      ],
+      isEmptyState: false
     }), () => {
+      toggleCreateGroupModal();
       const { userId, list } = this.props;
       db.collection(`users/${userId}/lists/${list.id}/groups`).add({
         name: groupName,
@@ -126,11 +128,7 @@ export default class UserListRoute extends React.Component {
             ...state.groupsData.filter(groupItem => groupItem.id !== 'temporary-id'),
             { id: docRef.id, name: groupName, links: [] }
           ]
-        }), () => {
-          toggleCreateGroupModal(() => {
-            this.setState({ isEmptyState: false });
-          });
-        });
+        }));        
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -142,7 +140,9 @@ export default class UserListRoute extends React.Component {
       <React.Fragment>
         <Header>
           <h1>{this.props.list.title} {this.props.match.url.replace(/\/app\//, '')}</h1>        
-          {!this.state.isEmptyState && <AddGroup />}
+          {!this.state.isEmptyState && (
+            <AddGroup handleCreateGroup={this.handleCreateGroup} />
+          )}
         </Header>
         {!this.state.isEmptyState ? (
           <GroupsContainer>

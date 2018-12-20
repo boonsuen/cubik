@@ -60,11 +60,11 @@ class EmptyState extends React.Component {
   state = {
     showCreateGroupModal: false
   };
-  toggleCreateGroupModal = (cb) => {
+  toggleCreateGroupModal = () => {
     this.setState({
       showCreateGroupModal: !this.state.showCreateGroupModal
-    }, cb);
-  };  
+    });
+  };
   render() {
     return (
       <Container>
@@ -86,17 +86,13 @@ class EmptyState extends React.Component {
         <Or>or</Or>
         <CreateGroupBtn 
           type="button"
-          onClick={() => {
-            this.toggleCreateGroupModal();
-          }}
+          onClick={this.toggleCreateGroupModal}
         >
           Create a group
         </CreateGroupBtn>
         <CreateGroupModal
           isOpen={this.state.showCreateGroupModal}
-          onRequestClose={() => {
-            this.toggleCreateGroupModal();
-          }}
+          onRequestClose={this.toggleCreateGroupModal}
           contentLabel="Create new group modal"
         >
           <h2>Create new group</h2>
@@ -113,9 +109,7 @@ class EmptyState extends React.Component {
             />
             <ModalButtons>
               <button type="submit">Create</button>
-              <button onClick={() => {
-                this.toggleCreateGroupModal();
-              }} type="button">Cancel</button>
+              <button onClick={this.toggleCreateGroupModal} type="button">Cancel</button>
             </ModalButtons>
           </form>
         </CreateGroupModal>
