@@ -109,30 +109,42 @@ export default class UserListRoute extends React.Component {
     });
   };
   handleCreateGroup = (groupName, fromEmptyState) => {
-    this.setState(state => ({
-      groupsData: [
-        ...state.groupsData, 
-        { id: 'temporary-id', name: groupName, links: [] }
-      ],
-      isEmptyState: false
-    }), () => {
-      const { userId, list } = this.props;
-      db.collection(`users/${userId}/lists/${list.id}/groups`).add({
-        name: groupName
-      })
-      .then(docRef => {
+    const { userId, list } = this.props;
+    const addToDb = db.collection(`users/${userId}/lists/${list.id}/groups`).add({
+      name: groupName
+    }).catch(error => {
+      console.error("Error adding group doc: ", error);
+    });
+    
+    if (fromEmptyState) {
+      this.setState(state => ({
+        groupsData: [
+          ...state.groupsData, 
+          { id: 'temporary-id', name: groupName, links: [] }
+        ],
+        isEmptyState: false
+      }), () => {
+        addToDb.then(docRef => {
+          console.log("Document written with ID: ", docRef.id);  
+          this.setState(state => ({
+            groupsData: [
+              ...state.groupsData.filter(groupItem => groupItem.id !== 'temporary-id'),
+              { id: docRef.id, name: groupName, links: [] }
+            ]
+          }));
+        });        
+      });
+    } else {
+      return addToDb.then(docRef => {
         console.log("Document written with ID: ", docRef.id);  
         this.setState(state => ({
           groupsData: [
-            ...state.groupsData.filter(groupItem => groupItem.id !== 'temporary-id'),
+            ...state.groupsData,
             { id: docRef.id, name: groupName, links: [] }
           ]
-        }));        
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error);
+        }));
       });
-    });
+    }
   };
   render() {
     return (

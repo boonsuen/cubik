@@ -16,31 +16,26 @@ class AddGroup extends React.Component {
     showTextField: false,
     submitStatus: "initial",
     prevStatusIsInitial: false,
-    value: ""
+    groupName: ""
   };
   handleSubmit = e => {
     e.preventDefault();
-    const { submitStatus } = this.state;
-
-    if (this.state.showTextField) {
-      if (this.textField.value === "") return;
-
-      // When submitting, in which submitStatus?
+    const { showTextField, groupName, submitStatus } = this.state;
+    if (showTextField) {
+      if (groupName === "") return;
       if (submitStatus === "initial" || submitStatus === "followingInitial") {
         this.setState({
           submitStatus: "submitting",
           prevStatusIsInitial: true
         });
-        
-        setTimeout(() => {
+        this.props.handleCreateGroup(groupName).then(() => {
           this.setState({
             submitStatus: "submitted",
-            prevStatusIsInitial: false
+            prevStatusIsInitial: false,
+            groupName: ""
           });
-          console.log(this.state.value);
           this.textField.value = "";
           this.textField.focus();
-
           setTimeout(() => {
             if (this.state.submitStatus === "submitted") {
               this.setState({
@@ -48,13 +43,9 @@ class AddGroup extends React.Component {
                 prevStatusIsInitial: false
               });
             }
-          }, 2000);
-        }, 3000);
-      } else if (
-        submitStatus === "submitting" ||
-        submitStatus === "followingSubmitting"
-      ) {
-        console.log("second");
+          }, 1500);
+        });
+      } else if (submitStatus === "submitting") {
         return;
       } else if (submitStatus === "submitted") {
         console.log("third");
@@ -84,7 +75,7 @@ class AddGroup extends React.Component {
     } else {
       this.setState(
         {
-          showTextField: !this.state.showTextField
+          showTextField: !showTextField
         },
         () => {
           if (!this.state.showTextField) {
@@ -97,85 +88,9 @@ class AddGroup extends React.Component {
         }
       );
     }
-
-    // if (this.state.showTextField) {
-    //   if (this.textField.value === "") return;
-
-    //   // When submitting, in which submitStatus?
-    //   if (submitStatus === "initial" || submitStatus === "followingInitial") {
-    //     console.log("first");
-    //     this.setState({
-    //       submitStatus: "submitting",
-    //       prevStatusIsInitial: true
-    //     });
-    //     setTimeout(() => {
-    //       this.setState({
-    //         submitStatus: "submitted",
-    //         prevStatusIsInitial: false
-    //       });
-    //       console.log(this.state.value);
-    //       this.textField.value = "";
-    //       this.textField.focus();
-
-    //       setTimeout(() => {
-    //         if (this.state.submitStatus === "submitted") {
-    //           this.setState({
-    //             submitStatus: "followingInitial",
-    //             prevStatusIsInitial: false
-    //           });
-    //         }
-    //       }, 2000);
-    //     }, 3000);
-    //   } else if (
-    //     submitStatus === "submitting" ||
-    //     submitStatus === "followingSubmitting"
-    //   ) {
-    //     console.log("second");
-    //     return;
-    //   } else if (submitStatus === "submitted") {
-    //     console.log("third");
-    //     this.setState({
-    //       submitStatus: "submitting",
-    //       prevStatusIsInitial: false
-    //     });
-    //     setTimeout(() => {
-    //       this.setState({
-    //         submitStatus: "submitted",
-    //         prevStatusIsInitial: false
-    //       });
-    //       console.log(this.state.value);
-    //       this.textField.value = "";
-    //       this.textField.focus();
-
-    //       setTimeout(() => {
-    //         if (this.state.submitStatus === "submitted") {
-    //           this.setState({
-    //             submitStatus: "followingInitial",
-    //             prevStatusIsInitial: false
-    //           });
-    //         }
-    //       }, 2000);
-    //     }, 3000);
-    //   }
-    // } else {
-    //   this.setState(
-    //     {
-    //       showTextField: !this.state.showTextField
-    //     },
-    //     () => {
-    //       if (!this.state.showTextField) {
-    //         this.textField.value = "";
-    //       } else {
-    //         setTimeout(() => {
-    //           this.textField.focus();
-    //         }, 1000);
-    //       }
-    //     }
-    //   );
-    // }
   };
-  handleChange = e => {
-    this.setState({ value: e.target.value });
+  handleChange = () => {
+    this.setState({ groupName: this.textField.value.trim() });
   };
   textFieldOnFocus = () => {
     this.setState({ textFieldFocused: true });
@@ -193,10 +108,7 @@ class AddGroup extends React.Component {
             this.textField = input;
           }}
           onChange={this.handleChange}
-          disabled={
-            this.state.submitStatus === "submitting" ||
-            this.state.submitStatus === "followingSubmitting"
-          }
+          disabled={this.state.submitStatus === "submitting"}
           onFocus={this.textFieldOnFocus}
           onBlur={this.textFieldOnBlur}
         />

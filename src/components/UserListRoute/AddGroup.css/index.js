@@ -121,7 +121,7 @@ const PlusIcon = styled.div`
     } else if (props.submitStatus === "submitted") {
       return "opacity: 0;";
     } else if (props.submitStatus === "followingInitial") {
-      return `transition: opacity 1s cubic-bezier(0.55, 0.42, 0.87, 1.35) .3s;
+      return `transition: opacity .5s cubic-bezier(0.55, 0.42, 0.87, 1.35) .3s;
       opacity: 1;`;
     }
   }};
