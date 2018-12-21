@@ -148,10 +148,11 @@ export default class UserListRoute extends React.Component {
     }
   };
   render() {
+    //{this.props.match.url.replace(/\/app\//, '')}
     return (
       <React.Fragment>
         <Header>
-          <h1>{this.props.list.title} {this.props.match.url.replace(/\/app\//, '')}</h1>        
+          <h1>{this.props.list.title}</h1>        
           {!this.state.isEmptyState && (
             <AddGroup handleCreateGroup={this.handleCreateGroup} />
           )}
