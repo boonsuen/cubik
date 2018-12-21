@@ -53,15 +53,14 @@ class AddGroup extends React.Component {
           submitStatus: "submitting",
           prevStatusIsInitial: false
         });
-        setTimeout(() => {
+        this.props.handleCreateGroup(groupName).then(() => {
           this.setState({
             submitStatus: "submitted",
-            prevStatusIsInitial: false
+            prevStatusIsInitial: false,
+            groupName: ""
           });
-          console.log(this.state.value);
           this.textField.value = "";
           this.textField.focus();
-
           setTimeout(() => {
             if (this.state.submitStatus === "submitted") {
               this.setState({
@@ -69,8 +68,8 @@ class AddGroup extends React.Component {
                 prevStatusIsInitial: false
               });
             }
-          }, 2000);
-        }, 3000);
+          }, 1500);
+        });
       }
     } else {
       this.setState(

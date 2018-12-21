@@ -91,6 +91,7 @@ export default class UserListRoute extends React.Component {
               ]
             }
           }
+          return group;
         });
         this.setState({ groupsData });
       } else {
