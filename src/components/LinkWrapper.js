@@ -137,25 +137,9 @@ class EditLinkForm extends React.Component {
 }
 
 class LinkWrapper extends React.Component {
-  state = {
-    selectedToEdit: false
-  };
-  static getDerivedStateFromProps(props, state) {
-    if (!props.inEditMode && state.selectedToEdit) {
-      return {
-        selectedToEdit: false
-      };
-    }
-    return null;
-  }
-  setSelectedToEdit = boolean => {
-    this.setState({
-      selectedToEdit: boolean
-    });
-  };
   handleClick = () => {
-    if (this.props.inEditMode && !this.state.selectedToEdit) {
-      this.setSelectedToEdit(true);
+    if (this.props.inEditMode && !this.props.selectedToEdit) {
+      this.props.setSelectedToEdit(true);
       this.props.handleLinkSelect(this.props.index);
     }
   };
@@ -168,24 +152,23 @@ class LinkWrapper extends React.Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.selectedLinkToEditIndex !== this.props.index &&
-      this.state.selectedToEdit
+      this.props.selectedToEdit
     ) {
-      this.setSelectedToEdit(false);
+      this.props.setSelectedToEdit(false);
     }
   }
   render() {
-    const { inEditMode, link } = this.props;
-    const { selectedToEdit } = this.state;
+    const { inEditMode, link, selectedToEdit } = this.props;
     return (
       <StyledLinkWrapper
         inEditMode={inEditMode}
         selectedToEdit={selectedToEdit}
         onClick={this.handleClick}
       >
-        {this.state.selectedToEdit && inEditMode ? (
+        {selectedToEdit && inEditMode ? (
           <EditLinkForm
             link={link}
-            setSelectedToEdit={this.setSelectedToEdit}
+            setSelectedToEdit={this.props.setSelectedToEdit}
           />
         ) : (
           <Link

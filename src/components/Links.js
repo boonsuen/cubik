@@ -15,7 +15,7 @@ const LinksContainer = styled.div`
   border-radius: 5px;
 `;
 
-const DivLink = styled.div`
+const StyledDivLink = styled.div`
   position: relative;
   height: 105px;
 
@@ -123,6 +123,47 @@ const StyledEditSvg = styled.svg`
   }
 `;
 
+class DivLink extends React.Component {
+  state = {
+    selectedToEdit: false
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (!props.inEditMode && state.selectedToEdit) {
+      return {
+        selectedToEdit: false
+      };
+    }
+    return null;
+  }
+  setSelectedToEdit = boolean => {
+    this.setState({
+      selectedToEdit: boolean
+    });
+  };
+  render() {
+    const { 
+      inEditMode, link, selectedLinkToEditIndex, 
+      index, handleLinkSelect 
+    } = this.props;
+    return (
+      <StyledDivLink 
+        inEditMode={inEditMode} 
+        selectedToEdit={this.state.selectedToEdit}
+      >
+        <LinkWrapper
+          link={link}
+          inEditMode={inEditMode}
+          selectedLinkToEditIndex={selectedLinkToEditIndex}
+          index={index}
+          handleLinkSelect={handleLinkSelect}
+          selectedToEdit={this.state.selectedToEdit}
+          setSelectedToEdit={this.setSelectedToEdit}
+        />
+      </StyledDivLink>
+    );
+  }
+}
+
 const EditSvg = props => (
   <StyledEditSvg
     version="1.1"
@@ -215,16 +256,15 @@ export default class Links extends React.Component {
           </RightIcon>
         </LinkAction>
         {this.props.links.length !== 0 ? (
-          this.props.links.map((link, index) => (
-            <DivLink key={`DivLink-${link.id}`} inEditMode={inEditMode} selectedLinkToEdit>
-              <LinkWrapper
-                link={link}
-                inEditMode={inEditMode}
-                selectedLinkToEditIndex={selectedLinkToEditIndex}
-                index={index}
-                handleLinkSelect={this.handleLinkSelect}
-              />
-            </DivLink>
+          this.props.links.map((link, index) => (     
+            <DivLink 
+              key={`DivLink-${link.id}`} 
+              link={link}
+              inEditMode={inEditMode}              
+              selectedLinkToEditIndex={selectedLinkToEditIndex}
+              index={index}
+              handleLinkSelect={this.handleLinkSelect}
+            />
           ))
         ) : (
           <EmptyLink>No links here</EmptyLink>
