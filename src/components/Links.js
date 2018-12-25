@@ -5,7 +5,7 @@ import AddIcon from '../assets/img/icons/add.svg';
 import EditIcon from '../assets/img/icons/edit.svg';
 import DeleteIcon from '../assets/img/icons/delete.svg';
 
-const LinksWrapper = styled.div`
+const LinksContainer = styled.div`
   display: flex;
   flex-direction: column-reverse;
   box-shadow: 0 2px 8px #ecedff;
@@ -80,7 +80,7 @@ const RightIcon = styled.button`
 export default class Links extends React.Component {
   render() {
     return (
-      <LinksWrapper>      
+      <LinksContainer>      
         <LinkAction>
           <LeftIcon type="button" onClick={() => {
             this.props.showAddLinkModal({
@@ -108,7 +108,7 @@ export default class Links extends React.Component {
         ) : (
           <EmptyLink>No links here</EmptyLink>
         )}  
-      </LinksWrapper>
+      </LinksContainer>
     );
   }
 }
