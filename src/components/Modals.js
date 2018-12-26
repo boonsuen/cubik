@@ -199,4 +199,79 @@ const AddLinkModal = styled(ReactModalAdapter)`
   }
 `;
 
-export { AddListModal, AddLinkModal };
+const RenameGroupModal = styled(ReactModalAdapter)`
+
+  &__overlay {
+    position: fixed; 
+    top: 0px; 
+    left: 0px; 
+    right: 0px; 
+    bottom: 0px; 
+    background-color: rgba(3, 53, 153, 0.1);
+    z-index: 1;
+  }
+
+  &__content {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    right: auto; 
+    bottom: auto; 
+    width: 470px;
+    padding: 28px; 
+    background: rgb(255, 255, 255); 
+    overflow: auto; 
+    border-radius: 10px; 
+    outline: none; 
+    margin-right: -50%; 
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
+  }
+
+  h2 {
+    color: #204459;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 12px;
+    color: #373764;
+    font-weight: 500;
+  }
+
+  button {
+    width: 103px;
+    height: 42px;
+    color: #4a525b;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px #dfefff;
+    border: 1px solid #aeb2b5;
+    line-height: 42px;
+  }
+
+  button:nth-of-type(2) {
+    width: 120px;
+    background: #655efe;
+    color: #fff;
+    border: none;
+    margin-left: 19px;
+  }
+
+  .ReactModal__Content {
+    opacity: 0;
+  }
+
+  .ReactModal__Content--after-open {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  .ReactModal__Content--before-close {
+    opacity: 0;
+  }
+`;
+
+export { AddListModal, AddLinkModal, RenameGroupModal };

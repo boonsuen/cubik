@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import AddGroup from './AddGroup';
 import Group from '../Group';
 import EmptyState from './EmptyState';
-import { AddLinkModal } from '../Modals';
+import { AddLinkModal, RenameGroupModal } from '../Modals';
 
 import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
+import img_rename from '../../assets/img/icons/rename.svg';
 
 const Header = styled.div`
   display: flex;
@@ -50,6 +51,44 @@ const ModalButtons = styled.div`
   justify-content: space-between;
 `;
 
+const GroupModalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+
+  h2 {
+    margin: 0;
+  }
+`;
+
+const Circle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  margin-right: 13px;
+  border-radius: 50%;
+  background-color: #f4edff;
+  box-shadow: 0 2px 4px rgba(223, 239, 255, 0.5);
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 32px;
+  color: #221862;
+  font-family: "Avenir Next";
+  font-size: 16px;
+  font-weight: 400;
+  overflow: hidden; 
+  overflow-wrap: break-word;
+`;
+
+const GroupModalBtnCtn = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export default class UserListRoute extends React.Component {
   state = {
     showAddLinkModal: false,
@@ -62,7 +101,8 @@ export default class UserListRoute extends React.Component {
     ungroupedLinks: this.props.ungroupedLinks,
     isEmptyState:
       this.props.groupsData.length === 0 &&
-      this.props.ungroupedLinks.length === 0
+      this.props.ungroupedLinks.length === 0,
+    showRenameGroupModal: false
   };
   showAddLinkModal = group => {
     this.setState({ 
@@ -72,6 +112,11 @@ export default class UserListRoute extends React.Component {
   };
   hideAddLinkModal = () => {
     this.setState({ showAddLinkModal: !this.state.showAddLinkModal });
+  };
+  toggleRenameGroupModal = () => {
+    this.setState({ 
+      showRenameGroupModal: !this.state.showRenameGroupModal 
+    });
   };
   handleAddLink = (listId, groupId, title, url) => {
     db.collection(`users/${this.props.userId}/lists/${listId}/links`).add({
@@ -167,6 +212,7 @@ export default class UserListRoute extends React.Component {
                 name={group.name}
                 links={group.links}
                 showAddLinkModal={this.showAddLinkModal}
+                toggleRenameGroupModal={this.toggleRenameGroupModal}
               />
             ))}
             <Group
@@ -222,6 +268,30 @@ export default class UserListRoute extends React.Component {
             </ModalButtons>
           </form>
         </AddLinkModal>
+        <RenameGroupModal
+          isOpen={this.state.showRenameGroupModal}
+          onRequestClose={this.toggleRenameGroupModal}
+          contentLabel="Rename Group Modal"
+        >
+          <GroupModalHeader>
+            <Circle>
+              <img src={img_rename} />
+            </Circle>
+            <h2>Change group name</h2>
+          </GroupModalHeader>
+          <form>
+            <label for="GroupNameTextarea">Name</label>
+            <Textarea 
+              id="GroupNameTextarea" 
+              rows="1"
+              required
+            ></Textarea>
+            <GroupModalBtnCtn>
+              <button onClick={this.toggleRenameGroupModal} type="button">Cancel</button>
+              <button type="submit">Submit</button> 
+            </GroupModalBtnCtn>
+          </form>
+        </RenameGroupModal>
       </React.Fragment>
     );
   }

@@ -19,11 +19,17 @@ const GroupTitle = styled.h2`
   font-size: 26px;
   font-weight: 600;
   transition: border-bottom-color 0.3s;
+  cursor: ${props => props.inEditMode && "pointer"};
 `;
 
 export default class Group extends React.Component {
   state = {
     inEditMode: false
+  };
+  handleTitleClick = () => {
+    if (!this.state.inEditMode) return;
+    console.log('yoyoyo');
+    this.props.toggleRenameGroupModal();
   };
   toggleEditMode = () => {
     this.setState(({ inEditMode }) => ({ inEditMode: !inEditMode }));
@@ -32,7 +38,12 @@ export default class Group extends React.Component {
     const { inEditMode } = this.state;
     return (
       <GroupWrapper>
-        <GroupTitle inEditMode={inEditMode}>{this.props.name}</GroupTitle>
+        <GroupTitle 
+          inEditMode={inEditMode} 
+          onClick={this.handleTitleClick}
+        >
+          {this.props.name}
+        </GroupTitle>
         <Links 
           listId={this.props.listId}
           groupId={this.props.id}

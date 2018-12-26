@@ -143,12 +143,6 @@ class LinkWrapper extends React.Component {
       this.props.handleLinkSelect(this.props.index);
     }
   };
-  handleLinkClick = e => {
-    if (this.props.inEditMode) {
-      e.preventDefault();
-      return false;
-    }
-  };
   componentDidUpdate(prevProps) {
     if (
       this.props.selectedLinkToEditIndex !== this.props.index &&
@@ -176,7 +170,6 @@ class LinkWrapper extends React.Component {
             key={link.id}
             href={link.url}
             target="_blank"
-            onClick={this.handleLinkClick}
           >
             {link.title}
           </Link>
