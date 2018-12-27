@@ -239,7 +239,21 @@ export default class UserListRoute extends React.Component {
     })
     .then(() => {
       console.log("Document successfully updated!");
-      this.toggleRenameGroupModal();
+      this.setState(state => {
+        const newGroupsData = state.groupsData.map(group => {
+          if (group.id === groupId) {
+            const newGroup = {...group};
+            newGroup.name = newGroupName;
+            return newGroup;
+          } else {
+            return group;
+          }  
+        });
+        return {
+          groupsData: newGroupsData,
+          showRenameGroupModal: !state.showRenameGroupModal
+        }
+      });
     })
     .catch(err => {
       console.error("Error updating document: ", err);
