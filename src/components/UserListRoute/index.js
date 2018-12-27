@@ -259,6 +259,17 @@ export default class UserListRoute extends React.Component {
       console.error("Error updating document: ", err);
     });
   };
+  onEnterPress = e => {
+    if(e.keyCode == 13) {
+      e.preventDefault();
+      const { selectedGroup: {
+        id: groupId
+      } } = this.state;
+      this.handleRenameGroup(
+        groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
+      );
+    }
+  };  
   render() {
     //{this.props.match.url.replace(/\/app\//, '')}
     return (
@@ -353,11 +364,12 @@ export default class UserListRoute extends React.Component {
           </GroupModalHeader>
           <form onSubmit={(e) => {
             e.preventDefault();
+            console.log(e)
             const { selectedGroup: {
               id: groupId
             } } = this.state;
             this.handleRenameGroup(
-              groupId, this.groupNameTextarea.value.trim()
+              groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
             );
           }}>
             <label htmlFor="GroupNameTextarea">Name</label>
@@ -366,6 +378,8 @@ export default class UserListRoute extends React.Component {
               inputRef={tag => this.groupNameTextarea = tag}
               maxRows={3}
               defaultValue={this.state.selectedGroup.name}
+              spellCheck={false}
+              onKeyDown={this.onEnterPress}
               required
             />
             <GroupModalBtnCtn>

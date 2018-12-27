@@ -8,6 +8,7 @@ const GroupWrapper = styled.div`
 `; 
 
 const GroupTitle = styled.h2`
+  width: 510px;
   box-sizing: border-box;
   padding-bottom: 3px;
   margin: 21px 0 17px 0;
