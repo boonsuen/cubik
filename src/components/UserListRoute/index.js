@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Textarea from 'react-textarea-autosize';
 import AddGroup from './AddGroup';
 import Group from '../Group';
 import EmptyState from './EmptyState';
@@ -7,6 +8,7 @@ import { AddLinkModal, RenameGroupModal } from '../Modals';
 
 import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
+import img_hideModal from '../../assets/img/icons/hidemodal.svg';
 import img_rename from '../../assets/img/icons/rename.svg';
 
 const Header = styled.div`
@@ -59,6 +61,13 @@ const GroupModalHeader = styled.div`
   h2 {
     margin: 0;
   }
+
+  button {
+    align-self: flex-start;
+    width: 14px;
+    height: 14px;
+    margin-left: auto;
+  }
 `;
 
 const Circle = styled.div`
@@ -73,20 +82,47 @@ const Circle = styled.div`
   box-shadow: 0 2px 4px rgba(223, 239, 255, 0.5);
 `;
 
-const Textarea = styled.textarea`
+const StyledTextarea = styled(Textarea)`
   width: 100%;
   height: 32px;
+  padding: 0 0 7px 0;
   color: #221862;
   font-family: "Avenir Next";
   font-size: 16px;
   font-weight: 400;
-  overflow: hidden; 
-  overflow-wrap: break-word;
+  outline: none;
+  resize: none;
+  border: none;
+  border-bottom: 2px solid #dfe7ec;
 `;
 
 const GroupModalBtnCtn = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 25px;
+
+  button {
+    width: 103px;
+    height: 42px;
+    color: #4a525b;
+    border-radius: 5px;
+    border: 1px solid #aeb2b5;
+    line-height: 44px;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      box-shadow: 0 2px 4px #dfefff;
+    }
+  }
+
+  button:nth-of-type(2) {
+    width: 120px;
+    background: #655efe;
+    color: #fff;
+    border: none;
+    margin-left: 19px;
+    box-shadow: 0 2px 4px #dfefff;
+  }
 `;
 
 export default class UserListRoute extends React.Component {
@@ -272,20 +308,24 @@ export default class UserListRoute extends React.Component {
           isOpen={this.state.showRenameGroupModal}
           onRequestClose={this.toggleRenameGroupModal}
           contentLabel="Rename Group Modal"
-        >
+        >          
           <GroupModalHeader>
             <Circle>
               <img src={img_rename} />
             </Circle>
             <h2>Change group name</h2>
+            <button onClick={this.toggleRenameGroupModal} type="button">
+              <img src={img_hideModal} />
+            </button>
           </GroupModalHeader>
           <form>
-            <label for="GroupNameTextarea">Name</label>
-            <Textarea 
-              id="GroupNameTextarea" 
-              rows="1"
+            <label htmlFor="GroupNameTextarea">Name</label>
+            <StyledTextarea 
+              id="GroupNameTextarea"
+              maxRows={3}
+              defaultValue="ussh"
               required
-            ></Textarea>
+            />
             <GroupModalBtnCtn>
               <button onClick={this.toggleRenameGroupModal} type="button">Cancel</button>
               <button type="submit">Submit</button> 

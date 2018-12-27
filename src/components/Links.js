@@ -91,6 +91,7 @@ const EditModeIndicator = styled(LeftIcon)`
 `;
 
 const RightIcon = styled.button`
+  width: 30px;
   margin-left: auto;
   background: #fff4f4;
 `

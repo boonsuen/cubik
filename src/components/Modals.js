@@ -217,7 +217,7 @@ const RenameGroupModal = styled(ReactModalAdapter)`
     left: 50%; 
     right: auto; 
     bottom: auto; 
-    width: 470px;
+    width: 460px;
     padding: 28px; 
     background: rgb(255, 255, 255); 
     overflow: auto; 
@@ -240,24 +240,6 @@ const RenameGroupModal = styled(ReactModalAdapter)`
     margin-bottom: 12px;
     color: #373764;
     font-weight: 500;
-  }
-
-  button {
-    width: 103px;
-    height: 42px;
-    color: #4a525b;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px #dfefff;
-    border: 1px solid #aeb2b5;
-    line-height: 42px;
-  }
-
-  button:nth-of-type(2) {
-    width: 120px;
-    background: #655efe;
-    color: #fff;
-    border: none;
-    margin-left: 19px;
   }
 
   .ReactModal__Content {
