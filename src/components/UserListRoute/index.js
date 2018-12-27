@@ -129,7 +129,6 @@ export default class UserListRoute extends React.Component {
   state = {
     showAddLinkModal: false,
     selectedGroup: {
-      listId: null,
       id: null,
       name: null
     },
@@ -140,12 +139,6 @@ export default class UserListRoute extends React.Component {
       this.props.ungroupedLinks.length === 0,
     showRenameGroupModal: false
   };
-  // showAddLinkModal = group => {
-  //   this.setState({ 
-  //     showAddLinkModal: !this.state.showAddLinkModal,
-  //     selectedGroup: group
-  //   });
-  // };
   toggleAddLinkModal = () => {
     this.setState({ 
       showAddLinkModal: !this.state.showAddLinkModal 
@@ -159,8 +152,9 @@ export default class UserListRoute extends React.Component {
   setSelectedGroup = group => {
     this.setState({ selectedGroup: group });
   };
-  handleAddLink = (listId, groupId, title, url) => {
-    db.collection(`users/${this.props.userId}/lists/${listId}/links`).add({
+  handleAddLink = (groupId, title, url) => {
+    const { userId, list } = this.props;
+    db.collection(`users/${userId}/lists/${list.id}/links`).add({
       groupId, title, url
     })
     .then((docRef) => {
@@ -233,6 +227,24 @@ export default class UserListRoute extends React.Component {
       });
     }
   };
+  handleRenameGroup = (groupId, newGroupName) => {
+    if (newGroupName === this.state.selectedGroup.name) {
+      console.log('No name changes');
+      return;
+    }
+    const { userId, list } = this.props;
+    const groupRef = db.collection(`users/${userId}/lists/${list.id}/groups`).doc(groupId);
+    return groupRef.update({
+      name: newGroupName
+    })
+    .then(() => {
+      console.log("Document successfully updated!");
+      this.toggleRenameGroupModal();
+    })
+    .catch(err => {
+      console.error("Error updating document: ", err);
+    });
+  };
   render() {
     //{this.props.match.url.replace(/\/app\//, '')}
     return (
@@ -284,11 +296,10 @@ export default class UserListRoute extends React.Component {
           <form onSubmit={(e) => {
             e.preventDefault();
             const { selectedGroup: { 
-              listId,
               id: groupId
             } } = this.state;
             this.handleAddLink(
-              listId, groupId, this.inputTitle.value, this.inputUrl.value
+              groupId, this.inputTitle.value, this.inputUrl.value
             );
           }}>
             <ModalGroupInfo>
@@ -308,7 +319,7 @@ export default class UserListRoute extends React.Component {
             />
             <ModalButtons>
               <button type="submit">Add</button>
-              <button onClick={this.hideAddLinkModal} type="button">Cancel</button>
+              <button onClick={this.toggleAddLinkModal} type="button">Cancel</button>
             </ModalButtons>
           </form>
         </AddLinkModal>
@@ -326,10 +337,19 @@ export default class UserListRoute extends React.Component {
               <img src={img_hideModal} />
             </button>
           </GroupModalHeader>
-          <form>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const { selectedGroup: {
+              id: groupId
+            } } = this.state;
+            this.handleRenameGroup(
+              groupId, this.groupNameTextarea.value.trim()
+            );
+          }}>
             <label htmlFor="GroupNameTextarea">Name</label>
             <StyledTextarea 
               id="GroupNameTextarea"
+              inputRef={tag => this.groupNameTextarea = tag}
               maxRows={3}
               defaultValue={this.state.selectedGroup.name}
               required

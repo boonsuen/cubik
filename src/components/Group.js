@@ -28,10 +28,8 @@ export default class Group extends React.Component {
   };
   handleTitleClick = () => {
     if (!this.state.inEditMode) return;
-    console.log('yoyoyo');
     this.props.toggleRenameGroupModal();
     this.props.setSelectedGroup({
-      listId: this.props.listId,
       id: this.props.id,
       name: this.props.name
     });
