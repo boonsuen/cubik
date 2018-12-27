@@ -14,12 +14,12 @@ const GroupTitle = styled.h2`
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: ${props =>
-    props.inEditMode ? "#d3d8ec" : "transparent"};
+    props.renamable ? "#d3d8ec" : "transparent"};
   color: #000b9f;
   font-size: 26px;
   font-weight: 600;
   transition: border-bottom-color 0.3s;
-  cursor: ${props => props.inEditMode && "pointer"};
+  cursor: ${props => props.renamable && "pointer"};
 `;
 
 export default class Group extends React.Component {
@@ -30,6 +30,11 @@ export default class Group extends React.Component {
     if (!this.state.inEditMode) return;
     console.log('yoyoyo');
     this.props.toggleRenameGroupModal();
+    this.props.setSelectedGroup({
+      listId: this.props.listId,
+      id: this.props.id,
+      name: this.props.name
+    });
   };
   toggleEditMode = () => {
     this.setState(({ inEditMode }) => ({ inEditMode: !inEditMode }));
@@ -39,8 +44,8 @@ export default class Group extends React.Component {
     return (
       <GroupWrapper>
         <GroupTitle 
-          inEditMode={inEditMode} 
-          onClick={this.handleTitleClick}
+          renamable={inEditMode && this.props.id}
+          onClick={this.props.id && this.handleTitleClick}
         >
           {this.props.name}
         </GroupTitle>
@@ -49,7 +54,8 @@ export default class Group extends React.Component {
           groupId={this.props.id}
           groupName={this.props.name}
           links={[...this.props.links].reverse()}         
-          showAddLinkModal={this.props.showAddLinkModal}
+          toggleAddLinkModal={this.props.toggleAddLinkModal}
+          setSelectedGroup={this.props.setSelectedGroup}
           inEditMode={inEditMode}
           toggleEditMode={this.toggleEditMode}          
         />
