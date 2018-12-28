@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import img_moveToTrash from '../assets/img/icons/move-to-trash.svg';
+
 const StyledLinkWrapper = styled.div`
   height: ${props => (props.selectedToEdit ? "120px" : "105px")};
   box-sizing: border-box;
@@ -86,7 +88,14 @@ const StyledEditLinkForm = styled.form`
   }
 
   div {
-    align-self: flex-end;
+    display: flex;
+    width: 100%;
+    
+    & button:first-child {
+      width: 27px;
+      margin-right: auto;
+      background-color: #ff9393;
+    }
   }
 
   button {
@@ -121,6 +130,11 @@ class EditLinkForm extends React.Component {
         <input type="text" defaultValue={title} placeholder="Title" />
         <input type="text" defaultValue={url} placeholder="URL" />
         <div>
+          <button
+            type="button"
+          >
+            <img src={img_moveToTrash} />
+          </button>
           <button
             type="button"
             onClick={() => {
