@@ -59,7 +59,7 @@ const AddListModal = styled(ReactModalAdapter)`
     padding: 32px;
     width: 326px;
     box-sizing: border-box;
-    box-shadow: 0 2px 4px #adb4c4;
+    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
   }
 
   h2 {
@@ -139,7 +139,7 @@ const AddLinkModal = styled(ReactModalAdapter)`
     padding: 32px;
     width: 326px;
     box-sizing: border-box;
-    box-shadow: 0 2px 4px #adb4c4;
+    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
   }
 
   h2 {
