@@ -364,7 +364,6 @@ export default class UserListRoute extends React.Component {
           </GroupModalHeader>
           <form onSubmit={(e) => {
             e.preventDefault();
-            console.log(e)
             const { selectedGroup: {
               id: groupId
             } } = this.state;
@@ -380,7 +379,7 @@ export default class UserListRoute extends React.Component {
               defaultValue={this.state.selectedGroup.name}
               spellCheck={false}
               onKeyDown={this.onEnterPress}
-              required
+              autoFocus required
             />
             <GroupModalBtnCtn>
               <button onClick={this.toggleRenameGroupModal} type="button">Cancel</button>

@@ -118,8 +118,8 @@ class EditLinkForm extends React.Component {
     } = this.props;
     return (
       <StyledEditLinkForm>
-        <input type="text" defaultValue={title} />
-        <input type="text" defaultValue={url} />
+        <input type="text" defaultValue={title} placeholder="Title" />
+        <input type="text" defaultValue={url} placeholder="URL" />
         <div>
           <button
             type="button"
