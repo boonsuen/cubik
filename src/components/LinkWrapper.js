@@ -133,13 +133,13 @@ class EditLinkForm extends React.Component {
     const {
       userId, listId,
       setSelectedToEdit,
+      handleLinkUpdate,
       link: { title, url, id }
     } = this.props;
     e.preventDefault();
     const newTitle = this.inputTitle.value.trim();
     const newUrl = this.inputUrl.value.trim();
     if (newTitle === title && newUrl === url) {
-      console.log('No changes');
       return;
     }
     const linkRef = db.collection(`users/${userId}/lists/${listId}/links`).doc(id);
@@ -150,6 +150,11 @@ class EditLinkForm extends React.Component {
     .then(() => {
       console.log("Document successfully updated!");
       setSelectedToEdit(false);
+      handleLinkUpdate({
+        title: newTitle,
+        url: newUrl,
+        id
+      });
     })
     .catch(err => {
       console.error("Error updating document: ", err);
@@ -197,11 +202,17 @@ class EditLinkForm extends React.Component {
 }
 
 class LinkWrapper extends React.Component {
+  state = {
+    link: this.props.link
+  }
   handleClick = () => {
     if (this.props.inEditMode && !this.props.selectedToEdit) {
       this.props.setSelectedToEdit(true);
       this.props.handleLinkSelect(this.props.index);
     }
+  };
+  handleLinkUpdate = link => {
+    this.setState({ link });
   };
   componentDidUpdate(prevProps) {
     if (
@@ -212,7 +223,8 @@ class LinkWrapper extends React.Component {
     }
   }
   render() {
-    const { userId, listId, inEditMode, link, selectedToEdit } = this.props;
+    const { userId, listId, inEditMode, selectedToEdit } = this.props;
+    const { link } = this.state;
     return (
       <StyledLinkWrapper
         inEditMode={inEditMode}
@@ -225,6 +237,7 @@ class LinkWrapper extends React.Component {
             listId={listId}
             link={link}
             setSelectedToEdit={this.props.setSelectedToEdit}
+            handleLinkUpdate={this.handleLinkUpdate}
           />
         ) : (
           <Link
