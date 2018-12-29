@@ -71,7 +71,7 @@ const AddListModal = styled(ReactModalAdapter)`
     line-height: 40px;
     width: 100%;
     height: 40px;
-    border: 1px solid #c4c8d7;
+    border: 1px solid #b0b6cc;
     font-size: 16px;
     padding: 0 10px 0 10px;
     box-sizing: border-box;
@@ -86,7 +86,7 @@ const AddListModal = styled(ReactModalAdapter)`
     }
 
     &::placeholder {
-      color: #d4d4df;
+      color: #cacadb;
     }
   }
 
