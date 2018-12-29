@@ -88,6 +88,8 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     align-items: center;
     padding: 0;
+    appearance: none;
+    background: transparent;
   
     &:focus {
       outline: none;
