@@ -143,7 +143,7 @@ class DivLink extends React.Component {
   };
   render() {
     const { 
-      inEditMode, link, selectedLinkToEditIndex, 
+      listId, inEditMode, link, selectedLinkToEditIndex, 
       index, handleLinkSelect 
     } = this.props;
     return (
@@ -151,7 +151,8 @@ class DivLink extends React.Component {
         inEditMode={inEditMode} 
         selectedToEdit={this.state.selectedToEdit}
       >
-        <LinkWrapper
+        <LinkWrapper      
+          listId={listId}
           link={link}
           inEditMode={inEditMode}
           selectedLinkToEditIndex={selectedLinkToEditIndex}
@@ -228,7 +229,7 @@ export default class Links extends React.Component {
     this.setState({ selectedLinkToEditIndex: index });
   };
   render() {
-    const { groupId, toggleEditMode, inEditMode } = this.props;
+    const { listId, groupId, toggleEditMode, inEditMode } = this.props;
     const { selectedLinkToEditIndex } = this.state;
     return (
       <LinksContainer>      
@@ -260,6 +261,7 @@ export default class Links extends React.Component {
           this.props.links.map((link, index) => (     
             <DivLink 
               key={`DivLink-${link.id}`} 
+              listId={listId}
               link={link}
               inEditMode={inEditMode}              
               selectedLinkToEditIndex={selectedLinkToEditIndex}

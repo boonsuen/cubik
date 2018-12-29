@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { AddListModal } from '../Modals';
 
+import { GroupModalHeader } from '../UserListRoute';
 import AddList_Icon from '../../assets/img/icons/AddList.svg';
+import img_hideModal from '../../assets/img/icons/hidemodal.svg';
+import img_list from '../../assets/img/icons/list.svg';
+import Group from '../Group';
 
 const StyledSidebarBottom = styled.div`
   box-sizing: border-box;
@@ -24,6 +28,46 @@ const AddListBtn = styled.button`
   div {
     margin-top: 3px;
   }
+`;
+
+const ModalHeader = styled(GroupModalHeader)`
+  margin-bottom: 20px;
+`;
+
+const Circle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  margin-right: 13px;
+  border-radius: 50%;
+  background-color: #faf7ff;
+  box-shadow: 0 2px 4px rgba(235, 245, 255, 0.5);
+
+  img {
+    max-width: initial;
+    margin-top: 3px;
+  }
+`;
+
+const ModalDescription = styled.div`
+  width: 85%;
+  margin-bottom: 15px;
+  color: #48546a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+`;
+
+const CreateListBtn = styled.button`
+  align-self: flex-end;
+  width: 120px;
+  height: 40px;
+  background: linear-gradient(232.95deg, #9277FF 0%, #7272FC 100%);  color: #fff;
+  line-height: 40px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(160, 152, 166, 0.5);
 `;
 
 export default class SidebarBottom extends React.Component {
@@ -52,7 +96,18 @@ export default class SidebarBottom extends React.Component {
           onRequestClose={this.toggleModal}
           contentLabel="Create New List Modal"
         >
-          <h2>Create new list</h2>
+          <ModalHeader>
+            <Circle>
+              <img src={img_list} />
+            </Circle>
+            <h2>New list</h2>
+            <button onClick={this.toggleModal} type="button">
+              <img src={img_hideModal} />
+            </button>
+          </ModalHeader>          
+          <ModalDescription>
+            Keep your links organized by adding them in a list and nested groups.
+          </ModalDescription>
           <form onSubmit={(e) => {
             e.preventDefault();
             if (!this.input.value) return;
@@ -64,10 +119,7 @@ export default class SidebarBottom extends React.Component {
               ref={(el) => { this.input = el }} 
               autoFocus  
             />
-            <div>
-              <button type="submit">Add</button>
-              <button onClick={this.toggleModal} type="button">Cancel</button>
-            </div>
+            <CreateListBtn type="submit">Create list</CreateListBtn>
           </form>
         </AddListModal>
       </React.Fragment>

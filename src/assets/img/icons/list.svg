@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="63.49117659164722" width="55.99117659164722">
+  <defs>
+    <path id="path-0" opacity="1" fill-rule="evenodd" d="M26.764225648798348,31.881205116776286 L36.873595877085506,28.237699345233693 L33.22695094284961,39.10997147487106 L23.11758071456245,42.75347724641366 L26.764225648798348,31.881205116776286Z"/>
+    <filter id="filter-1" filterUnits="userSpaceOnUse" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset in="SourceAlpha" result="shadow-1-feOffset-shadow" dx="0" dy="2"/>
+      <feGaussianBlur in="shadow-1-feOffset-shadow" result="shadow-1-feGaussianBlur-shadow" stdDeviation="2"/>
+      <feColorMatrix in="shadow-1-feGaussianBlur-shadow" result="shadow-1-feColorMatrix-shadow" type="matrix" values="0 0 0 0 0.7843137254901961  0 0 0 0 0.7647058823529411  0 0 0 0 0.7647058823529411  0 0 0 0.5 0"/>
+    </filter>
+    <linearGradient id="linearGradient-2" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="rgb(103,146,255)" stop-opacity="1"/>
+      <stop offset="1" stop-color="rgb(153,155,255)" stop-opacity="1"/>
+    </linearGradient>
+    <path id="path-3" opacity="1" fill-rule="evenodd" d="M24.764225648798284,27.245726574301514 L34.87359587708559,23.602220802758893 L31.22695094284964,34.47449293239634 L21.117580714562337,38.117998703938966 L24.764225648798284,27.245726574301514Z"/>
+    <linearGradient id="linearGradient-4" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="rgb(172,134,255)" stop-opacity="1"/>
+      <stop offset="1" stop-color="rgb(79,82,255)" stop-opacity="0.6"/>
+    </linearGradient>
+    <path id="path-5" opacity="1" fill-rule="evenodd" d="M22.764225648798284,22.38120511677637 L32.87359587708559,18.73769934523375 L29.22695094284964,29.609971474871195 L19.117580714562337,33.25347724641382 L22.764225648798284,22.38120511677637Z"/>
+    <linearGradient id="linearGradient-6" x1="0.6" y1="0.24" x2="0.88" y2="0.72">
+      <stop offset="0" stop-color="rgb(234,148,255)" stop-opacity="1"/>
+      <stop offset="1" stop-color="rgb(255,255,255)" stop-opacity="0.75"/>
+    </linearGradient>
+    <mask id="mask-7" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+      <rect opacity="1" x="0" y="0" width="55.99117659164722" height="63.49117659164722" fill="black"/>
+      <use xlink:href="#path-5" fill="white"/>
+    </mask>
+  </defs>
+  <g opacity="1">
+    <g transform="translate(29.99558829582398, 35.49558829582368) rotate(45.00001609038752) translate(-29.99558829582398, -35.49558829582368)" opacity="1">
+      <use xlink:href="#path-0" fill="black" filter="url(#filter-1)" stroke="black" stroke-opacity="0" stroke-width="0"/>
+      <use xlink:href="#path-0" fill="url(#linearGradient-2)"/>
+    </g>
+    <g transform="translate(27.995588295823964, 30.86010975334893) rotate(45.00001609038752) translate(-27.995588295823964, -30.86010975334893)" opacity="1">
+      <use xlink:href="#path-3" fill="url(#linearGradient-4)"/>
+    </g>
+    <g transform="translate(25.995588295823964, 25.995588295823786) rotate(45.00001609038752) translate(-25.995588295823964, -25.995588295823786)" opacity="1">
+      <use xlink:href="#path-5" fill-opacity="0" stroke="url(#linearGradient-6)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-7)"/>
+    </g>
+  </g>
+</svg>

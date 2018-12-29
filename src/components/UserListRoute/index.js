@@ -53,7 +53,7 @@ const ModalButtons = styled.div`
   justify-content: space-between;
 `;
 
-const GroupModalHeader = styled.div`
+export const GroupModalHeader = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 25px;
@@ -116,7 +116,7 @@ const GroupModalBtnCtn = styled.div`
   }
 
   button:nth-of-type(2) {
-    width: 120px;
+    width: 115px;
     background: #655efe;
     color: #fff;
     border: none;

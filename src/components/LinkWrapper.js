@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import db from '../firebase/db';
+import { InitialDataContext } from './CubikApp';
 import img_moveToTrash from '../assets/img/icons/move-to-trash.svg';
 
 const StyledLinkWrapper = styled.div`
@@ -90,11 +92,15 @@ const StyledEditLinkForm = styled.form`
   div {
     display: flex;
     width: 100%;
-    
+
     & button:first-child {
       width: 27px;
-      margin-right: auto;
-      background-color: #ff9393;
+      margin-right: auto;      
+      background-color: #ffa4a4;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: #ff9393;
+      }
     }
   }
 
@@ -120,18 +126,58 @@ const StyledEditLinkForm = styled.form`
 `;
 
 class EditLinkForm extends React.Component {
+  state = {
+
+  };
+  handleSubmit = e => {
+    const {
+      userId, listId,
+      setSelectedToEdit,
+      link: { title, url, id }
+    } = this.props;
+    e.preventDefault();
+    const newTitle = this.inputTitle.value.trim();
+    const newUrl = this.inputUrl.value.trim();
+    if (newTitle === title && newUrl === url) {
+      console.log('No changes');
+      return;
+    }
+    const linkRef = db.collection(`users/${userId}/lists/${listId}/links`).doc(id);
+    linkRef.update({
+      title: newTitle,
+      url: newUrl
+    })
+    .then(() => {
+      console.log("Document successfully updated!");
+      setSelectedToEdit(false);
+    })
+    .catch(err => {
+      console.error("Error updating document: ", err);
+    });
+  };
   render() {
     const {
       setSelectedToEdit,
       link: { title, url }
     } = this.props;
     return (
-      <StyledEditLinkForm>
-        <input type="text" defaultValue={title} placeholder="Title" />
-        <input type="text" defaultValue={url} placeholder="URL" />
+      <StyledEditLinkForm onSubmit={this.handleSubmit}>
+        <input 
+          type="text" 
+          ref={el => this.inputTitle = el} 
+          defaultValue={title} 
+          placeholder="Title" 
+        />
+        <input 
+          type="text" 
+          ref={el => this.inputUrl = el} 
+          defaultValue={url} 
+          placeholder="URL" 
+        />
         <div>
           <button
             type="button"
+            title="Delete"
           >
             <img src={img_moveToTrash} />
           </button>
@@ -166,7 +212,7 @@ class LinkWrapper extends React.Component {
     }
   }
   render() {
-    const { inEditMode, link, selectedToEdit } = this.props;
+    const { userId, listId, inEditMode, link, selectedToEdit } = this.props;
     return (
       <StyledLinkWrapper
         inEditMode={inEditMode}
@@ -175,6 +221,8 @@ class LinkWrapper extends React.Component {
       >
         {selectedToEdit && inEditMode ? (
           <EditLinkForm
+            userId={userId}
+            listId={listId}
             link={link}
             setSelectedToEdit={this.props.setSelectedToEdit}
           />
@@ -193,4 +241,13 @@ class LinkWrapper extends React.Component {
   }
 }
 
-export default LinkWrapper;
+export default props => (
+  <InitialDataContext.Consumer>
+    {data => (
+      <LinkWrapper 
+        {...props} 
+        userId={data.user.id}
+      />
+    )}
+  </InitialDataContext.Consumer>
+);

@@ -51,20 +51,20 @@ const AddListModal = styled(ReactModalAdapter)`
     bottom: auto; 
     background: rgb(255, 255, 255); 
     overflow: auto; 
-    border-radius: 4px; 
-    outline: none; 
-    padding: 20px; 
+    border-radius: 10px; 
+    outline: none;
     margin-right: -50%; 
     transform: translate(-50%, -50%);
-    padding: 32px;
-    width: 326px;
+    padding: 28px;
+    width: 390px;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
   }
 
   h2 {
-    font-size: 25px;
-    margin-top: 0;
+    color: #204459;
+    font-size: 22px;
+    font-weight: 600;
   }
 
   input {
@@ -90,24 +90,9 @@ const AddListModal = styled(ReactModalAdapter)`
     }
   }
 
-  form div {
+  form {
     display: flex;
-    justify-content: space-between;
-  }
-
-  button {
-    width: 150px;
-    height: 40px;
-    background: #7272fc;
-    color: #fff;
-    line-height: 40px;
-    border-radius: 2px;
-  }
-
-  div button:nth-child(2) {
-    width: 101px;
-    background: #e5e5ff;
-    color: #102d3e;
+    flex-direction: column;
   }
 `;
 
