@@ -126,9 +126,6 @@ const StyledEditLinkForm = styled.form`
 `;
 
 class EditLinkForm extends React.Component {
-  state = {
-
-  };
   handleSubmit = e => {
     const {
       userId, listId,
@@ -160,6 +157,27 @@ class EditLinkForm extends React.Component {
       console.error("Error updating document: ", err);
     });
   };
+  handleDelete = () => { 
+    const {
+      userId, listId,
+      setSelectedToEdit,
+      handleLinkUpdate,
+      link: { title, url, id }
+    } = this.props;
+    const linkRef = db.collection(`users/${userId}/lists/${listId}/links`).doc(id);
+    linkRef.delete().then(() => {
+      console.log("Document successfully deleted!");
+      // setSelectedToEdit(false);
+      // handleLinkUpdate({
+      //   title: newTitle,
+      //   url: newUrl,
+      //   id
+      // });
+    })
+    .catch(err => {
+      console.error("Error removing document: ", err);
+    });
+  };
   render() {
     const {
       setSelectedToEdit,
@@ -183,6 +201,7 @@ class EditLinkForm extends React.Component {
           <button
             type="button"
             title="Delete"
+            onClick={this.handleDelete}
           >
             <img src={img_moveToTrash} />
           </button>
