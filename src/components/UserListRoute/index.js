@@ -8,14 +8,28 @@ import { AddLinkModal, RenameGroupModal } from '../Modals';
 
 import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
-import img_hideModal from '../../assets/img/icons/hidemodal.svg';
-import img_rename from '../../assets/img/icons/rename.svg';
+import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
+import img_link from '../../assets/img/icons/modal/link.svg';
+import img_plus from '../../assets/img/icons/modal/plus.svg';
+import img_rename from '../../assets/img/icons/modal/rename.svg';
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 91px;
+`;
+
+const LinkModalCircle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  margin-right: 13px;
+  border-radius: 50%;
+  background-color: #faebff;
+  box-shadow: 0 2px 4px rgba(223, 239, 255, 0.5);
 `;
 
 const ModalGroupInfo = styled.div`
@@ -29,7 +43,7 @@ const ModalGroupInfo = styled.div`
   }
   
   div {
-    margin-left: 20px;
+    margin-left: 15px;
     height: 32px;
     padding: 0 10px;
     border: 1px solid #9b7ae6;
@@ -48,9 +62,30 @@ const ModalInputLabel = styled.label`
   display: inline-block;
 `;
 
-const ModalButtons = styled.div`
+const FetchTitleBtn = styled.button`
+  display: inline-block;
+  height: initial;
+  margin-left: 4px;
+  color: #5da4f4;
+`;
+
+const LinkModalBtnCtn = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+
+  button {
+    width: 86px;
+    height: 40px;
+    background: linear-gradient(223.7deg, #F199FF 0%, #BE6BFF 100%);
+    color: #fff;
+    line-height: 45px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 #DFEFFF;
+  }
+
+  img {
+    margin: -5px 6px 0 0;
+  }
 `;
 
 export const GroupModalHeader = styled.div`
@@ -68,6 +103,10 @@ export const GroupModalHeader = styled.div`
     height: 14px;
     margin-left: auto;
   }
+`;
+
+const LinkModalHeader = styled(GroupModalHeader)`
+  margin-bottom: 20px;
 `;
 
 const Circle = styled.div`
@@ -317,7 +356,15 @@ export default class UserListRoute extends React.Component {
           onRequestClose={this.toggleAddLinkModal}
           contentLabel="Add New Link Modal"
         >
-          <h2>Add link</h2>
+          <LinkModalHeader>
+            <LinkModalCircle>
+              <img src={img_link} />
+            </LinkModalCircle>
+            <h2>Add link</h2>
+            <button onClick={this.toggleAddLinkModal} type="button">
+              <img src={img_hideModal} />
+            </button>
+          </LinkModalHeader>
           <form onSubmit={(e) => {
             e.preventDefault();
             const { selectedGroup: { 
@@ -337,15 +384,17 @@ export default class UserListRoute extends React.Component {
               ref={(el) => { this.inputUrl = el }} autoComplete="off"
               autoFocus  
             />
-            <ModalInputLabel htmlFor="link-title">Title</ModalInputLabel>
+            <ModalInputLabel htmlFor="link-title">Title - </ModalInputLabel>
+            <FetchTitleBtn type="button">Get title from link</FetchTitleBtn>
             <input 
               id="link-title" placeholder="Enter the title (optional)"
               ref={(el) => { this.inputTitle = el }} autoComplete="off"
             />
-            <ModalButtons>
-              <button type="submit">Add</button>
-              <button onClick={this.toggleAddLinkModal} type="button">Cancel</button>
-            </ModalButtons>
+            <LinkModalBtnCtn>
+              <button type="submit">
+                <img src={img_plus} />Add
+              </button>
+            </LinkModalBtnCtn>
           </form>
         </AddLinkModal>
         <RenameGroupModal

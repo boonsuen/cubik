@@ -4,9 +4,8 @@ import { AddListModal } from '../Modals';
 
 import { GroupModalHeader } from '../UserListRoute';
 import AddList_Icon from '../../assets/img/icons/AddList.svg';
-import img_hideModal from '../../assets/img/icons/hidemodal.svg';
-import img_list from '../../assets/img/icons/list.svg';
-import Group from '../Group';
+import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
+import img_list from '../../assets/img/icons/modal/list.svg';
 
 const StyledSidebarBottom = styled.div`
   box-sizing: border-box;
