@@ -96,7 +96,7 @@ const AddListModal = styled(ReactModalAdapter)`
   }
 `;
 
-const AddLinkModal = styled(ReactModalAdapter)`
+const StyledAddLinkModal = styled(ReactModalAdapter)`
 
   &__overlay {
     position: fixed; 
@@ -226,4 +226,8 @@ const RenameGroupModal = styled(ReactModalAdapter)`
   }
 `;
 
-export { AddListModal, AddLinkModal, RenameGroupModal };
+export { 
+  AddListModal, 
+  StyledAddLinkModal, 
+  RenameGroupModal 
+};

@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
+import isURL from 'validator/lib/isURL';
 import AddGroup from './AddGroup';
 import Group from '../Group';
 import EmptyState from './EmptyState';
-import { AddLinkModal, RenameGroupModal } from '../Modals';
+import AddLinkModal from './AddLinkModal';
+import { RenameGroupModal } from '../Modals';
 
 import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
 import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
-import img_link from '../../assets/img/icons/modal/link.svg';
-import img_plus from '../../assets/img/icons/modal/plus.svg';
 import img_rename from '../../assets/img/icons/modal/rename.svg';
 
 const Header = styled.div`
@@ -18,74 +18,6 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 91px;
-`;
-
-const LinkModalCircle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 42px;
-  height: 42px;
-  margin-right: 13px;
-  border-radius: 50%;
-  background-color: #faebff;
-  box-shadow: 0 2px 4px rgba(223, 239, 255, 0.5);
-`;
-
-const ModalGroupInfo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
-
-  label {
-    font-weight: 500;
-    color: #495f8a;
-  }
-  
-  div {
-    margin-left: 15px;
-    height: 32px;
-    padding: 0 10px;
-    border: 1px solid #9b7ae6;
-    text-align: center;
-    line-height: 32px;
-    border-radius: 5px;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-const ModalInputLabel = styled.label`
-  color: #71718a;
-  margin-bottom: 3px;
-  display: inline-block;
-`;
-
-const FetchTitleBtn = styled.button`
-  display: inline-block;
-  height: initial;
-  margin-left: 4px;
-  color: #5da4f4;
-`;
-
-const LinkModalBtnCtn = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  button {
-    width: 86px;
-    height: 40px;
-    background: linear-gradient(223.7deg, #F199FF 0%, #BE6BFF 100%);
-    color: #fff;
-    line-height: 45px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px 0 #DFEFFF;
-  }
-
-  img {
-    margin: -5px 6px 0 0;
-  }
 `;
 
 export const GroupModalHeader = styled.div`
@@ -103,10 +35,6 @@ export const GroupModalHeader = styled.div`
     height: 14px;
     margin-left: auto;
   }
-`;
-
-const LinkModalHeader = styled(GroupModalHeader)`
-  margin-bottom: 20px;
 `;
 
 const Circle = styled.div`
@@ -268,7 +196,6 @@ export default class UserListRoute extends React.Component {
   };
   handleRenameGroup = (groupId, newGroupName) => {
     if (newGroupName === this.state.selectedGroup.name) {
-      console.log('No name changes');
       return;
     }
     const { userId, list } = this.props;
@@ -352,51 +279,12 @@ export default class UserListRoute extends React.Component {
           />
         )}
         <AddLinkModal
-          isOpen={this.state.showAddLinkModal}
-          onRequestClose={this.toggleAddLinkModal}
-          contentLabel="Add New Link Modal"
-        >
-          <LinkModalHeader>
-            <LinkModalCircle>
-              <img src={img_link} />
-            </LinkModalCircle>
-            <h2>Add link</h2>
-            <button onClick={this.toggleAddLinkModal} type="button">
-              <img src={img_hideModal} />
-            </button>
-          </LinkModalHeader>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const { selectedGroup: { 
-              id: groupId
-            } } = this.state;
-            this.handleAddLink(
-              groupId, this.inputTitle.value, this.inputUrl.value
-            );
-          }}>
-            <ModalGroupInfo>
-              <label>Group:</label>
-              <div>{this.state.selectedGroup.name}</div>
-            </ModalGroupInfo>
-            <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
-            <input 
-              id="link-url" placeholder="https://..."
-              ref={(el) => { this.inputUrl = el }} autoComplete="off"
-              autoFocus  
-            />
-            <ModalInputLabel htmlFor="link-title">Title - </ModalInputLabel>
-            <FetchTitleBtn type="button">Get title from link</FetchTitleBtn>
-            <input 
-              id="link-title" placeholder="Enter the title (optional)"
-              ref={(el) => { this.inputTitle = el }} autoComplete="off"
-            />
-            <LinkModalBtnCtn>
-              <button type="submit">
-                <img src={img_plus} />Add
-              </button>
-            </LinkModalBtnCtn>
-          </form>
-        </AddLinkModal>
+          showAddLinkModal={this.state.showAddLinkModal}
+          toggleAddLinkModal={this.toggleAddLinkModal}
+          groupId={this.state.selectedGroup.id}
+          groupName={this.state.selectedGroup.name}
+          handleAddLink={this.handleAddLink}
+        />
         <RenameGroupModal
           isOpen={this.state.showRenameGroupModal}
           onRequestClose={this.toggleRenameGroupModal}
