@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import isURL from 'validator/lib/isURL';
 import { StyledAddLinkModal } from '../Modals';
 
 import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
 import img_link from '../../assets/img/icons/modal/link.svg';
 import img_plus from '../../assets/img/icons/modal/plus.svg';
 
-const ModalHeader = styled.div`
+const Header = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -23,7 +24,7 @@ const ModalHeader = styled.div`
   }
 `;
 
-const ModalCircle = styled.div`
+const Circle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +36,7 @@ const ModalCircle = styled.div`
   box-shadow: 0 2px 4px rgba(223, 239, 255, 0.5);
 `;
 
-const ModalGroupInfo = styled.div`
+const GroupInfo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 14px;
@@ -59,10 +60,50 @@ const ModalGroupInfo = styled.div`
   }
 `;
 
-const ModalInputLabel = styled.label`
+const UrlLabels = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const InputLabel = styled.label`
   color: #71718a;
   margin-bottom: 3px;
   display: inline-block;
+`;
+
+const InvalidUrlIndicator = styled(InputLabel)`
+  color: #996781;
+  transition: ${props =>
+    !props.isUrlValid ? "opacity .3s" : "visibility 0s .3s, opacity .3s"};
+  opacity: ${props => (!props.isUrlValid ? 1 : 0)};
+  visibility: ${props => (!props.isUrlValid ? "visible" : "hidden")};
+`;
+
+const Input = styled.input`
+  line-height: 40px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid #c4c8d7;
+  font-size: 16px;
+  padding: 0 10px 0 10px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  transition: all 300ms;
+  margin-bottom: 20px;
+
+  &:focus {
+    border-color: #889fff;
+    background-color: #fcfcff;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #d4d4df;
+  }
+`;
+
+const InputUrl = styled(Input)`
+  border-color: ${props => !props.isUrlValid && '#ffb5d1'};
 `;
 
 const FetchTitleBtn = styled.button`
@@ -77,7 +118,7 @@ const FetchTitleBtn = styled.button`
   }
 `;
 
-const ModalBtnCtn = styled.div`
+const SubmitBtnCtn = styled.div`
   display: flex;
   justify-content: flex-end;
 
@@ -97,6 +138,25 @@ const ModalBtnCtn = styled.div`
 `;
 
 class AddLinkModal extends React.Component {
+  state = {
+    isUrlValid: null
+  }
+  validateUrl = url => { 
+    if (!isURL(url)) {
+      return 'INVALID';
+    } else if (
+      !url.startsWith('http://') && !url.startsWith('https://')
+    ) {
+      return 'VALID-RELATIVE';
+    } else {
+      return 'VALID';
+    }
+  };
+  handleInputUrlChange = () => {
+    if (this.state.isUrlValid === false) {
+      this.setState({ isUrlValid: null });
+    }
+  }
   render() {
     const { 
       showAddLinkModal, 
@@ -105,50 +165,77 @@ class AddLinkModal extends React.Component {
       groupName,
       handleAddLink
     } = this.props;
+    const isUrlValid = 
+      this.state.isUrlValid || this.state.isUrlValid === null;
     return (
       <StyledAddLinkModal
         isOpen={showAddLinkModal}
         onRequestClose={toggleAddLinkModal}
         contentLabel="Add Link Modal"
       >
-        <ModalHeader>
-          <ModalCircle>
+        <Header>
+          <Circle>
             <img src={img_link} />
-          </ModalCircle>
+          </Circle>
           <h2>Add link</h2>
           <button onClick={toggleAddLinkModal} type="button">
             <img src={img_hideModal} />
           </button>
-        </ModalHeader>
+        </Header>
         <form onSubmit={(e) => {
-          e.preventDefault();
-          handleAddLink(
-            groupId, 
-            this.inputTitle.value.trim(), 
-            this.inputUrl.value.trim()
-          );
+          e.preventDefault();          
+          const title = this.inputTitle.value.trim();
+          let url = this.inputUrl.value.trim();
+          if (!url) {
+            return;
+          }
+          if (this.validateUrl(url) === 'INVALID') {
+            this.setState({ isUrlValid: false })
+            setTimeout(() => {
+              if (this.state.isUrlValid === false) {
+                this.setState({ isUrlValid: null });
+              }
+            }, 2000);
+            return;
+          } else if (this.validateUrl(url) === 'VALID-RELATIVE') {
+            url = `http://${url}`;
+            console.log('relative', url);
+          } else if (this.validateUrl(url) === 'VALID') {
+            console.log('okay');
+          }
+          handleAddLink(groupId, title, url);
         }}>
-          <ModalGroupInfo>
+          <GroupInfo>
             <label>Group:</label>
             <div>{groupName}</div>
-          </ModalGroupInfo>
-          <ModalInputLabel htmlFor="link-url">URL</ModalInputLabel>
-          <input 
+          </GroupInfo>
+          <UrlLabels>
+            <InputLabel htmlFor="link-url">URL</InputLabel>
+            <InvalidUrlIndicator 
+              isUrlValid={isUrlValid}
+              htmlFor="link-url"
+            >
+              Invalid URL
+            </InvalidUrlIndicator>
+          </UrlLabels>
+          <InputUrl
             id="link-url" placeholder="https://..."
+            onChange={this.handleInputUrlChange}
             ref={(el) => { this.inputUrl = el }} autoComplete="off"
+            isUrlValid={isUrlValid}
             autoFocus required
           />
-          <ModalInputLabel htmlFor="link-title">Title - </ModalInputLabel>
+          <InputLabel htmlFor="link-title">Title - </InputLabel>
           <FetchTitleBtn type="button">Get title from link</FetchTitleBtn>
-          <input 
+          <Input 
             id="link-title" placeholder="Enter the title (optional)"
             ref={(el) => { this.inputTitle = el }} autoComplete="off"
           />
-          <ModalBtnCtn>
+          <SubmitBtnCtn>
             <button type="submit">
               <img src={img_plus} />Add
             </button>
-          </ModalBtnCtn>
+          </SubmitBtnCtn>
         </form>
       </StyledAddLinkModal>
     );

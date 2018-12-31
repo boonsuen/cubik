@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AddLinkModal as CreateGroupModal } from '../Modals';
+import { StyledAddLinkModal as CreateGroupModal } from '../Modals';
 
 import img_emptyState from '../../assets/img/illustration/emptystate.svg';
 

@@ -120,6 +120,10 @@ export default class UserListRoute extends React.Component {
     this.setState({ selectedGroup: group });
   };
   handleAddLink = (groupId, title, url) => {
+    // both url and title are required onSubmit as of now
+    if (!url || !title) {
+      return;
+    }
     const { userId, list } = this.props;
     db.collection(`users/${userId}/lists/${list.id}/links`).add({
       groupId, title, url

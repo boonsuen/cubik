@@ -132,7 +132,7 @@ const StyledAddLinkModal = styled(ReactModalAdapter)`
     font-weight: 600;
   }
 
-  input {
+  ${'' /* input {
     line-height: 40px;
     width: 100%;
     height: 40px;
@@ -153,7 +153,7 @@ const StyledAddLinkModal = styled(ReactModalAdapter)`
     &::placeholder {
       color: #d4d4df;
     }
-  }
+  } */}
 
   .ReactModal__Content {
     opacity: 0;
