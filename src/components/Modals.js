@@ -132,29 +132,6 @@ const StyledAddLinkModal = styled(ReactModalAdapter)`
     font-weight: 600;
   }
 
-  ${'' /* input {
-    line-height: 40px;
-    width: 100%;
-    height: 40px;
-    border: 1px solid #c4c8d7;
-    font-size: 16px;
-    padding: 0 10px 0 10px;
-    box-sizing: border-box;
-    border-radius: 2px;
-    transition: all 300ms;
-    margin-bottom: 20px;
-
-    &:focus {
-      border-color: #889fff;
-      background-color: #fcfcff;
-      outline: none;
-    }
-
-    &::placeholder {
-      color: #d4d4df;
-    }
-  } */}
-
   .ReactModal__Content {
     opacity: 0;
   }

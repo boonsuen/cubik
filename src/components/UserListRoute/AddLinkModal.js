@@ -221,8 +221,9 @@ class AddLinkModal extends React.Component {
           <InputUrl
             id="link-url" placeholder="https://..."
             onChange={this.handleInputUrlChange}
-            ref={(el) => { this.inputUrl = el }} autoComplete="off"
+            ref={(el) => { this.inputUrl = el }} 
             isUrlValid={isUrlValid}
+            autoComplete="off" spellCheck={false}       
             autoFocus required
           />
           <InputLabel htmlFor="link-title">Title - </InputLabel>
