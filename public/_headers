@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.googleapis.com; img-src 'self' https://*.cloudfront.net data:; style-src 'self' 'unsafe-inline'; form-action 'self'; font-src 'self' https://*.cloudfront.net; base-uri 'self'; frame-ancestors 'none'; object-src 'none';
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://*.googleapis.com https://us-central1-cubik-d04fe.cloudfunctions.net; img-src 'self' https://*.cloudfront.net data:; style-src 'self' 'unsafe-inline'; form-action 'self'; font-src 'self' https://*.cloudfront.net; base-uri 'self'; frame-ancestors 'none'; object-src 'none';
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
