@@ -156,7 +156,16 @@ class AddLinkModal extends React.Component {
     if (this.state.isUrlValid === false) {
       this.setState({ isUrlValid: null });
     }
-  }
+  };
+  fetchTitle = () => {
+    fetch(
+      `https://us-central1-cubik-d04fe.cloudfunctions.net/getTitleOfUrl?url=${this.inputUrl.value.trim()}`
+    ).then(res => {
+      return res.text();
+    }).then(title => {
+      this.inputTitle.value = title;
+    });
+  };
   render() {
     const { 
       showAddLinkModal, 
@@ -227,7 +236,9 @@ class AddLinkModal extends React.Component {
             autoFocus required
           />
           <InputLabel htmlFor="link-title">Title - </InputLabel>
-          <FetchTitleBtn type="button">Get title from link</FetchTitleBtn>
+          <FetchTitleBtn 
+            onClick={this.fetchTitle}
+            type="button">Get title from link</FetchTitleBtn>
           <Input 
             id="link-title" placeholder="Enter the title (optional)"
             ref={(el) => { this.inputTitle = el }} autoComplete="off"
