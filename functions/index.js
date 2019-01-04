@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-const whitelist = ['http://localhost:3000', 'http://example2.com'];
+const whitelist = ['http://localhost:3000', 'https://cubikapp.com'];
 const cors = require('cors')({
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
