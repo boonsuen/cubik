@@ -1,18 +1,18 @@
-var _ = require('lodash'),
-	cheerio = require('cheerio'),
-	charset = require('superagent-charset'),
-	rest = require('superagent'),
-	URI = require('uri-js'),
-	franc = require('franc'),
-	langs = require('langs'),
-	Client = {};
+const _ = require('lodash');
+const	cheerio = require('cheerio');
+const	charset = require('superagent-charset');
+const	rest = require('superagent');
+const	URI = require('uri-js');
+const	franc = require('franc');
+const	langs = require('langs');
+const	Client = {};
 
 charset(rest);
 
-var parseMeta = function(url, options, body, header) {
+const parseMeta = function(url, options, body, header) {
 	header = header || {};
 	var uri = URI.parse(url);
-	var $;
+	let $;
 	try {
 		$ = cheerio.load(body);
 	} catch (e) {
@@ -24,8 +24,8 @@ var parseMeta = function(url, options, body, header) {
 	$('embed').remove();
 	$('object').remove();
 	$('noscript').remove();
-	var response = {};
-	var title;
+	const response = {};
+	let title;
 	if (options.title) {
 		title = $('head > title').text();
 	}
@@ -34,9 +34,9 @@ var parseMeta = function(url, options, body, header) {
 	}
 
 	if (options.images) {
-		var imagehash = {};
+		const imagehash = {};
 		response.images = $('img').map(function() {
-			var src = $(this).attr('src');
+			const src = $(this).attr('src');
 			if (src) {
 				return URI.resolve(url, src);
 			} else {
@@ -49,7 +49,7 @@ var parseMeta = function(url, options, body, header) {
 		}).get();
 	}
 	if (options.links) {
-		var linkhash = {};
+		const linkhash = {};
 		response.links = $('a').map(function() {
 			var href = $(this).attr('href');
 			if (href && href.trim().length && href[0] !== "#") {
@@ -99,8 +99,7 @@ var parseMeta = function(url, options, body, header) {
 	response.uri = uri;
 
 	if (options.title) {
-		// response.title = metaData['og:title'] || title;
-		response.title = title;
+		response.title = metaData['og:title'] || title;
 	}
 	if (options.description) {
 		response.description = metaData['og:description'] || metaData.description;
@@ -139,7 +138,7 @@ Client.fetch = function(url, options, callback) {
 	return new Promise(function(resolve, reject) {
 
 		url = url.split("#")[0]; //Remove any anchor fragments
-		var http_options = {
+		const http_options = {
 			timeout: 20000,
 			headers: {
 				'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
@@ -147,7 +146,7 @@ Client.fetch = function(url, options, callback) {
 			followRedirects: false
 		};
 		var userAgent = Client.userAgent;
-		var _options = {
+		const _options = {
 			title: true,
 			description: true,
 			type: true,
@@ -168,7 +167,7 @@ Client.fetch = function(url, options, callback) {
 			_.merge(_options, options.flags || {});
 			userAgent = options.userAgent || userAgent;
 		}
-		var cb = function(err, res) {
+		const cb = function(err, res) {
 			if (typeof callback !== "undefined") {
 				return callback(err, res);
 			} else if (err) {
@@ -180,7 +179,6 @@ Client.fetch = function(url, options, callback) {
 			return cb("Invalid URL", (url || ""));
 		}
 		http_options.headers['User-Agent'] = userAgent;
-		var redirectCount = 0;
 		if (url.slice(-4) === ".pdf") {
 			var pdf = function() {
 				//TODO : PDF parsing
