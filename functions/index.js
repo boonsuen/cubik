@@ -13,11 +13,9 @@ exports.getTitleOfUrl = functions.https.onRequest((req, res) => {
     const url = req.query.url;
     urlMetadata(url)
       .then(metadata => {
-        // console.log(metadata);
         res.status(200).send(metadata.title);
       }, error => {
-        console.log(error);
-        res.status(500).send(error);
+        res.status(500).send(error.message);
       });
   });
 });
