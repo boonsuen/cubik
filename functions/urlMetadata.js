@@ -3,6 +3,9 @@ const request = require('request');
 const parse = require('./lib/parse');
 
 module.exports = function (url, options) {
+  if (!url.startsWith('http://') && !url.startsWith('https://') && url.length > 1) {
+    url = `http://${url}`;
+  }
   const dfd = q.defer();
   if (!options || typeof options !== 'object') options = {}
   const opts = {
@@ -17,7 +20,7 @@ module.exports = function (url, options) {
   };
 
   const requestOpts = {
-    url: url,
+    url,
     headers: {
       'User-Agent': opts.userAgent,
       'From': opts.fromEmail

@@ -158,8 +158,23 @@ class AddLinkModal extends React.Component {
     }
   };
   fetchTitle = () => {
+    let url = this.inputUrl.value.trim();
+    if (!url) {
+      this.inputUrl.focus();
+      return;
+    } else if (this.validateUrl(url) === 'INVALID') {
+      this.setState({ isUrlValid: false })
+      setTimeout(() => {
+        if (this.state.isUrlValid === false) {
+          this.setState({ isUrlValid: null });
+        }
+      }, 2000);
+      return;
+    } else if (this.validateUrl(url) === 'VALID-RELATIVE') {
+      url = `http://${url}`;
+    }
     fetch(
-      `https://us-central1-cubik-d04fe.cloudfunctions.net/getTitleOfUrl?url=${this.inputUrl.value.trim()}`
+      `http://localhost:5000/cubik-d04fe/us-central1/getTitleOfUrl?url=${url}`
     ).then(res => {
       return res.text();
     }).then(title => {
