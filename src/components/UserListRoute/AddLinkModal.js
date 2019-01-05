@@ -174,7 +174,7 @@ class AddLinkModal extends React.Component {
       url = `http://${url}`;
     }
     fetch(
-      `http://localhost:5000/cubik-d04fe/us-central1/getTitleOfUrl?url=${url}`
+      `https://us-central1-cubik-d04fe.cloudfunctions.net/getTitleOfUrl?url=${url}`
     ).then(res => {
       return res.text();
     }).then(title => {
