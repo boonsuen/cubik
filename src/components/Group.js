@@ -56,7 +56,8 @@ export default class Group extends React.Component {
           toggleAddLinkModal={this.props.toggleAddLinkModal}
           setSelectedGroup={this.props.setSelectedGroup}
           inEditMode={inEditMode}
-          toggleEditMode={this.toggleEditMode}          
+          toggleEditMode={this.toggleEditMode}      
+          handleLinkDelete={this.props.handleLinkDelete}    
         />
       </GroupWrapper>
     );

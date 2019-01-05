@@ -160,21 +160,13 @@ class EditLinkForm extends React.Component {
   handleDelete = () => { 
     const {
       userId, listId,
-      setSelectedToEdit,
-      handleLinkUpdate,
-      link: { title, url, id }
+      handleLinkDelete, link
     } = this.props;
-    const linkRef = db.collection(`users/${userId}/lists/${listId}/links`).doc(id);
+    const linkRef = db.collection(`users/${userId}/lists/${listId}/links`).doc(link.id);
     linkRef.delete().then(() => {
       console.log("Document successfully deleted!");
-      // setSelectedToEdit(false);
-      // handleLinkUpdate({
-      //   title: newTitle,
-      //   url: newUrl,
-      //   id
-      // });
-    })
-    .catch(err => {
+      handleLinkDelete(link);
+    }).catch(err => {
       console.error("Error removing document: ", err);
     });
   };
@@ -257,6 +249,7 @@ class LinkWrapper extends React.Component {
             link={link}
             setSelectedToEdit={this.props.setSelectedToEdit}
             handleLinkUpdate={this.handleLinkUpdate}
+            handleLinkDelete={this.props.handleLinkDelete}
           />
         ) : (
           <Link

@@ -144,7 +144,7 @@ class DivLink extends React.Component {
   render() {
     const { 
       listId, inEditMode, link, selectedLinkToEditIndex, 
-      index, handleLinkSelect 
+      index, handleLinkSelect, handleLinkDelete
     } = this.props;
     return (
       <StyledDivLink 
@@ -160,6 +160,7 @@ class DivLink extends React.Component {
           handleLinkSelect={handleLinkSelect}
           selectedToEdit={this.state.selectedToEdit}
           setSelectedToEdit={this.setSelectedToEdit}
+          handleLinkDelete={handleLinkDelete}
         />
       </StyledDivLink>
     );
@@ -267,6 +268,7 @@ export default class Links extends React.Component {
               selectedLinkToEditIndex={selectedLinkToEditIndex}
               index={index}
               handleLinkSelect={this.handleLinkSelect}
+              handleLinkDelete={this.props.handleLinkDelete}
             />
           ))
         ) : (

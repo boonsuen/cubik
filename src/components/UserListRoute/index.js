@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Textarea from 'react-textarea-autosize';
-import isURL from 'validator/lib/isURL';
 import AddGroup from './AddGroup';
 import Group from '../Group';
 import EmptyState from './EmptyState';
@@ -160,6 +159,25 @@ export default class UserListRoute extends React.Component {
       console.error("Error adding document: ", error);
     });
   };
+  handleLinkDelete = link => {
+    if (link.groupId) {
+      const groupsData = this.state.groupsData.map(group => {
+        if (group.id === link.groupId) {
+          return {
+            ...group,
+            links: group.links.filter(groupLink => groupLink.id !== link.id)
+          }
+        }
+        return group;
+      });
+      this.setState({ groupsData });
+    } else {
+      this.setState(state => ({
+        ungroupedLinks: state.ungroupedLinks.filter(groupLink => groupLink.id !== link.id),
+        isEmptyState: false
+      }));
+    }
+  };
   handleCreateGroup = (groupName, fromEmptyState) => {
     const { userId, list } = this.props;
     const addToDb = db.collection(`users/${userId}/lists/${list.id}/groups`).add({
@@ -262,6 +280,7 @@ export default class UserListRoute extends React.Component {
                 toggleAddLinkModal={this.toggleAddLinkModal}
                 toggleRenameGroupModal={this.toggleRenameGroupModal}
                 setSelectedGroup={this.setSelectedGroup}
+                handleLinkDelete={this.handleLinkDelete}
               />
             ))}
             <Group
@@ -272,6 +291,7 @@ export default class UserListRoute extends React.Component {
               links={this.state.ungroupedLinks}
               toggleAddLinkModal={this.toggleAddLinkModal}
               setSelectedGroup={this.setSelectedGroup}
+              handleLinkDelete={this.handleLinkDelete}
             />
           </GroupsContainer>
         ) : (
