@@ -62,7 +62,7 @@ const ListItem = styled.li`
   align-items: center;
 
   &:hover {
-    background: #fdf9ff;
+    background: #fefcff;
   }
 
   a {
