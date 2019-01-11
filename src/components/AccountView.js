@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Body = styled.div`
-  height: 100%;
+  width: 100%;
+  min-height: 100%;
   padding-top: 50px;
   background: #f0f4ff;
   overflow: scroll;
