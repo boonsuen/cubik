@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-static';
 import styled from 'styled-components';
 import onClickOutside from 'react-onclickoutside';
 
@@ -56,12 +57,23 @@ const DropdownList = styled.ul`
 const ListItem = styled.li`
   padding-left: 25px;
   height: 39px;
-  transition: color .3s;
+  transition: background .3s;
   display: flex;
   align-items: center;
 
   &:hover {
-    color: #626593;
+    background: #fdf9ff;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #7e81a8;
+    transition: color .3s;
+    &:hover {
+      color: #626593;
+    }
   }
 
   div {
@@ -81,6 +93,7 @@ const ListItem_Signout = styled(ListItem)`
 
   &:hover {
     cursor: pointer;
+    background: #fafbff;
   }
 `;
 
@@ -103,11 +116,13 @@ class SettingDropdown extends React.Component {
           <ArrowDown rotate={this.state.dropdownOpen ? 1 : 0} src={img_settingArrow} alt="down arrow" />        
         </ButtonContainer>       
         <DropdownList visible={this.state.dropdownOpen ? 1 : 0}>
-          <ListItem>
+          <ListItem>        
             <div><img src={img_preference} /></div>Preference
           </ListItem>
           <ListItem>
-            <div><img src={img_account} /></div>Account
+            <Link to="/app/account">
+              <div><img src={img_account} /></div>Account
+            </Link>
           </ListItem>
           <ListItem_Signout onClick={this.props.logoutUser}>
             <div><img src={img_signout} /></div>Sign out

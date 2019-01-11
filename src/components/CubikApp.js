@@ -1,8 +1,9 @@
 import React from 'react';
-import { Head } from 'react-static';
+import { Head, Route } from 'react-static';
 import styled, { keyframes } from 'styled-components';
 import Sidebar from './Sidebar';
 import Content from './Content';
+import AccountView from './AccountView';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
@@ -210,13 +211,23 @@ class CubikApp extends React.Component {
                   links: this.state.links,
                   allLinks: this.state.allLinks
                 }}>
-                  <StyledApp>
-                    <Sidebar 
-                      toggleAuth={toggleAuth}  
-                      handleAddList={this.handleAddList}
-                    />
-                    <Content /> 
-                  </StyledApp>
+                  <Route path="/app" render={({location, history}) => {
+                    if (location.pathname === '/app/account') {
+                      return (
+                        <AccountView history={history} />
+                      );
+                    } else {
+                      return (
+                        <StyledApp>
+                          <Sidebar 
+                            toggleAuth={toggleAuth}  
+                            handleAddList={this.handleAddList}
+                          />
+                          <Content /> 
+                        </StyledApp>
+                      );
+                    }
+                  }} />
                 </InitialDataContext.Provider>
               )
             }
