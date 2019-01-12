@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="25.0000399999999" width="29.03572740117488">
+  <defs>
+    <rect id="rect-0" opacity="1" x="14.01786370058744" y="0.31903311789818645" width="9" height="22"/>
+    <ellipse id="ellipse-1" opacity="1" rx="6.7039928307342285" ry="6.696439285714258" cx="13.049487614022588" cy="6.696439285714258"/>
+    <mask id="mask-2" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+      <rect opacity="1" x="0" y="0" width="29.03572740117488" height="25.0000399999999" fill="black"/>
+      <use xlink:href="#ellipse-1" fill="white"/>
+    </mask>
+    <path id="path-3" opacity="1" fill-rule="evenodd" d="M0.28533140088209785,18.46284010164504 C0.6875387776547813,16.052314899580026 2.773300645594585,14.285737142857101 5.217150584465822,14.285737142857101 L20.881824643579396,14.285737142857101 C23.32567458245063,14.285737142857101 25.411436450390436,16.052314899580022 25.81364382716312,18.46284010164504 L26.01054042010877,19.642888571428507 C26.478424510602753,22.447030058914038 24.3161016472216,25.000039999999913 21.473193804189236,25.000039999999913 L4.625781423855984,25.000039999999913 C1.7828735808236202,25.000039999999913 -0.37944928255753174,22.447030058914038 0.08843480793644765,19.642888571428507 L0.28533140088209785,18.46284010164504Z"/>
+    <mask id="mask-4" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+      <rect opacity="1" x="0" y="0" width="29.03572740117488" height="25.0000399999999" fill="black"/>
+      <use xlink:href="#path-3" fill="white"/>
+    </mask>
+  </defs>
+  <g opacity="1">
+    <g transform="translate(18.51786370058744, 11.319033117898186) rotate(40.00001430256668) translate(-18.51786370058744, -11.319033117898186)" opacity="1">
+      <use xlink:href="#rect-0" fill="rgb(194,255,218)" fill-opacity="1"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#ellipse-1" fill-opacity="0" stroke="rgb(173,180,183)" stroke-opacity="1" stroke-width="2.8" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-2)"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-3" fill-opacity="0" stroke="rgb(173,180,183)" stroke-opacity="1" stroke-width="2.8" stroke-linecap="butt" stroke-linejoin="miter" mask="url(#mask-4)"/>
+    </g>
+  </g>
+</svg>

@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import img_leftArrow from '../assets/img/icons/accountView/left-arrow.svg';
+import img_accSetting from '../assets/img/icons/accountView/accsetting.svg';
+import img_profile from '../assets/img/icons/accountView/profile.svg';
+
 const Body = styled.div`
   width: 100%;
   min-height: 100%;
@@ -20,6 +24,25 @@ const GoBack = styled.button`
   height: 44px;
   background: #fff;
   border-radius: 25px;
+  color: #657084;
+
+  img {
+    margin-right: 5px;
+  }
+
+  div {
+    margin-top: 2px;
+  }
+`;
+
+const HeadingCtn = styled.div`
+  display: flex;
+  align-items: center;
+  height: 142px;
+
+  img {
+    margin-right: 26px;
+  }
 `;
 
 const Header = styled.header`
@@ -39,6 +62,7 @@ const WhiteBox = styled.div`
 `;
 
 const H2 = styled.h2`
+  margin: 0 0 15px 0;
   color: #151d4f;
   font-size: 30px;
   font-weight: 600;
@@ -46,16 +70,41 @@ const H2 = styled.h2`
 
 const Label = styled.label`
   display: block;
+  margin-bottom: 8px;
   color: #7c7f91;
   font-size: 18px;
   font-weight: 500;
 `;
 
+const DisplayNameForm = styled.form`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const InputText = styled.input`
   box-sizing: border-box;
   height: 42px;
+  margin-bottom: 20px;
+  padding: 0 10px;
   border: 2px solid #dadfe6;
   border-radius: 4px;
+  color: #657084;
+  font-size: 16px;
+  line-height: 42px;
+  ${'' /* width: 42; */}
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SaveNameBtn = styled.button`
+  width: 70px;
+  height: 42px;
+  background: linear-gradient(317.39deg, #6171FF 0%, #927CFF 100%);	
+  box-shadow: 0 2px 4px 0 rgba(218,215,238,0.5);
+  color: #fff;
+  line-height: 42px;
 `;
 
 const ChangePasswordBtn = styled.button`
@@ -72,7 +121,15 @@ const Description = styled.div`
   color: #828995;
 `;
 
+const Separator = styled.div`
+  height: 1px;
+  background: #dfe7ef;
+  width: 100%;
+  margin: 22px 0;
+`;
+
 const H3 = styled.h3`
+  margin: 0 0 10px 0;
   font-size: 25px;
   font-weight: 600;
 `;
@@ -80,6 +137,7 @@ const H3 = styled.h3`
 const DeleteAccBtn = styled.button`
   width: 150px;
   height: 42px;
+  margin-top: 20px;
   border: 1px solid #ff9494;
   color: #eb5656;
 `;
@@ -93,18 +151,26 @@ class AccountView extends React.Component {
             <GoBack type="button" onClick={() => {
               this.props.history.goBack();
             }}>
-              Go back
+              <img src={img_leftArrow} /><div>Go back</div>
             </GoBack>
-            <h1>Account Settings</h1>
+            <HeadingCtn>
+              <img src={img_accSetting} />
+              <h1>Account Settings</h1>
+            </HeadingCtn>
           </Header>
           <WhiteBox>
+            <img src={img_profile} />
             <H2>Profile</H2>
             <Label>Display Name</Label>
-            <InputText type="text" />
+            <DisplayNameForm>
+              <InputText type="text" />
+              <SaveNameBtn type="submit">Save</SaveNameBtn>
+            </DisplayNameForm>
             <Label>Email</Label>
             <InputText type="email" />
             <Label>Password</Label>
             <ChangePasswordBtn type="button">Change password</ChangePasswordBtn>
+            <Separator />
             <H2>Plans & Billings</H2>
             <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
           </WhiteBox>
