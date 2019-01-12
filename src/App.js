@@ -9,6 +9,7 @@ import {
   cleanPath
 } from 'react-static';
 import Routes from 'react-static-routes';
+import { LastLocationProvider } from 'react-router-last-location';
 import universal from 'react-universal-component';
 import styled from 'styled-components';
 
@@ -178,41 +179,43 @@ export default class App extends React.Component {
         </Head>      
         <GlobalStyle />
         <Router>
-          <Switch>            
-            <Route path="/nolayout" render={() => (<NoLayout />)} />
-            <Route path="/nonstatic" render={() => (<NonStatic />)} />
-            <Route path="/app" render={({ location }) => {
-              if (firebaseAuth === 'done') {
-                console.log("firebaseAuth === 'done'");
-                return auth
-                  ? (
+          <LastLocationProvider>
+            <Switch>            
+              <Route path="/nolayout" render={() => (<NoLayout />)} />
+              <Route path="/nonstatic" render={() => (<NonStatic />)} />
+              <Route path="/app" render={({ location }) => {
+                if (firebaseAuth === 'done') {
+                  console.log("firebaseAuth === 'done'");
+                  return auth
+                    ? (
+                      <AuthContext.Provider value={this.toggleAuth}>
+                        <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
+                      </AuthContext.Provider>
+                    ) : <Redirect to="/login" />
+                } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {
+                  console.log("firebaseAuth === 'loading' || firebaseAuth === 'initial'");
+                  return (
                     <AuthContext.Provider value={this.toggleAuth}>
                       <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
                     </AuthContext.Provider>
-                  ) : <Redirect to="/login" />
-              } else if (firebaseAuth === 'loading' || firebaseAuth === 'initial') {
-                console.log("firebaseAuth === 'loading' || firebaseAuth === 'initial'");
-                return (
-                  <AuthContext.Provider value={this.toggleAuth}>
-                    <CubikApp routeListId={location.pathname.replace(/\/app\//, '')} />
-                  </AuthContext.Provider>
-                );
-              }
-            }} />
-            {auth && 
-              <Route 
-                path="/" 
-                render={() => <Redirect to="/app" />} 
-              />
-            } 
-            <Routes render={
-              ({ getComponentForPath }) =>
-                <RenderRoutes
-                  toggleAuth={this.toggleAuth}
-                  getComponentForPath={getComponentForPath}
+                  );
+                }
+              }} />
+              {auth && 
+                <Route 
+                  path="/" 
+                  render={() => <Redirect to="/app" />} 
                 />
-            } />
-          </Switch>
+              } 
+              <Routes render={
+                ({ getComponentForPath }) =>
+                  <RenderRoutes
+                    toggleAuth={this.toggleAuth}
+                    getComponentForPath={getComponentForPath}
+                  />
+              } />
+            </Switch>
+          </LastLocationProvider>
         </Router>
       </React.Fragment>
     );

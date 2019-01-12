@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withLastLocation } from 'react-router-last-location';
 
 import img_leftArrow from '../assets/img/icons/accountView/left-arrow.svg';
 import img_accSetting from '../assets/img/icons/accountView/accsetting.svg';
@@ -153,10 +154,13 @@ class AccountView extends React.Component {
         <Container>
           <Header>
             <GoBack type="button" onClick={() => {
-              if (this.props.history.length === 0) {
+              const { lastLocation } = this.props;
+              console.log(lastLocation);
+              if (lastLocation) {
+                this.props.history.push(lastLocation.pathname);
+              } else {
                 this.props.history.push('/app');
               }
-              this.props.history.goBack();
             }}>
               <img src={img_leftArrow} /><div>Go back</div>
             </GoBack>
@@ -192,4 +196,4 @@ class AccountView extends React.Component {
   }
 }
 
-export default AccountView;
+export default withLastLocation(AccountView);
