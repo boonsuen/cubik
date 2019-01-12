@@ -53,6 +53,7 @@ const Header = styled.header`
 `;
 
 const WhiteBox = styled.div`
+  box-sizing: border-box;
   width: 100%;
   margin-bottom: 20px;
   padding: 30px 45px;
@@ -83,6 +84,7 @@ const DisplayNameForm = styled.form`
 
 const InputText = styled.input`
   box-sizing: border-box;
+  width: 100%;
   height: 42px;
   margin-bottom: 20px;
   padding: 0 10px;
@@ -91,7 +93,6 @@ const InputText = styled.input`
   color: #657084;
   font-size: 16px;
   line-height: 42px;
-  ${'' /* width: 42; */}
 
   &:focus {
     outline: none;
@@ -99,11 +100,13 @@ const InputText = styled.input`
 `;
 
 const SaveNameBtn = styled.button`
-  width: 70px;
+  width: 75px;
   height: 42px;
+  margin-left: 20px;
   background: linear-gradient(317.39deg, #6171FF 0%, #927CFF 100%);	
   box-shadow: 0 2px 4px 0 rgba(218,215,238,0.5);
   color: #fff;
+  font-size: 14px;
   line-height: 42px;
 `;
 
@@ -119,6 +122,7 @@ const ChangePasswordBtn = styled.button`
 
 const Description = styled.div`
   color: #828995;
+  line-height: 1.3;
 `;
 
 const Separator = styled.div`
@@ -149,6 +153,9 @@ class AccountView extends React.Component {
         <Container>
           <Header>
             <GoBack type="button" onClick={() => {
+              if (this.props.history.length === 0) {
+                this.props.history.push('/app');
+              }
               this.props.history.goBack();
             }}>
               <img src={img_leftArrow} /><div>Go back</div>
@@ -159,7 +166,7 @@ class AccountView extends React.Component {
             </HeadingCtn>
           </Header>
           <WhiteBox>
-            <img src={img_profile} />
+            <img src={img_profile} style={{marginBottom: "9px"}} />
             <H2>Profile</H2>
             <Label>Display Name</Label>
             <DisplayNameForm>
