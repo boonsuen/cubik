@@ -88,10 +88,27 @@ class InitialLoading extends React.Component {
                   console.log(doc.id, doc.data());
                   links.push({...doc.data(), id: doc.id});
                 });
-                resolve({auth: true, id: user.uid, lists, links});
+                resolve({
+                  auth: true, 
+                  info: {
+                    id: user.uid,
+                    name: user.displayName,
+                    email: user.email
+                  },
+                  lists, 
+                  links
+                });
               });
             } else {
-              resolve({auth: true, id: user.uid, lists});
+              resolve({
+                auth: true, 
+                info: {
+                  id: user.uid,
+                  name: user.displayName,
+                  email: user.email
+                }, 
+                lists
+              });
             }
           });
         } else {
@@ -106,7 +123,7 @@ class InitialLoading extends React.Component {
     loadFirebaseAuthState.then((user => {    
       this.props.toggleAuth(user.auth, 'done');
       if (user.auth === true) {
-        this.props.doneLoadingFirebaseAuth(user.auth, user.id, user.lists, user.links);
+        this.props.doneLoadingFirebaseAuth(user.auth, user.info, user.lists, user.links);
       }
     }));
   }
@@ -129,12 +146,10 @@ class InitialLoading extends React.Component {
 }
 
 class CubikApp extends React.Component {
-  doneLoadingFirebaseAuth = (authStatus, userId, lists, links) => {
+  doneLoadingFirebaseAuth = (authStatus, user, lists, links) => {
     this.setState({
       loadingFirebaseAuth: !authStatus,
-      user: {
-        id: userId
-      },
+      user,
       lists: lists.sort((a, b) => a.order - b.order),
       links
     });
@@ -142,7 +157,8 @@ class CubikApp extends React.Component {
   state = {
     loadingFirebaseAuth: true,
     user: {
-      id: ''
+      id: '',
+      name: ''
     },
     lists: [],
     links: [],
@@ -204,9 +220,7 @@ class CubikApp extends React.Component {
                 /> 
               : (
                 <InitialDataContext.Provider value={{
-                  user: {
-                    id: this.state.user.id
-                  },
+                  user: this.state.user,
                   lists: this.state.lists, 
                   links: this.state.links,
                   allLinks: this.state.allLinks

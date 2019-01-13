@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { withLastLocation } from 'react-router-last-location';
 
+import { InitialDataContext } from './CubikApp';
+
 import img_leftArrow from '../assets/img/icons/accountView/left-arrow.svg';
 import img_accSetting from '../assets/img/icons/accountView/accsetting.svg';
 import img_profile from '../assets/img/icons/accountView/profile.svg';
@@ -75,7 +77,7 @@ const Label = styled.label`
   margin-bottom: 8px;
   color: #7c7f91;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 const DisplayNameForm = styled.form`
@@ -97,6 +99,10 @@ const InputText = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  &::placeholder {
+    color: #d9e1e2;
   }
 `;
 
@@ -145,6 +151,7 @@ const DeleteAccBtn = styled.button`
   margin-top: 20px;
   border: 1px solid #ff9494;
   color: #eb5656;
+  line-height: 42px;
 `;
 
 class AccountView extends React.Component {
@@ -169,22 +176,29 @@ class AccountView extends React.Component {
               <h1>Account Settings</h1>
             </HeadingCtn>
           </Header>
-          <WhiteBox>
-            <img src={img_profile} style={{marginBottom: "9px"}} />
-            <H2>Profile</H2>
-            <Label>Display Name</Label>
-            <DisplayNameForm>
-              <InputText type="text" />
-              <SaveNameBtn type="submit">Save</SaveNameBtn>
-            </DisplayNameForm>
-            <Label>Email</Label>
-            <InputText type="email" />
-            <Label>Password</Label>
-            <ChangePasswordBtn type="button">Change password</ChangePasswordBtn>
-            <Separator />
-            <H2>Plans & Billings</H2>
-            <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
-          </WhiteBox>
+          <InitialDataContext.Consumer>
+            {({ user }) => 
+              <WhiteBox>
+                <img src={img_profile} style={{marginBottom: "9px"}} />
+                <H2>Profile</H2>
+                <Label>Display Name</Label>
+                <DisplayNameForm>
+                  <InputText 
+                    type="text" defaultValue={user.name} 
+                    placeholder="What's your name?" 
+                  />
+                  <SaveNameBtn type="submit">Save</SaveNameBtn>
+                </DisplayNameForm>
+                <Label>Email</Label>
+                <InputText type="email" defaultValue={user.email} />
+                <Label>Password</Label>
+                <ChangePasswordBtn type="button">Change password</ChangePasswordBtn>
+                <Separator />
+                <H2>Plans & Billings</H2>
+                <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
+              </WhiteBox>
+            }
+          </InitialDataContext.Consumer>          
           <WhiteBox>
             <H3>Danger zone</H3>
             <Description>Delete your account, all of the associated data will be removed, including all your links. You'll get a confirmation email first.</Description>
