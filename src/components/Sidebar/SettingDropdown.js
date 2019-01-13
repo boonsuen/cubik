@@ -57,23 +57,14 @@ const DropdownList = styled.ul`
 const ListItem = styled.li`
   padding-left: 25px;
   height: 39px;
-  transition: background .3s;
+  transition: all .3s;
   display: flex;
   align-items: center;
+  color: #7e81a8;
 
   &:hover {
     background: #fefcff;
-  }
-
-  a {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    color: #7e81a8;
-    transition: color .3s;
-    &:hover {
-      color: #626593;
-    }
+    color: #626593;
   }
 
   div {
@@ -119,11 +110,11 @@ class SettingDropdown extends React.Component {
           <ListItem>        
             <div><img src={img_preference} /></div>Preference
           </ListItem>
-          <ListItem>
-            <Link to="/app/account">
+          <Link to="/app/account">
+            <ListItem>            
               <div><img src={img_account} /></div>Account
-            </Link>
-          </ListItem>
+            </ListItem>
+          </Link>
           <ListItem_Signout onClick={this.props.logoutUser}>
             <div><img src={img_signout} /></div>Sign out
           </ListItem_Signout>
