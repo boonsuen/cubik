@@ -87,13 +87,18 @@ class InitialLoading extends React.Component {
                 querySnapshot.forEach((doc) => {
                   console.log(doc.id, doc.data());
                   links.push({...doc.data(), id: doc.id});
-                });
+                });              
                 resolve({
                   auth: true, 
+                  user,
                   info: {
                     id: user.uid,
                     name: user.displayName,
-                    email: user.email
+                    email: user.email,
+                    updateProfile: user.updateProfile
+                  },
+                  actions: {
+                    updateProfile: user.updateProfile
                   },
                   lists, 
                   links
@@ -102,11 +107,16 @@ class InitialLoading extends React.Component {
             } else {
               resolve({
                 auth: true, 
+                user,
                 info: {
                   id: user.uid,
                   name: user.displayName,
-                  email: user.email
+                  email: user.email,
+                  updateProfile: user.updateProfile
                 }, 
+                actions: {
+                  updateProfile: user.updateProfile
+                },
                 lists
               });
             }
@@ -123,7 +133,13 @@ class InitialLoading extends React.Component {
     loadFirebaseAuthState.then((user => {    
       this.props.toggleAuth(user.auth, 'done');
       if (user.auth === true) {
-        this.props.doneLoadingFirebaseAuth(user.auth, user.info, user.lists, user.links);
+        this.props.doneLoadingFirebaseAuth(
+          user.auth,
+          user.info,
+          user.lists, 
+          user.links,
+          user.user
+        );
       }
     }));
   }
@@ -146,19 +162,22 @@ class InitialLoading extends React.Component {
 }
 
 class CubikApp extends React.Component {
-  doneLoadingFirebaseAuth = (authStatus, user, lists, links) => {
+  doneLoadingFirebaseAuth = (authStatus, user, lists, links, userObj) => {
     this.setState({
       loadingFirebaseAuth: !authStatus,
       user,
       lists: lists.sort((a, b) => a.order - b.order),
-      links
+      links,
+      userObj
     });
   }
   state = {
     loadingFirebaseAuth: true,
     user: {
       id: '',
-      name: ''
+      name: '',
+      email: '',
+      updateProfile: () => {}
     },
     lists: [],
     links: [],
@@ -223,7 +242,8 @@ class CubikApp extends React.Component {
                   user: this.state.user,
                   lists: this.state.lists, 
                   links: this.state.links,
-                  allLinks: this.state.allLinks
+                  allLinks: this.state.allLinks,
+                  userObj: this.state.userObj
                 }}>
                   <Route path="/app" render={({location, history}) => {
                     if (location.pathname === '/app/account') {

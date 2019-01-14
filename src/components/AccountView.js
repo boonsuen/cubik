@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withLastLocation } from 'react-router-last-location';
 
+import auth from '../firebase/auth';
 import { InitialDataContext } from './CubikApp';
 
 import img_leftArrow from '../assets/img/icons/accountView/left-arrow.svg';
@@ -11,7 +12,7 @@ import img_profile from '../assets/img/icons/accountView/profile.svg';
 const Body = styled.div`
   width: 100%;
   min-height: 100%;
-  padding-top: 50px;
+  padding: 50px 0;
   background: #f0f4ff;
   overflow: scroll;
 `;
@@ -155,6 +156,17 @@ const DeleteAccBtn = styled.button`
 `;
 
 class AccountView extends React.Component {
+  handleChangeName = e => {
+    e.preventDefault();
+    const displayName = this.inputDisplayName.value.trim();
+    this.props.user.updateProfile({
+      displayName,
+    }).then(() => {
+      console.log('updated');
+    }).catch(error => {
+      console.log(error);
+    });
+  };
   render() {
     return (
       <Body>
@@ -176,29 +188,28 @@ class AccountView extends React.Component {
               <h1>Account Settings</h1>
             </HeadingCtn>
           </Header>
-          <InitialDataContext.Consumer>
-            {({ user }) => 
-              <WhiteBox>
-                <img src={img_profile} style={{marginBottom: "9px"}} />
-                <H2>Profile</H2>
-                <Label>Display Name</Label>
-                <DisplayNameForm>
-                  <InputText 
-                    type="text" defaultValue={user.name} 
-                    placeholder="What's your name?" 
-                  />
-                  <SaveNameBtn type="submit">Save</SaveNameBtn>
-                </DisplayNameForm>
-                <Label>Email</Label>
-                <InputText type="email" defaultValue={user.email} />
-                <Label>Password</Label>
-                <ChangePasswordBtn type="button">Change password</ChangePasswordBtn>
-                <Separator />
-                <H2>Plans & Billings</H2>
-                <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
-              </WhiteBox>
-            }
-          </InitialDataContext.Consumer>          
+          <WhiteBox>
+            <img src={img_profile} style={{marginBottom: "9px"}} />
+            <H2>Profile</H2>
+            <Label>Display Name</Label>
+            <DisplayNameForm onSubmit={this.handleChangeName}>
+              <InputText 
+                type="text" defaultValue={this.props.user.displayName} 
+                ref={el => this.inputDisplayName = el} 
+                placeholder="What's your name?" 
+              />
+              <SaveNameBtn type="submit">Save</SaveNameBtn>
+            </DisplayNameForm>
+            <Label>Email</Label>
+            <InputText 
+              type="email" defaultValue={this.props.user.email} 
+            />
+            <Label>Password</Label>
+            <ChangePasswordBtn type="button">Change password</ChangePasswordBtn>
+            <Separator />
+            <H2>Plans & Billings</H2>
+            <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
+          </WhiteBox>        
           <WhiteBox>
             <H3>Danger zone</H3>
             <Description>Delete your account, all of the associated data will be removed, including all your links. You'll get a confirmation email first.</Description>
@@ -210,4 +221,12 @@ class AccountView extends React.Component {
   }
 }
 
-export default withLastLocation(AccountView);
+const AccountViewWithContext = props => (
+  <InitialDataContext.Consumer>
+    {({ userObj }) => (
+      <AccountView {...props} user={userObj} />
+    )}
+  </InitialDataContext.Consumer>
+);
+
+export default withLastLocation(AccountViewWithContext);
