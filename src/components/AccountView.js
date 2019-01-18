@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { withLastLocation } from 'react-router-last-location';
 
-import auth from '../firebase/auth';
 import { InitialDataContext } from './CubikApp';
 
 import img_leftArrow from '../assets/img/icons/accountView/left-arrow.svg';
@@ -155,6 +154,96 @@ const DeleteAccBtn = styled.button`
   line-height: 42px;
 `;
 
+const ChangePasswordForm = styled.form`
+  background-color: #fcfcff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(212, 251, 255, 0.5);
+  padding: 21px 38px;
+  border-radius: 4px;
+
+  label {
+    color: #444b5e;
+    margin-bottom: 3px;
+  }
+
+  input {
+    font-size: 14px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid #cbd4df;
+    outline: none;
+    padding: 0 10px;
+    line-height: 32px;
+    margin-bottom: 11px;
+  }
+
+  button {
+    width: 80px;
+    height: 32px;
+    color: #697184;
+    display: inline-block;
+    margin-right: 10px;
+    line-height: 32px;
+    font-size: 14px;
+    margin-top: 5px;
+
+    &:first-child {
+      background: #fff;
+      box-shadow: 0 1px 4px #edebf2;
+    }
+
+    &:last-child {
+      color: #fff;
+      background: #995eff;
+      box-shadow: 0 1px 4px #ffb8f1;
+    }
+  }
+`;
+
+class ChangePassword extends React.Component {
+  state = {
+    active: false
+  };
+  toggleActive = e => {
+    this.setState(state => ({ active: !state.active }));
+  };
+  handleSubmit = e => {
+    e.preventDefault();
+
+  }
+  render() {
+    return (
+      <React.Fragment>
+      {
+        this.state.active ? (
+          <ChangePasswordForm onSubmit={this.handleSubmit}>
+            <label>Current password</label>
+            <input type="password" />
+            <label>New password</label>
+            <input type="password" />
+            <label>Confirm password</label>
+            <input type="password" />
+            <div>
+              <button onClick={this.toggleActive} type="button">Cancel</button>
+              <button type="submit">Update</button>
+            </div>
+            
+          </ChangePasswordForm>
+        ) : (
+          <ChangePasswordBtn 
+            onClick={this.toggleActive}
+            type="button"
+          >
+            Change password
+          </ChangePasswordBtn>
+        )      
+      }
+      </React.Fragment>
+    );
+  }
+}
+
 class AccountView extends React.Component {
   handleChangeName = e => {
     e.preventDefault();
@@ -205,7 +294,7 @@ class AccountView extends React.Component {
               type="email" defaultValue={this.props.user.email} 
             />
             <Label>Password</Label>
-            <ChangePasswordBtn type="button">Change password</ChangePasswordBtn>
+            <ChangePassword />
             <Separator />
             <H2>Plans & Billings</H2>
             <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
