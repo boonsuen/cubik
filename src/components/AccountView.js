@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withLastLocation } from 'react-router-last-location';
 
+import { EmailAuthProviderCredential } from '../firebase/auth';
 import { InitialDataContext } from './CubikApp';
 
 import img_leftArrow from '../assets/img/icons/accountView/left-arrow.svg';
@@ -203,14 +204,46 @@ const ChangePasswordForm = styled.form`
 
 class ChangePassword extends React.Component {
   state = {
-    active: false
+    active: false,
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   };
   toggleActive = e => {
     this.setState(state => ({ active: !state.active }));
   };
+  handleCurrPwChange = e => {
+    this.setState({ currentPassword: e.target.value });
+  };
+  handleNewPwChange = e => {
+    this.setState({ newPassword: e.target.value});
+  }
+  handleConPwChange = e => {
+    this.setState({ confirmPassword: e.target.value});
+  }
   handleSubmit = e => {
     e.preventDefault();
-
+    const { 
+      currentPassword,
+      newPassword, 
+      confirmPassword 
+    } = this.state;
+    const { user } = this.props;
+    if (newPassword === confirmPassword) {
+      const credential = EmailAuthProviderCredential(user.email, currentPassword);
+      user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+        console.log('user reauthenticated');
+        user.updatePassword(newPassword).then(() => {
+          console.log('password updated');
+        }).catch(error => {
+          console.log(error);
+        });
+      }).catch(error => {
+        console.log(error);
+      });
+    } else {
+      console.log('show error');
+    };
   }
   render() {
     return (
@@ -219,11 +252,11 @@ class ChangePassword extends React.Component {
         this.state.active ? (
           <ChangePasswordForm onSubmit={this.handleSubmit}>
             <label>Current password</label>
-            <input type="password" />
+            <input type="password" onChange={this.handleCurrPwChange} />
             <label>New password</label>
-            <input type="password" />
+            <input type="password" onChange={this.handleNewPwChange} />
             <label>Confirm password</label>
-            <input type="password" />
+            <input type="password" onChange={this.handleConPwChange} />
             <div>
               <button onClick={this.toggleActive} type="button">Cancel</button>
               <button type="submit">Update</button>
@@ -294,7 +327,7 @@ class AccountView extends React.Component {
               type="email" defaultValue={this.props.user.email} 
             />
             <Label>Password</Label>
-            <ChangePassword />
+            <ChangePassword user={this.props.user} />
             <Separator />
             <H2>Plans & Billings</H2>
             <Description>There is no paid plan yet, feel free to use it while in beta.</Description>
