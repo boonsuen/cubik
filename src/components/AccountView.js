@@ -59,7 +59,7 @@ const Header = styled.header`
 const WhiteBox = styled.div`
   box-sizing: border-box;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding: 30px 45px;
   background: #fff;
   border-radius: 10px;
@@ -202,66 +202,88 @@ const ChangePasswordForm = styled.form`
   }
 `;
 
+const UpdatePwSuccessIndicator = styled.div`
+  background: #eefff5;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+  color: #44d97b;
+  margin-top: 16px;
+`;
+
 class ChangePassword extends React.Component {
   state = {
     active: false,
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    error: {
+      shown: false
+    },
+    showIndicator: false
   };
   toggleActive = e => {
     this.setState(state => ({ active: !state.active }));
   };
-  handleCurrPwChange = e => {
-    this.setState({ currentPassword: e.target.value });
+  triggerError = message => {
+    this.setState({
+      error: {
+        shown: true,
+        message
+      }
+    });
   };
-  handleNewPwChange = e => {
-    this.setState({ newPassword: e.target.value});
-  }
-  handleConPwChange = e => {
-    this.setState({ confirmPassword: e.target.value});
-  }
   handleSubmit = e => {
     e.preventDefault();
     const { 
       currentPassword,
       newPassword, 
       confirmPassword 
-    } = this.state;
-    const { user } = this.props;
-    if (newPassword === confirmPassword) {
-      const credential = EmailAuthProviderCredential(user.email, currentPassword);
-      user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+    } = this;
+    const { user } = this.props;    
+    this.setState({ showIndicator: false });
+    if (newPassword.value === confirmPassword.value) {
+      const credential = EmailAuthProviderCredential(user.email, currentPassword.value);
+      user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
         console.log('user reauthenticated');
-        user.updatePassword(newPassword).then(() => {
-          console.log('password updated');
+        user.updatePassword(newPassword.value).then(() => {
+          this.setState({
+            showIndicator: true
+          });
         }).catch(error => {
+          this.triggerError(error.message);
           console.log(error);
         });
       }).catch(error => {
         console.log(error);
+        if (error.code === 'auth/wrong-password') {
+          this.triggerError('Current password is wrong');
+        }
       });
     } else {
-      console.log('show error');
+      this.triggerError("Password don't match");
     };
   }
   render() {
+    const { active, error } = this.state;
     return (
       <React.Fragment>
       {
-        this.state.active ? (
+        active ? (
           <ChangePasswordForm onSubmit={this.handleSubmit}>
             <label>Current password</label>
-            <input type="password" onChange={this.handleCurrPwChange} />
+            <input type="password" ref={el => this.currentPassword = el} required />
             <label>New password</label>
-            <input type="password" onChange={this.handleNewPwChange} />
+            <input type="password" ref={el => this.newPassword = el} required />
             <label>Confirm password</label>
-            <input type="password" onChange={this.handleConPwChange} />
+            <input type="password" ref={el => this.confirmPassword = el} required />
             <div>
               <button onClick={this.toggleActive} type="button">Cancel</button>
               <button type="submit">Update</button>
             </div>
-            
+            {
+              error.shown && !this.state.showIndicator && <div style={{marginTop: '10px'}}>{error.message}</div>
+            }
+            {
+              this.state.showIndicator && <UpdatePwSuccessIndicator>Password changed successfully</UpdatePwSuccessIndicator>
+            }
           </ChangePasswordForm>
         ) : (
           <ChangePasswordBtn 
@@ -271,7 +293,7 @@ class ChangePassword extends React.Component {
             Change password
           </ChangePasswordBtn>
         )      
-      }
+      }      
       </React.Fragment>
     );
   }

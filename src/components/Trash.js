@@ -8,6 +8,7 @@ class Trash extends React.Component {
     return (
       <React.Fragment>
         <h1>Deleted links</h1>
+        <div>This functionality is not ready yet.</div>
         <GroupsContainer>
           {this.props.allLinks.groups.map(group => (
             <Group 
