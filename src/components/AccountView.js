@@ -215,7 +215,8 @@ class ChangePassword extends React.Component {
   state = {
     active: false,
     error: {
-      shown: false
+      shown: false,
+      message: ''
     },
     showIndicator: false
   };
@@ -245,8 +246,15 @@ class ChangePassword extends React.Component {
         console.log('user reauthenticated');
         user.updatePassword(newPassword.value).then(() => {
           this.setState({
-            showIndicator: true
+            showIndicator: true,
+            error: {
+              shown: false,
+              message: ''
+            }
           });
+          this.currentPassword.value = '';
+          this.newPassword.value = '';
+          this.confirmPassword.value = '';
         }).catch(error => {
           this.triggerError(error.message);
           console.log(error);
