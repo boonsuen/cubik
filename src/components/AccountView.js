@@ -97,9 +97,11 @@ const InputText = styled.input`
   color: #657084;
   font-size: 16px;
   line-height: 42px;
+  transition: border-color 0.3s;
 
   &:focus {
     outline: none;
+    border-color: #8492ff;
   }
 
   &::placeholder {
@@ -177,6 +179,11 @@ const ChangePasswordForm = styled.form`
     padding: 0 10px;
     line-height: 32px;
     margin-bottom: 11px;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #ab7aff;
+    }
   }
 
   button {
