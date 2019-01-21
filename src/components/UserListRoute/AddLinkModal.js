@@ -253,7 +253,7 @@ class AddLinkModal extends React.Component {
           <InputLabel htmlFor="link-title">Title - </InputLabel>
           <FetchTitleBtn 
             onClick={this.fetchTitle}
-            type="button">Get title from link</FetchTitleBtn>
+            type="button">Get it from url</FetchTitleBtn>
           <Input 
             id="link-title" placeholder="Enter the title (optional)"
             ref={(el) => { this.inputTitle = el }} autoComplete="off"
