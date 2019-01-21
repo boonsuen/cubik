@@ -14,7 +14,7 @@ const StyledContent = styled.div`
   background: #f7f8fe;
   flex: 1;
   box-sizing: border-box;
-  padding: 50px;
+  padding: 24px 50px 50px 50px;
   overflow-y: scroll;
 
   h1 {
