@@ -6,11 +6,21 @@ import Group from '../Group';
 import EmptyState from './EmptyState';
 import AddLinkModal from './AddLinkModal';
 import { RenameGroupModal } from '../Modals';
+import EditList from './EditList';
 
 import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
+import img_editList from '../../assets/img/icons/list/edit-list.svg';
 import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
 import img_rename from '../../assets/img/icons/modal/rename.svg';
+
+const EditListBtn = styled.button`
+  width: 28px;
+  height: 26px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 4px rgba(234, 234, 234, 0.5);
+`;
 
 const Header = styled.div`
   display: flex;
@@ -103,7 +113,8 @@ export default class UserListRoute extends React.Component {
     isEmptyState:
       this.props.groupsData.length === 0 &&
       this.props.ungroupedLinks.length === 0,
-    showRenameGroupModal: false
+    showRenameGroupModal: false,
+    inEditListMode: false
   };
   toggleAddLinkModal = () => {
     this.setState({ 
@@ -258,97 +269,110 @@ export default class UserListRoute extends React.Component {
       );
     }
   };  
+  toggleEditListMode = e => {
+    this.setState(state => ({
+      inEditListMode: !state.inEditListMode
+    }));
+  };
   render() {
     //{this.props.match.url.replace(/\/app\//, '')}
-    return (
-      <React.Fragment>
-        <Header>
-          <h1>{this.props.list.title}</h1>        
-          {!this.state.isEmptyState && (
-            <AddGroup handleCreateGroup={this.handleCreateGroup} />
-          )}
-        </Header>
-        {!this.state.isEmptyState ? (
-          <GroupsContainer>
-            {this.state.groupsData.map(group => (
+    return (!this.state.inEditListMode ? 
+      (
+        <React.Fragment>
+          <EditListBtn onClick={this.toggleEditListMode}><img src={img_editList} /></EditListBtn>
+          <Header>
+            <h1>{this.props.list.title}</h1>        
+            {!this.state.isEmptyState && (
+              <AddGroup handleCreateGroup={this.handleCreateGroup} />
+            )}
+          </Header>
+          {!this.state.isEmptyState ? (
+            <GroupsContainer>
+              {this.state.groupsData.map(group => (
+                <Group
+                  key={`Group-${group.id}`}
+                  listId={this.props.list.id}
+                  id={group.id}
+                  name={group.name}
+                  links={group.links}
+                  toggleAddLinkModal={this.toggleAddLinkModal}
+                  toggleRenameGroupModal={this.toggleRenameGroupModal}
+                  setSelectedGroup={this.setSelectedGroup}
+                  handleLinkDelete={this.handleLinkDelete}
+                />
+              ))}
               <Group
-                key={`Group-${group.id}`}
+                key="Group-ungrouped"
                 listId={this.props.list.id}
-                id={group.id}
-                name={group.name}
-                links={group.links}
+                id={null}
+                name="Ungrouped"
+                links={this.state.ungroupedLinks}
                 toggleAddLinkModal={this.toggleAddLinkModal}
-                toggleRenameGroupModal={this.toggleRenameGroupModal}
                 setSelectedGroup={this.setSelectedGroup}
                 handleLinkDelete={this.handleLinkDelete}
               />
-            ))}
-            <Group
-              key="Group-ungrouped"
+            </GroupsContainer>
+          ) : (
+            <EmptyState 
               listId={this.props.list.id}
-              id={null}
-              name="Ungrouped"
-              links={this.state.ungroupedLinks}
               toggleAddLinkModal={this.toggleAddLinkModal}
               setSelectedGroup={this.setSelectedGroup}
-              handleLinkDelete={this.handleLinkDelete}
+              handleCreateGroup={this.handleCreateGroup}
             />
-          </GroupsContainer>
-        ) : (
-          <EmptyState 
-            listId={this.props.list.id}
+          )}
+          <AddLinkModal
+            showAddLinkModal={this.state.showAddLinkModal}
             toggleAddLinkModal={this.toggleAddLinkModal}
-            setSelectedGroup={this.setSelectedGroup}
-            handleCreateGroup={this.handleCreateGroup}
+            groupId={this.state.selectedGroup.id}
+            groupName={this.state.selectedGroup.name}
+            handleAddLink={this.handleAddLink}
           />
-        )}
-        <AddLinkModal
-          showAddLinkModal={this.state.showAddLinkModal}
-          toggleAddLinkModal={this.toggleAddLinkModal}
-          groupId={this.state.selectedGroup.id}
-          groupName={this.state.selectedGroup.name}
-          handleAddLink={this.handleAddLink}
+          <RenameGroupModal
+            isOpen={this.state.showRenameGroupModal}
+            onRequestClose={this.toggleRenameGroupModal}
+            contentLabel="Rename Group Modal"
+          >          
+            <GroupModalHeader>
+              <Circle>
+                <img src={img_rename} />
+              </Circle>
+              <h2>Change group name</h2>
+              <button onClick={this.toggleRenameGroupModal} type="button">
+                <img src={img_hideModal} />
+              </button>
+            </GroupModalHeader>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const { selectedGroup: {
+                id: groupId
+              } } = this.state;
+              this.handleRenameGroup(
+                groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
+              );
+            }}>
+              <label htmlFor="GroupNameTextarea">Name</label>
+              <StyledTextarea 
+                id="GroupNameTextarea"
+                inputRef={tag => this.groupNameTextarea = tag}
+                maxRows={3}
+                defaultValue={this.state.selectedGroup.name}
+                spellCheck={false}
+                onKeyDown={this.onEnterPress}
+                autoFocus required
+              />
+              <GroupModalBtnCtn>
+                <button onClick={this.toggleRenameGroupModal} type="button">Cancel</button>
+                <button type="submit">Submit</button> 
+              </GroupModalBtnCtn>
+            </form>
+          </RenameGroupModal>
+        </React.Fragment>
+      ) : (
+        <EditList 
+          toggleEditListMode={this.toggleEditListMode} 
+          listTitle={this.props.list.title}
         />
-        <RenameGroupModal
-          isOpen={this.state.showRenameGroupModal}
-          onRequestClose={this.toggleRenameGroupModal}
-          contentLabel="Rename Group Modal"
-        >          
-          <GroupModalHeader>
-            <Circle>
-              <img src={img_rename} />
-            </Circle>
-            <h2>Change group name</h2>
-            <button onClick={this.toggleRenameGroupModal} type="button">
-              <img src={img_hideModal} />
-            </button>
-          </GroupModalHeader>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const { selectedGroup: {
-              id: groupId
-            } } = this.state;
-            this.handleRenameGroup(
-              groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
-            );
-          }}>
-            <label htmlFor="GroupNameTextarea">Name</label>
-            <StyledTextarea 
-              id="GroupNameTextarea"
-              inputRef={tag => this.groupNameTextarea = tag}
-              maxRows={3}
-              defaultValue={this.state.selectedGroup.name}
-              spellCheck={false}
-              onKeyDown={this.onEnterPress}
-              autoFocus required
-            />
-            <GroupModalBtnCtn>
-              <button onClick={this.toggleRenameGroupModal} type="button">Cancel</button>
-              <button type="submit">Submit</button> 
-            </GroupModalBtnCtn>
-          </form>
-        </RenameGroupModal>
-      </React.Fragment>
+      )
     );
   }
 }
