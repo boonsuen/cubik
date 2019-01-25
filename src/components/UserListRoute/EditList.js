@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import db from '../../firebase/db';
+import { InitialDataContext } from '../CubikApp';
 import img_goBack from '../../assets/img/icons/list/goback.svg';
 
 const Container = styled.div`
@@ -51,7 +53,7 @@ const GoBack = styled.button`
   }
 `;
 
-const RenameList = styled.div`
+const RenameList = styled.form`
   margin-top: 65px;
 `;
 
@@ -80,18 +82,39 @@ const DeleteListBtn = styled.button`
   background: #ffdada;
 `;
 
-export default class EditList extends React.Component {
+class EditList extends React.Component {
+  state = {
+    listTitle: this.props.list.title
+  };
+  handleListTitleChange = e => {
+    this.setState({ listTitle: e.target.value });
+  };
   render() {
-    const { toggleEditListMode, listTitle } = this.props;
+    const { toggleEditListMode } = this.props;
     return (
       <Container>
         <GoBack onClick={toggleEditListMode} type="button">
           <img src={img_goBack} />
         </GoBack>
-        <RenameList>
+        <RenameList onSubmit={e => {
+          e.preventDefault();
+          const newTitle = this.state.listTitle.trim();
+          if (newTitle === this.props.listTitle) {
+            return;
+          }
+          this.props.renameList(this.props.list.id, newTitle).then(() => {
+            this.props.toggleEditListMode();
+          });
+        }}>
           <h2>Rename list</h2>
-          <input type="text" defaultValue={listTitle} spellCheck={false} />
-          <SaveBtn type="button">Save</SaveBtn>
+          <input 
+            type="text" 
+            defaultValue={this.state.listTitle} 
+            onChange={this.handleListTitleChange} 
+            spellCheck={false} 
+            autoFocus
+          />
+          <SaveBtn type="submit">Save</SaveBtn>
         </RenameList>
         <Separator />
         <p>
@@ -103,3 +126,11 @@ export default class EditList extends React.Component {
     );
   }
 }
+
+export default props => (
+  <InitialDataContext.Consumer>
+    {data => (
+      <EditList {...props} renameList={data.renameList} />
+    )}
+  </InitialDataContext.Consumer>
+);

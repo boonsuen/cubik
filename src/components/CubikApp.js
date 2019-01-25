@@ -222,6 +222,22 @@ class CubikApp extends React.Component {
       });
     });
   }  
+  renameList = async (listId, title) => {
+    const userId = this.state.user.id;
+    const listRef = db.collection(`users/${userId}/lists`).doc(listId);
+    return listRef.update({ title }).then(() => {
+      this.setState(state => {
+        return state.lists.map(list => {
+          if (list.id === listId) {
+            list.title = title
+          }
+          return list;
+        });
+      });
+    }).catch(err => {
+      console.error("Error updating list document: ", err);
+    });
+  };
   render() {
     return (
       <React.Fragment>
@@ -243,7 +259,8 @@ class CubikApp extends React.Component {
                   lists: this.state.lists, 
                   links: this.state.links,
                   allLinks: this.state.allLinks,
-                  userObj: this.state.userObj
+                  userObj: this.state.userObj,
+                  renameList: this.renameList
                 }}>
                   <Route path="/app" render={({location, history}) => {
                     if (location.pathname === '/app/account') {
