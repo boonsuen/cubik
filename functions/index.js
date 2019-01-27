@@ -28,26 +28,23 @@ exports.getTitleOfUrl = functions.https.onRequest((req, res) => {
   });
 });
 
-exports.recursiveDelete = functions
+exports.recursiveDeleteList = functions
   .runWith({
     timeoutSeconds: 540,
     memory: '2GB'
   })
   .https.onCall((data, context) => {
       if (!(context.auth && context.auth.token)) {
-        throw new functions.https.HttpsError(
-          'permission-denied'
-        );
+        throw new functions.https.HttpsError('permission-denied');
       }
 
-      const path = data.path;
+      const { listId } = data;
+      const path = `users/${context.auth.uid}/lists/${listId}`;
+      
       console.log(
         `User ${context.auth.uid} has requested to delete path ${path}`
       );
 
-      // Run a recursive delete on the given document or collection path.
-      // The 'token' must be set in the functions config, and can be generated
-      // at the command line by running 'firebase login:ci'.
       return firebase_tools.firestore
         .delete(path, {
           project: process.env.GCLOUD_PROJECT,

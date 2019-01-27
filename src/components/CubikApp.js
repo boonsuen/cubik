@@ -240,9 +240,7 @@ class CubikApp extends React.Component {
     });
   };
   deleteList = async listId => {
-    const userId = this.state.user.id;
-    const listPath = `users/${userId}/lists/${listId}`;    
-    return functions.recursiveDelete({ path: listPath }).then(result => {
+    return functions.recursiveDeleteList({ listId }).then(result => {
       console.log('result', result);
       this.setState(state => ({
         lists: state.lists.filter(list => list.id !== listId)
