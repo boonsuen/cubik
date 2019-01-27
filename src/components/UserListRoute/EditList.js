@@ -1,7 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-static';
 import styled from 'styled-components';
 
-import db from '../../firebase/db';
 import { InitialDataContext } from '../CubikApp';
 import img_goBack from '../../assets/img/icons/list/goback.svg';
 
@@ -89,6 +89,11 @@ class EditList extends React.Component {
   handleListTitleChange = e => {
     this.setState({ listTitle: e.target.value });
   };
+  handleDeleteClick = e => {
+    this.props.deleteList(this.props.list.id).then(() => {
+      this.props.history.push('/app');
+    });
+  };
   render() {
     const { toggleEditListMode } = this.props;
     return (
@@ -121,7 +126,12 @@ class EditList extends React.Component {
           All information including the links and the groups will be permanently removed. 
           This action cannot be undo.
         </p>
-        <DeleteListBtn type="button">Delete list</DeleteListBtn>
+        <DeleteListBtn 
+          onClick={this.handleDeleteClick} 
+          type="button"
+        >
+          Delete list
+        </DeleteListBtn>
       </Container>
     );
   }
@@ -130,7 +140,11 @@ class EditList extends React.Component {
 export default props => (
   <InitialDataContext.Consumer>
     {data => (
-      <EditList {...props} renameList={data.renameList} />
+      <EditList 
+        {...props} 
+        renameList={data.renameList} 
+        deleteList={data.deleteList}
+      />
     )}
   </InitialDataContext.Consumer>
 );

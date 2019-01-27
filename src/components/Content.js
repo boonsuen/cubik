@@ -134,7 +134,7 @@ class Content extends React.Component {
           <Route 
             key={`listRoute-${list.id}`} 
             path={`/app/${list.id}`} 
-            render={({match, location}) => {
+            render={({ location, history }) => {
               return (
                 <ContentLoader 
                   location={location}
@@ -147,7 +147,7 @@ class Content extends React.Component {
                       groupsData={groupsData}
                       ungroupedLinks={ungroupedLinks}
                       list={list}
-                      match={match}
+                      history={history}
                       toggleModal={this.toggleModal}
                     />
                   )}

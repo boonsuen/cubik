@@ -371,6 +371,7 @@ export default class UserListRoute extends React.Component {
         <EditList 
           toggleEditListMode={this.toggleEditListMode} 
           list={this.props.list}
+          history={this.props.history}
         />
       )
     );

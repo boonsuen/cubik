@@ -7,6 +7,7 @@ import AccountView from './AccountView';
 
 import auth from '../firebase/auth';
 import db from '../firebase/db';
+import functions from '../firebase/functions';
 import { AuthContext } from '../App';
 
 const LoaderWrapper = styled.div`
@@ -226,16 +227,28 @@ class CubikApp extends React.Component {
     const userId = this.state.user.id;
     const listRef = db.collection(`users/${userId}/lists`).doc(listId);
     return listRef.update({ title }).then(() => {
-      this.setState(state => {
-        return state.lists.map(list => {
+      this.setState(state => ({
+        lists: state.lists.map(list => {
           if (list.id === listId) {
             list.title = title
           }
           return list;
-        });
-      });
+        })
+      }));
     }).catch(err => {
       console.error("Error updating list document: ", err);
+    });
+  };
+  deleteList = async listId => {
+    const userId = this.state.user.id;
+    const listPath = `users/${userId}/lists/${listId}`;    
+    return functions.recursiveDelete({ path: listPath }).then(result => {
+      console.log('result', result);
+      this.setState(state => ({
+        lists: state.lists.filter(list => list.id !== listId)
+      }));
+    }).catch(error => {
+      console.log(error);
     });
   };
   render() {
@@ -260,7 +273,8 @@ class CubikApp extends React.Component {
                   links: this.state.links,
                   allLinks: this.state.allLinks,
                   userObj: this.state.userObj,
-                  renameList: this.renameList
+                  renameList: this.renameList,
+                  deleteList: this.deleteList
                 }}>
                   <Route path="/app" render={({location, history}) => {
                     if (location.pathname === '/app/account') {
