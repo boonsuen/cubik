@@ -104,7 +104,7 @@ class EditList extends React.Component {
         <RenameList onSubmit={e => {
           e.preventDefault();
           const newTitle = this.state.listTitle.trim();
-          if (newTitle === this.props.listTitle) {
+          if (newTitle === this.props.list.title) {
             return;
           }
           this.props.renameList(this.props.list.id, newTitle).then(() => {
