@@ -201,7 +201,7 @@ class CubikApp extends React.Component {
       }]
     }
   }
-  handleAddList = (inputValue) => {
+  handleAddList = inputValue => {
     this.setState(state => ({
       lists: [...state.lists, {title: inputValue, id: 'temporary-id'}]
     }), () => {
@@ -218,7 +218,7 @@ class CubikApp extends React.Component {
           ]
         }));
       })
-      .catch(function(error) {
+      .catch(error => {
         console.error("Error adding document: ", error);
       });
     });
@@ -235,8 +235,8 @@ class CubikApp extends React.Component {
           return list;
         })
       }));
-    }).catch(err => {
-      console.error("Error updating list document: ", err);
+    }).catch(error => {
+      console.error("Error updating list document: ", error);
     });
   };
   deleteList = async listId => {

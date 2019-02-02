@@ -109,9 +109,13 @@ export default class SidebarBottom extends React.Component {
           </ModalDescription>
           <form onSubmit={(e) => {
             e.preventDefault();
-            if (!this.input.value) return;
+            if (!this.input.value.trim()) {
+              this.input.value = '';
+              this.input.focus();
+              return;
+            };
             this.toggleModal();
-            this.props.handleAddList(this.input.value);
+            this.props.handleAddList(this.input.value.trim());
           }}>
             <input 
               placeholder="Name your list"
