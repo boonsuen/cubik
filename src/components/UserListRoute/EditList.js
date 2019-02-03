@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-static';
 import styled from 'styled-components';
 
 import { InitialDataContext } from '../CubikApp';
@@ -104,7 +103,8 @@ class EditList extends React.Component {
         <RenameList onSubmit={e => {
           e.preventDefault();
           const newTitle = this.state.listTitle.trim();
-          if (newTitle === this.props.list.title) {
+          if (newTitle === this.props.list.title || !newTitle) {
+            this.props.toggleEditListMode();
             return;
           }
           this.props.renameList(this.props.list.id, newTitle).then(() => {
