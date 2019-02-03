@@ -34,27 +34,27 @@ exports.recursiveDeleteList = functions
     memory: '2GB'
   })
   .https.onCall((data, context) => {
-      if (!(context.auth && context.auth.token)) {
-        throw new functions.https.HttpsError('permission-denied');
-      }
+    if (!(context.auth && context.auth.token)) {
+      throw new functions.https.HttpsError('permission-denied');
+    }
 
-      const { listId } = data;
-      const path = `users/${context.auth.uid}/lists/${listId}`;
-      
-      console.log(
-        `User ${context.auth.uid} has requested to delete path ${path}`
-      );
+    const { listId } = data;
+    const path = `users/${context.auth.uid}/lists/${listId}`;
+    
+    console.log(
+      `User ${context.auth.uid} has requested to delete path ${path}`
+    );
 
-      return firebase_tools.firestore
-        .delete(path, {
-          project: process.env.GCLOUD_PROJECT,
-          recursive: true,
-          yes: true,
-          token: functions.config().fb.token
-        })
-        .then(() => {
-          return {
-            path: path 
-          };
-        });
+    return firebase_tools.firestore
+      .delete(path, {
+        project: process.env.GCLOUD_PROJECT,
+        recursive: true,
+        yes: true,
+        token: functions.config().fb.token
+      })
+      .then(() => {
+        return {
+          path: path 
+        };
+      });
   });
