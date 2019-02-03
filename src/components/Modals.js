@@ -17,9 +17,8 @@ const ReactModalAdapter = ({ className, ...props }) => {
     />
   )
 };
- 
-const AddListModal = styled(ReactModalAdapter)`
 
+const BaseModal = styled(ReactModalAdapter)`
   &__overlay {
     position: fixed; 
     top: 0px; 
@@ -42,7 +41,9 @@ const AddListModal = styled(ReactModalAdapter)`
   .ReactModal__Content--before-close {
     opacity: 0;
   }
-
+`;
+ 
+const AddListModal = styled(BaseModal)`
   &__content {
     position: absolute; 
     top: 50%; 
@@ -96,18 +97,7 @@ const AddListModal = styled(ReactModalAdapter)`
   }
 `;
 
-const StyledAddLinkModal = styled(ReactModalAdapter)`
-
-  &__overlay {
-    position: fixed; 
-    top: 0px; 
-    left: 0px; 
-    right: 0px; 
-    bottom: 0px; 
-    background-color: rgba(3, 53, 153, 0.1);
-    z-index: 1;
-  }
-
+const StyledAddLinkModal = styled(BaseModal)`
   &__content {
     position: absolute; 
     top: 50%; 
@@ -131,33 +121,9 @@ const StyledAddLinkModal = styled(ReactModalAdapter)`
     font-size: 22px;
     font-weight: 600;
   }
-
-  .ReactModal__Content {
-    opacity: 0;
-  }
-
-  .ReactModal__Content--after-open {
-    opacity: 1;
-    transition: opacity 200ms;
-  }
-
-  .ReactModal__Content--before-close {
-    opacity: 0;
-  }
 `;
 
-const RenameGroupModal = styled(ReactModalAdapter)`
-
-  &__overlay {
-    position: fixed; 
-    top: 0px; 
-    left: 0px; 
-    right: 0px; 
-    bottom: 0px; 
-    background-color: rgba(3, 53, 153, 0.1);
-    z-index: 1;
-  }
-
+const RenameGroupModal = styled(BaseModal)`
   &__content {
     position: absolute; 
     top: 50%; 
@@ -188,23 +154,44 @@ const RenameGroupModal = styled(ReactModalAdapter)`
     color: #373764;
     font-weight: 500;
   }
+`;
 
-  .ReactModal__Content {
-    opacity: 0;
+const StyledGroupModal = styled(BaseModal)`
+  &__content {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    right: auto; 
+    bottom: auto; 
+    width: 460px;
+    padding: 28px; 
+    background: rgb(255, 255, 255); 
+    overflow: auto; 
+    border-radius: 10px; 
+    outline: none; 
+    margin-right: -50%; 
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
   }
 
-  .ReactModal__Content--after-open {
-    opacity: 1;
-    transition: opacity 200ms;
+  h2 {
+    color: #204459;
+    font-size: 22px;
+    font-weight: 600;
   }
 
-  .ReactModal__Content--before-close {
-    opacity: 0;
+  label {
+    display: block;
+    margin-bottom: 12px;
+    color: #373764;
+    font-weight: 500;
   }
 `;
 
 export { 
   AddListModal, 
   StyledAddLinkModal, 
-  RenameGroupModal 
+  RenameGroupModal,
+  StyledGroupModal
 };
