@@ -124,9 +124,9 @@ class GroupModal extends React.Component {
         toggleModal();
         return;
       }
-      onRenameGroup(groupId, groupNameValue);
+      onRenameGroup(groupNameValue);
     } else if (modalType === 'delete') {
-      console.log('handleDelete');
+      // onDeleteGroup();
     }
   };
   onEnterPress = e => {

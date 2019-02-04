@@ -234,7 +234,8 @@ export default class UserListRoute extends React.Component {
       });
     }
   };
-  handleRenameGroup = (groupId, newGroupName) => {
+  handleRenameGroup = newGroupName => {
+    const groupId = this.state.selectedGroup.id;
     if (newGroupName === this.state.selectedGroup.name) {
       return;
     }
@@ -264,18 +265,7 @@ export default class UserListRoute extends React.Component {
     .catch(err => {
       console.error("Error updating document: ", err);
     });
-  };
-  // onEnterPress = e => {
-  //   if(e.keyCode == 13) {
-  //     e.preventDefault();
-  //     const { selectedGroup: {
-  //       id: groupId
-  //     } } = this.state;
-  //     this.handleRenameGroup(
-  //       groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
-  //     );
-  //   }
-  // };  
+  }; 
   toggleEditListMode = e => {
     this.setState(state => ({
       inEditListMode: !state.inEditListMode
@@ -343,7 +333,6 @@ export default class UserListRoute extends React.Component {
             contentLabel="Rename group"
             onRenameGroup={this.handleRenameGroup}
             groupName={this.state.selectedGroup.name}
-            groupId={this.state.selectedGroup.id}
           />
           <GroupModal
             modalType="delete"
