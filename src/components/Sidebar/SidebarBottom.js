@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { AddListModal } from '../Modals';
 
-import { GroupModalHeader } from '../UserListRoute';
 import AddList_Icon from '../../assets/img/icons/AddList.svg';
 import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
 import img_list from '../../assets/img/icons/modal/list.svg';
@@ -29,8 +28,21 @@ const AddListBtn = styled.button`
   }
 `;
 
-const ModalHeader = styled(GroupModalHeader)`
+const ModalHeader = styled.div`
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+
+  button {
+    align-self: flex-start;
+    width: 14px;
+    height: 14px;
+    margin-left: auto;
+  }
 `;
 
 const Circle = styled.div`

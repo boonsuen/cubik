@@ -1,19 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Textarea from 'react-textarea-autosize';
 import AddGroup from './AddGroup';
 import Group from '../Group';
 import EmptyState from './EmptyState';
 import GroupModal from './GroupModal';
 import AddLinkModal from './AddLinkModal';
-import { RenameGroupModal } from '../Modals';
 import EditList from './EditList';
 
 import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
 import img_editList from '../../assets/img/icons/list/edit-list.svg';
-import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
-import img_rename from '../../assets/img/icons/modal/group/rename.svg';
 
 const EditListBtn = styled.button`
   width: 28px;
@@ -28,78 +24,6 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 91px;
-`;
-
-export const GroupModalHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-
-  h2 {
-    margin: 0;
-  }
-
-  button {
-    align-self: flex-start;
-    width: 14px;
-    height: 14px;
-    margin-left: auto;
-  }
-`;
-
-const Circle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 42px;
-  height: 42px;
-  margin-right: 13px;
-  border-radius: 50%;
-  background-color: #f4edff;
-  box-shadow: 0 2px 4px rgba(223, 239, 255, 0.5);
-`;
-
-const StyledTextarea = styled(Textarea)`
-  width: 100%;
-  height: 32px;
-  padding: 0 0 7px 0;
-  color: #221862;
-  font-family: "Avenir Next";
-  font-size: 16px;
-  font-weight: 400;
-  outline: none;
-  resize: none;
-  border: none;
-  border-bottom: 2px solid #dfe7ec;
-`;
-
-const GroupModalBtnCtn = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 25px;
-
-  button {
-    width: 103px;
-    height: 42px;
-    color: #4a525b;
-    border-radius: 5px;
-    border: 1px solid #aeb2b5;
-    line-height: 44px;
-    transition: box-shadow 0.2s;
-
-    &:hover {
-      box-shadow: 0 2px 4px #dfefff;
-    }
-  }
-
-  button:nth-of-type(2) {
-    width: 115px;
-    background: #655efe;
-    color: #fff;
-    border: none;
-    margin-left: 19px;
-    box-shadow: 0 2px 4px #dfefff;
-  }
 `;
 
 export default class UserListRoute extends React.Component {
@@ -266,6 +190,33 @@ export default class UserListRoute extends React.Component {
       console.error("Error updating document: ", err);
     });
   }; 
+  handleDeleteGroup = () => {
+    const groupId = this.state.selectedGroup.id;
+    const { userId, list } = this.props;
+    const groupRef = db.collection(`users/${userId}/lists/${list.id}/groups`).doc(groupId);
+    groupRef.delete().then(() => {
+      console.log("Group successfully deleted!");
+    }).catch(err => {
+      console.error("Error removing group doc: ", err);
+    });
+    
+    const linksRef = db.collection(`users/${userId}/lists/${list.id}/links`);
+    linksRef.where('groupId', '==', groupId).get()
+      .then(querySnapshot => {
+        // Once we get the results, begin a batch
+        const batch = db.batch();
+
+        querySnapshot.forEach(doc => {
+          // For each doc, add a delete operation to the batch
+          batch.delete(doc.ref);
+        });
+
+        // Commit the batch
+        return batch.commit();
+      }).then(() => {
+        console.log('Links successfully deleted!');
+      }); 
+  };
   toggleEditListMode = e => {
     this.setState(state => ({
       inEditListMode: !state.inEditListMode
@@ -339,6 +290,7 @@ export default class UserListRoute extends React.Component {
             isOpen={this.state.showDeleteGroupModal}
             toggleModal={this.toggleDeleteGroupModal}
             contentLabel="Delete group"
+            onDeleteGroup={this.handleDeleteGroup}
             groupName={this.state.selectedGroup.name}
           />
         </React.Fragment>
