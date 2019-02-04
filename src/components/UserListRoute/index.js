@@ -4,6 +4,7 @@ import Textarea from 'react-textarea-autosize';
 import AddGroup from './AddGroup';
 import Group from '../Group';
 import EmptyState from './EmptyState';
+import GroupModal from './GroupModal';
 import AddLinkModal from './AddLinkModal';
 import { RenameGroupModal } from '../Modals';
 import EditList from './EditList';
@@ -12,7 +13,7 @@ import db from '../../firebase/db';
 import { GroupsContainer } from '../app.css';
 import img_editList from '../../assets/img/icons/list/edit-list.svg';
 import img_hideModal from '../../assets/img/icons/modal/hidemodal.svg';
-import img_rename from '../../assets/img/icons/modal/rename.svg';
+import img_rename from '../../assets/img/icons/modal/group/rename.svg';
 
 const EditListBtn = styled.button`
   width: 28px;
@@ -102,8 +103,7 @@ const GroupModalBtnCtn = styled.div`
 `;
 
 export default class UserListRoute extends React.Component {
-  state = {
-    showAddLinkModal: false,
+  state = {    
     selectedGroup: {
       id: null,
       name: null
@@ -113,7 +113,9 @@ export default class UserListRoute extends React.Component {
     isEmptyState:
       this.props.groupsData.length === 0 &&
       this.props.ungroupedLinks.length === 0,
+    showAddLinkModal: false,
     showRenameGroupModal: false,
+    showDeleteGroupModal: false,
     inEditListMode: false
   };
   toggleAddLinkModal = () => {
@@ -122,9 +124,14 @@ export default class UserListRoute extends React.Component {
     });
   };
   toggleRenameGroupModal = () => {
-    this.setState({ 
-      showRenameGroupModal: !this.state.showRenameGroupModal 
-    });
+    this.setState(state => ({ 
+      showRenameGroupModal: !state.showRenameGroupModal 
+    }));
+  };
+  toggleDeleteGroupModal = () => {
+    this.setState(state => ({ 
+      showDeleteGroupModal: !state.showDeleteGroupModal 
+    }));
   };
   setSelectedGroup = group => {
     this.setState({ selectedGroup: group });
@@ -258,17 +265,17 @@ export default class UserListRoute extends React.Component {
       console.error("Error updating document: ", err);
     });
   };
-  onEnterPress = e => {
-    if(e.keyCode == 13) {
-      e.preventDefault();
-      const { selectedGroup: {
-        id: groupId
-      } } = this.state;
-      this.handleRenameGroup(
-        groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
-      );
-    }
-  };  
+  // onEnterPress = e => {
+  //   if(e.keyCode == 13) {
+  //     e.preventDefault();
+  //     const { selectedGroup: {
+  //       id: groupId
+  //     } } = this.state;
+  //     this.handleRenameGroup(
+  //       groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
+  //     );
+  //   }
+  // };  
   toggleEditListMode = e => {
     this.setState(state => ({
       inEditListMode: !state.inEditListMode
@@ -295,8 +302,9 @@ export default class UserListRoute extends React.Component {
                   id={group.id}
                   name={group.name}
                   links={group.links}
-                  toggleAddLinkModal={this.toggleAddLinkModal}
+                  toggleAddLinkModal={this.toggleAddLinkModal}                  
                   toggleRenameGroupModal={this.toggleRenameGroupModal}
+                  toggleDeleteGroupModal={this.toggleDeleteGroupModal}
                   setSelectedGroup={this.setSelectedGroup}
                   handleLinkDelete={this.handleLinkDelete}
                 />
@@ -308,6 +316,7 @@ export default class UserListRoute extends React.Component {
                 name="Ungrouped"
                 links={this.state.ungroupedLinks}
                 toggleAddLinkModal={this.toggleAddLinkModal}
+                toggleDeleteGroupModal={this.toggleDeleteGroupModal}
                 setSelectedGroup={this.setSelectedGroup}
                 handleLinkDelete={this.handleLinkDelete}
               />
@@ -327,45 +336,22 @@ export default class UserListRoute extends React.Component {
             groupName={this.state.selectedGroup.name}
             handleAddLink={this.handleAddLink}
           />
-          <RenameGroupModal
+          <GroupModal 
+            modalType="rename"
             isOpen={this.state.showRenameGroupModal}
-            onRequestClose={this.toggleRenameGroupModal}
-            contentLabel="Rename Group Modal"
-          >          
-            <GroupModalHeader>
-              <Circle>
-                <img src={img_rename} />
-              </Circle>
-              <h2>Change group name</h2>
-              <button onClick={this.toggleRenameGroupModal} type="button">
-                <img src={img_hideModal} />
-              </button>
-            </GroupModalHeader>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const { selectedGroup: {
-                id: groupId
-              } } = this.state;
-              this.handleRenameGroup(
-                groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
-              );
-            }}>
-              <label htmlFor="GroupNameTextarea">Name</label>
-              <StyledTextarea 
-                id="GroupNameTextarea"
-                inputRef={tag => this.groupNameTextarea = tag}
-                maxRows={3}
-                defaultValue={this.state.selectedGroup.name}
-                spellCheck={false}
-                onKeyDown={this.onEnterPress}
-                autoFocus required
-              />
-              <GroupModalBtnCtn>
-                <button onClick={this.toggleRenameGroupModal} type="button">Cancel</button>
-                <button type="submit">Submit</button> 
-              </GroupModalBtnCtn>
-            </form>
-          </RenameGroupModal>
+            toggleModal={this.toggleRenameGroupModal}
+            contentLabel="Rename group"
+            onRenameGroup={this.handleRenameGroup}
+            groupName={this.state.selectedGroup.name}
+            groupId={this.state.selectedGroup.id}
+          />
+          <GroupModal
+            modalType="delete"
+            isOpen={this.state.showDeleteGroupModal}
+            toggleModal={this.toggleDeleteGroupModal}
+            contentLabel="Delete group"
+            groupName={this.state.selectedGroup.name}
+          />
         </React.Fragment>
       ) : (
         <EditList 

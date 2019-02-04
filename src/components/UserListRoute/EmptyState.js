@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledAddLinkModal as CreateGroupModal } from '../Modals';
+import CreateGroupModal from './GroupModal';
 
 import img_emptyState from '../../assets/img/illustration/emptystate.svg';
 
@@ -91,32 +91,12 @@ class EmptyState extends React.Component {
           Create a group
         </CreateGroupBtn>
         <CreateGroupModal
+          modalType="create"
           isOpen={this.state.showCreateGroupModal}
-          onRequestClose={this.toggleCreateGroupModal}
-          contentLabel="Create new group modal"
-        >
-          <h2>Create new group</h2>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            if (!this.inputName.value) return;
-            this.setState(state => ({
-              showCreateGroupModal: !state.showCreateGroupModal
-            }), () => {
-              this.props.handleCreateGroup(this.inputName.value, true);
-            });
-          }}>
-            <ModalInputLabel htmlFor="group-name">Name</ModalInputLabel>
-            <input 
-              id="group-name" placeholder="Enter a name"
-              ref={(el) => { this.inputName = el }} autoComplete="off"
-              autoFocus  
-            />
-            <ModalButtons>
-              <button type="submit">Create</button>
-              <button onClick={this.toggleCreateGroupModal} type="button">Cancel</button>
-            </ModalButtons>
-          </form>
-        </CreateGroupModal>
+          toggleModal={this.toggleCreateGroupModal}
+          contentLabel="Create new group"
+          onCreateGroup={this.props.handleCreateGroup}
+        />
       </Container>
     );
   }

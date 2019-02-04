@@ -230,7 +230,7 @@ export default class Links extends React.Component {
     this.setState({ selectedLinkToEditIndex: index });
   };
   render() {
-    const { listId, groupId, toggleEditMode, inEditMode } = this.props;
+    const { listId, groupId, groupName, toggleEditMode, inEditMode } = this.props;
     const { selectedLinkToEditIndex } = this.state;
     return (
       <LinksContainer>      
@@ -239,7 +239,7 @@ export default class Links extends React.Component {
             this.props.toggleAddLinkModal();
             this.props.setSelectedGroup({
               id: groupId,
-              name: this.props.groupName
+              name: groupName
             });
           }}>
             <img src={AddIcon} 
@@ -254,7 +254,13 @@ export default class Links extends React.Component {
           <EditModeIndicator inEditMode={inEditMode} onClick={toggleEditMode}>
             Edit mode on
           </EditModeIndicator>
-          <RightIcon type="button">
+          <RightIcon type="button" onClick={() => {
+            this.props.toggleDeleteGroupModal();
+            this.props.setSelectedGroup({
+              id: groupId,
+              name: groupName
+            });
+          }}>
             <img src={DeleteIcon} />
           </RightIcon>
         </LinkAction>

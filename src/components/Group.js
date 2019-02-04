@@ -54,6 +54,7 @@ export default class Group extends React.Component {
           groupName={this.props.name}
           links={[...this.props.links].reverse()}         
           toggleAddLinkModal={this.props.toggleAddLinkModal}
+          toggleDeleteGroupModal={this.props.toggleDeleteGroupModal}
           setSelectedGroup={this.props.setSelectedGroup}
           inEditMode={inEditMode}
           toggleEditMode={this.toggleEditMode}      
