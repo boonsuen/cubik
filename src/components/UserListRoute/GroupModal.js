@@ -90,14 +90,13 @@ const DeleteDescription = styled.div`
 `;
 
 const GroupNameReminder = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 102px;
+  display: inline-block;
   height: 35px;
+  line-height: 35px;
   background: #dbe1ff;
   border-left: 8px solid #8f90ff;
   margin-top: 10px;
+  padding: 0 13px;
 `;
 
 const Separator = styled.div`
@@ -142,13 +141,22 @@ class GroupModal extends React.Component {
         {(modalType === 'create' || modalType === 'rename') && 
           <form onSubmit={(e) => {
             e.preventDefault();
-            const groupName = this.groupNameTextarea.value.trim();
-            if (modalType === 'create' && !groupName) {
-              this.groupNameTextarea.value = '';
-              this.groupNameTextarea.focus();
-              return;
+            const groupNameValue = this.groupNameTextarea.value.trim();
+            if (modalType === 'create') {
+              if (!groupName) {
+                this.groupNameTextarea.value = '';
+                this.groupNameTextarea.focus();
+                return;
+              }
+              this.props.onCreateSubmit(groupNameValue);
             }
-            this.props.onSubmit(groupName);
+            if (modalType === 'rename') {
+              if (groupNameValue === groupName || !groupNameValue) {
+                toggleModal();
+                return;
+              } 
+              this.props.onRenameSubmit(groupNameValue);
+            }
           }}>
             <label htmlFor="GroupNameTextarea">Name</label>
             <StyledTextarea 
@@ -176,7 +184,7 @@ class GroupModal extends React.Component {
             e.preventDefault();
           }}>
             <DeleteDescription>Are you sure to delete this group?</DeleteDescription>
-            <GroupNameReminder>GraphQL</GroupNameReminder>
+            <GroupNameReminder>{groupName}</GroupNameReminder>
             <Separator />
             <DeleteDescription>13 links under it will be gone forever along with it.</DeleteDescription>
             <BtnContainer modalType="delete">
