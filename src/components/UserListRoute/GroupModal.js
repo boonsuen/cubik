@@ -106,15 +106,33 @@ const Separator = styled.div`
 `;
 
 class GroupModal extends React.Component {
+  handleSubmit = e => {
+    if (e) {
+      e.preventDefault();
+    }
+    const { modalType, groupName, groupId, toggleModal, onCreateGroup, onRenameGroup } = this.props;
+    const groupNameValue = this.groupNameTextarea.value.trim().replace(/\n/g, "");
+    if (modalType === 'create') {
+      if (!groupNameValue) {
+        this.groupNameTextarea.value = '';
+        this.groupNameTextarea.focus();
+        return;
+      }
+      onCreateGroup(groupNameValue, true);
+    } else if (modalType === 'rename') {
+      if (groupNameValue === groupName || !groupNameValue) {
+        toggleModal();
+        return;
+      }
+      onRenameGroup(groupId, groupNameValue);
+    } else if (modalType === 'delete') {
+      console.log('handleDelete');
+    }
+  };
   onEnterPress = e => {
     if(e.keyCode == 13) {
       e.preventDefault();
-      const { selectedGroup: {
-        id: groupId
-      } } = this.state;
-      this.handleRenameGroup(
-        groupId, this.groupNameTextarea.value.trim().replace(/\n/g, "")
-      );
+      this.handleSubmit();
     }
   }; 
   render() {
@@ -138,61 +156,43 @@ class GroupModal extends React.Component {
             <img src={img_hideModal} />
           </button>
         </Header>  
-        {(modalType === 'create' || modalType === 'rename') && 
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            const groupNameValue = this.groupNameTextarea.value.trim();
-            if (modalType === 'create') {
-              if (!groupName) {
-                this.groupNameTextarea.value = '';
-                this.groupNameTextarea.focus();
-                return;
-              }
-              this.props.onCreateSubmit(groupNameValue);
-            }
-            if (modalType === 'rename') {
-              if (groupNameValue === groupName || !groupNameValue) {
-                toggleModal();
-                return;
-              } 
-              this.props.onRenameSubmit(groupNameValue);
-            }
-          }}>
-            <label htmlFor="GroupNameTextarea">Name</label>
-            <StyledTextarea 
-              id="GroupNameTextarea"
-              placeholder="Enter a name"
-              inputRef={tag => this.groupNameTextarea = tag}
-              maxRows={3}
-              defaultValue={groupName}
-              spellCheck={false}
-              onKeyDown={this.onEnterPress}
-              autoFocus
-            />
-            <BtnContainer>
-              <button onClick={toggleModal} type="button">Cancel</button>
-              <button type="submit">
-                {modalType === 'create' && "Create"}
-                {modalType === 'rename' && "Submitted"}
-                {modalType === 'delete' && "Delete"}
-              </button> 
-            </BtnContainer>
-          </form>
-        }
-        {modalType === 'delete' &&
-          <form onSubmit={e => {
-            e.preventDefault();
-          }}>
-            <DeleteDescription>Are you sure to delete this group?</DeleteDescription>
-            <GroupNameReminder>{groupName}</GroupNameReminder>
-            <Separator />
-            <DeleteDescription>13 links under it will be gone forever along with it.</DeleteDescription>
-            <BtnContainer modalType="delete">
-              <button onClick={toggleModal} type="button">Cancel</button>
-              <button type="submit">Delete</button> 
-            </BtnContainer>
-          </form>
-        }
+        <form onSubmit={this.handleSubmit}>
+          {(modalType === 'create' || modalType === 'rename') &&
+            <React.Fragment>
+              <label htmlFor="GroupNameTextarea">Name</label>
+              <StyledTextarea 
+                id="GroupNameTextarea"
+                placeholder="Enter a name"
+                inputRef={tag => this.groupNameTextarea = tag}
+                maxRows={3}
+                defaultValue={groupName}
+                spellCheck={false}
+                onKeyDown={this.onEnterPress}
+                autoFocus
+              />
+              <BtnContainer>
+                <button onClick={toggleModal} type="button">Cancel</button>
+                <button type="submit">
+                  {modalType === 'create' && "Create"}
+                  {modalType === 'rename' && "Submit"}
+                  {modalType === 'delete' && "Delete"}
+                </button> 
+              </BtnContainer>
+            </React.Fragment>
+          }
+          {modalType === 'delete' &&
+            <React.Fragment>
+              <DeleteDescription>Are you sure to delete this group?</DeleteDescription>
+              <GroupNameReminder>{groupName}</GroupNameReminder>
+              <Separator />
+              <DeleteDescription>13 links under it will be gone forever along with it.</DeleteDescription>
+              <BtnContainer modalType="delete">
+                <button onClick={toggleModal} type="button">Cancel</button>
+                <button type="submit">Delete</button> 
+              </BtnContainer>
+            </React.Fragment>
+          }
+        </form>
       </StyledGroupModal>
     );
   }
