@@ -84,6 +84,28 @@ const BtnContainer = styled.div`
   }
 `;
 
+const DeleteDescription = styled.div`
+  color: #373764;
+  font-weight: 500;
+`;
+
+const GroupNameReminder = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 102px;
+  height: 35px;
+  background: #dbe1ff;
+  border-left: 8px solid #8f90ff;
+  margin-top: 10px;
+`;
+
+const Separator = styled.div`
+  height: 1px;
+  margin: 15px 0;
+  background-color: #dfe7ec;
+`;
+
 class GroupModal extends React.Component {
   onEnterPress = e => {
     if(e.keyCode == 13) {
@@ -153,9 +175,10 @@ class GroupModal extends React.Component {
           <form onSubmit={e => {
             e.preventDefault();
           }}>
-            <div>Are you sure to delete this group?</div>
-            <div>GraphQL</div>
-            <div>13 links under it will be gone forever along with it.</div>
+            <DeleteDescription>Are you sure to delete this group?</DeleteDescription>
+            <GroupNameReminder>GraphQL</GroupNameReminder>
+            <Separator />
+            <DeleteDescription>13 links under it will be gone forever along with it.</DeleteDescription>
             <BtnContainer modalType="delete">
               <button onClick={toggleModal} type="button">Cancel</button>
               <button type="submit">Delete</button> 
