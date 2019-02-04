@@ -110,23 +110,27 @@ class GroupModal extends React.Component {
     if (e) {
       e.preventDefault();
     }
-    const { modalType, groupName, groupId, toggleModal, onCreateGroup, onRenameGroup } = this.props;
-    const groupNameValue = this.groupNameTextarea.value.trim().replace(/\n/g, "");
+    const { 
+      modalType, groupName, toggleModal, 
+      onCreateGroup, onRenameGroup, onDeleteGroup
+    } = this.props;    
     if (modalType === 'create') {
-      if (!groupNameValue) {
+      const groupName = this.groupNameTextarea.value.trim().replace(/\n/g, "");
+      if (!groupName) {
         this.groupNameTextarea.value = '';
         this.groupNameTextarea.focus();
         return;
       }
-      onCreateGroup(groupNameValue, true);
+      onCreateGroup(groupName, true);
     } else if (modalType === 'rename') {
-      if (groupNameValue === groupName || !groupNameValue) {
+      const newGroupName = this.groupNameTextarea.value.trim().replace(/\n/g, "");
+      if (newGroupName === groupName || !newGroupName) {
         toggleModal();
         return;
       }
-      onRenameGroup(groupNameValue);
+      onRenameGroup(newGroupName);
     } else if (modalType === 'delete') {
-      // onDeleteGroup();
+      onDeleteGroup();
     }
   };
   onEnterPress = e => {
