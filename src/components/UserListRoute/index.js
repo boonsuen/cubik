@@ -193,29 +193,43 @@ export default class UserListRoute extends React.Component {
   handleDeleteGroup = () => {
     const groupId = this.state.selectedGroup.id;
     const { userId, list } = this.props;
-    const groupRef = db.collection(`users/${userId}/lists/${list.id}/groups`).doc(groupId);
-    groupRef.delete().then(() => {
-      console.log("Group successfully deleted!");
-    }).catch(err => {
-      console.error("Error removing group doc: ", err);
+
+    const deleteGroup = new Promise((resolve, reject) => {
+      const groupRef = db.collection(`users/${userId}/lists/${list.id}/groups`).doc(groupId);
+      groupRef.delete().then(() => {
+        console.log("Group successfully deleted!");
+        resolve();
+      }).catch(err => {
+        console.error("Error removing group doc: ", err);
+        reject(err);
+      });
     });
-    
-    const linksRef = db.collection(`users/${userId}/lists/${list.id}/links`);
-    linksRef.where('groupId', '==', groupId).get()
-      .then(querySnapshot => {
-        // Once we get the results, begin a batch
-        const batch = db.batch();
 
-        querySnapshot.forEach(doc => {
-          // For each doc, add a delete operation to the batch
-          batch.delete(doc.ref);
-        });
+    const deleteLinks = new Promise((resolve, reject) => {
+      const linksRef = db.collection(`users/${userId}/lists/${list.id}/links`);
+      linksRef.where('groupId', '==', groupId).get()
+        .then(querySnapshot => {
+          const batch = db.batch();
 
-        // Commit the batch
-        return batch.commit();
-      }).then(() => {
-        console.log('Links successfully deleted!');
-      }); 
+          querySnapshot.forEach(doc => {
+            batch.delete(doc.ref);
+          });
+
+          return batch.commit();
+        }).then(() => {
+          console.log('Links successfully deleted!');
+          resolve();
+        }).catch(err => {
+          console.error("Error removing links doc: ", err);
+          reject(err);
+        }); 
+    });
+
+    Promise.all([deleteGroup, deleteLinks]).then(values => {
+      console.log('All done', values);
+    }).catch(error => { 
+      console.log(error);
+    });
   };
   toggleEditListMode = e => {
     this.setState(state => ({
