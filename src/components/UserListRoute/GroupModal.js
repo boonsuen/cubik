@@ -189,7 +189,7 @@ class GroupModal extends React.Component {
               <DeleteDescription>Are you sure to delete this group?</DeleteDescription>
               <GroupNameReminder>{groupName}</GroupNameReminder>
               <Separator />
-              <DeleteDescription>13 links under it will be gone forever along with it.</DeleteDescription>
+              <DeleteDescription>{this.props.getLinksCount()} links under it will be gone forever along with it.</DeleteDescription>
               <BtnContainer modalType="delete">
                 <button onClick={toggleModal} type="button">Cancel</button>
                 <button type="submit">Delete</button> 

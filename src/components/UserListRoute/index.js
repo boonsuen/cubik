@@ -239,6 +239,13 @@ export default class UserListRoute extends React.Component {
       inEditListMode: !state.inEditListMode
     }));
   };
+  getLinksCount = () => {
+    if (this.state.selectedGroup.id) {
+      return this.state.groupsData.find(group => {
+        return group.id === this.state.selectedGroup.id
+      }).links.length;
+    }
+  };
   render() {
     //{this.props.match.url.replace(/\/app\//, '')}
     return (!this.state.inEditListMode ? 
@@ -309,6 +316,7 @@ export default class UserListRoute extends React.Component {
             contentLabel="Delete group"
             onDeleteGroup={this.handleDeleteGroup}
             groupName={this.state.selectedGroup.name}
+            getLinksCount={this.getLinksCount}
           />
         </React.Fragment>
       ) : (
