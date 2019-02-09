@@ -227,7 +227,11 @@ export default class UserListRoute extends React.Component {
 
     Promise.all([deleteGroup, deleteLinks]).then(() => {
       this.setState(state => ({ 
-        groupsData: state.groupsData.filter(group => group.id !== groupId) 
+        groupsData: state.groupsData.filter(group => group.id !== groupId),
+        selectedGroup: {
+          id: null,
+          name: null
+        }
       }));
       this.toggleDeleteGroupModal();
     }).catch(error => { 
