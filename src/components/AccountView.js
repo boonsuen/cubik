@@ -155,6 +155,8 @@ const DeleteAccBtn = styled.button`
   border: 1px solid #ff9494;
   color: #eb5656;
   line-height: 42px;
+  transition: background .3s;
+  &:hover { background: #fff4f4; }
 `;
 
 const ChangePasswordForm = styled.form`
