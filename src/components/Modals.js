@@ -123,39 +123,6 @@ const StyledAddLinkModal = styled(BaseModal)`
   }
 `;
 
-const RenameGroupModal = styled(BaseModal)`
-  &__content {
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    right: auto; 
-    bottom: auto; 
-    width: 460px;
-    padding: 28px; 
-    background: rgb(255, 255, 255); 
-    overflow: auto; 
-    border-radius: 10px; 
-    outline: none; 
-    margin-right: -50%; 
-    transform: translate(-50%, -50%);
-    box-sizing: border-box;
-    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
-  }
-
-  h2 {
-    color: #204459;
-    font-size: 22px;
-    font-weight: 600;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 12px;
-    color: #373764;
-    font-weight: 500;
-  }
-`;
-
 const StyledGroupModal = styled(BaseModal)`
   &__content {
     position: absolute; 
@@ -189,9 +156,29 @@ const StyledGroupModal = styled(BaseModal)`
   }
 `;
 
+const StyledDeleteAccModal = styled(BaseModal)`
+  &__content {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    right: auto; 
+    bottom: auto; 
+    width: 457px;
+    padding: 28px; 
+    background: rgb(255, 255, 255); 
+    overflow: auto; 
+    border-radius: 10px; 
+    outline: none; 
+    margin-right: -50%; 
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
+  }
+`;
+
 export { 
   AddListModal, 
-  StyledAddLinkModal, 
-  RenameGroupModal,
-  StyledGroupModal
+  StyledAddLinkModal,
+  StyledGroupModal,
+  StyledDeleteAccModal
 };
