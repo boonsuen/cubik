@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "firebase": "^5.8.6",
+    "firebase": "^5.9.0",
     "react-beautiful-dnd": "^10.0.4",
     "react-modal": "^3.8.1",
     "react-onclickoutside": "^6.8.0",
