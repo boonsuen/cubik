@@ -10,7 +10,7 @@
     "serve": "serve dist -p 3001"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "firebase": "^5.9.1",
     "react-beautiful-dnd": "^10.0.4",
     "react-modal": "^3.8.1",
